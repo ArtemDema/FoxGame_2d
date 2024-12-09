@@ -1,11 +1,7 @@
 import pygame
 
-<<<<<<< HEAD
 from .map import background, blocks
 from ..resourses import droped_resources
-=======
-from.map import background, blocks
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
 
 pygame.init()
 
@@ -20,11 +16,8 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen,
     #rendering all blocks
     for block in blocks: 
         block.draw_image(screen)
-<<<<<<< HEAD
     for recource in droped_resources: 
         recource.draw_image(screen)
-=======
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
 
     #check for drawing in a idle
     if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False: 

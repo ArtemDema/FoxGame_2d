@@ -1,8 +1,5 @@
 from .screen.map import blocks
-<<<<<<< HEAD
 from .resourses import droped_resources
-=======
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
 
 def check_run(player_x, player_y, player_width, player_height, move_jump, player_speed, side):
     dict_return = {}
@@ -19,11 +16,8 @@ def check_run(player_x, player_y, player_width, player_height, move_jump, player
             dict_return["last_side"] = 1
             for block in blocks:
                 block.x -= player_speed
-<<<<<<< HEAD
             for resource in droped_resources:
                 resource.x -= player_speed
-=======
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
 
     else:
         for block in blocks:
@@ -38,11 +32,8 @@ def check_run(player_x, player_y, player_width, player_height, move_jump, player
             dict_return["last_side"] = 0
             for block in blocks:
                 block.x += player_speed
-<<<<<<< HEAD
             for resource in droped_resources:
                 resource.x += player_speed
-=======
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
     return dict_return
 
 def check_jump(player_x, player_y, player_width, player_height, player_strength_jump, blocks, player_speed, move_jump):
@@ -58,11 +49,8 @@ def check_jump(player_x, player_y, player_width, player_height, player_strength_
             
             for block in blocks:
                 block.y += player_speed * 3
-<<<<<<< HEAD
             for resource in droped_resources:
                 resource.y += player_speed * 3
-=======
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
             return_dict["player_strength_jump"] = player_strength_jump - 1
             return return_dict
     else:

@@ -1,11 +1,7 @@
 import os
 import json
 
-<<<<<<< HEAD
 path = os.path.abspath(__file__ + "/../../../json/main_info.json")
-=======
-path = os.path.abspath(__file__ + "/../../../instance/main_info.json")
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
 
 def get_info(WIDTH, HEIGHT, player_hp):
     with open(file = path, mode = "r", encoding = "utf-8") as file:

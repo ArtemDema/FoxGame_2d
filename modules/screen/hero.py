@@ -73,8 +73,4 @@ class Hero(Enemy):
             self.load_image()
             self.draw_image(screen)
 
-<<<<<<< HEAD
 player = Hero(x = 600, y = 400, width = 80, height = 80, image=list_idle[0], hp = 3, speed = 4, strength_jump = 17)
-=======
-player = Hero(x = 600, y = 400, width = 80, height = 80, image=list_idle[0], hp = 3,speed = 4, strength_jump = 17)
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
