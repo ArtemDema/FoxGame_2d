@@ -53,7 +53,9 @@ class Discarded_Item(Block):
             else: return_list["key_count"] = key_count + 1
         return return_list
         
-meat1 = Discarded_Item(x = 600, y = 200, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
-egg1 = Discarded_Item(x = 700, y = 200, width = 20, height = 30, image = "images/resources/egg.png",whatIsThis= "egg")
+meat1 = Discarded_Item(x = 700, y = 200, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
+egg1 = Discarded_Item(x = 800, y = 200, width = 20, height = 30, image = "images/resources/egg.png",whatIsThis= "egg")
+key1 = Discarded_Item(x = 900, y = 200, width = 25, height = 25, image = "images/resources/key.png",whatIsThis= "key")
 droped_resources.append(meat1)
 droped_resources.append(egg1)
+droped_resources.append(key1)

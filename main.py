@@ -8,9 +8,6 @@ tick = pygame.time.Clock()
 #saves the last motion vector (0 - left, 1 - right)
 last_side = 0
 
-egg_count = 0
-meat_count = 0
-key_count = 0
 #counters (elements for the array) for changing the sprite:
 idle_count = 0
 run_count = 0
@@ -100,16 +97,11 @@ while game_run:
 
     #COLLECT RECOURCES
     for recource in mod.droped_resources:
-        return_dict = recource.check_collect_recource(mod.player, meat_count, egg_count, key_count)
-        if "egg_count" in return_dict: 
-            egg_count = return_dict["egg_count"]
-            print(f"egg: {egg_count}")
-        if "key_count" in return_dict: 
-            key_count = return_dict["key_count"]
-            print(f"key: {key_count}")
-        if "meat_count" in return_dict: 
-            meat_count = return_dict["meat_count"]
-            print(f"meat: {meat_count}")
+        return_dict = recource.check_collect_recource(mod.player, mod.meat.count, mod.egg.count, mod.key.count)
+        if "egg_count" in return_dict: mod.egg.count = return_dict["egg_count"]
+        if "key_count" in return_dict: mod.key.count = return_dict["key_count"]
+        if "meat_count" in return_dict: mod.meat.count = return_dict["meat_count"]
+
     #DRAWING
     return_dict = mod.render(move_left, move_right, move_jump, move_crouch, move_bottom, mod.screen, 
                              mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count)

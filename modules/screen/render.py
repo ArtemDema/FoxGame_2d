@@ -2,6 +2,7 @@ import pygame
 
 from .map import background, blocks
 from ..resourses import droped_resources
+from ..interface import interface
 
 pygame.init()
 
@@ -18,6 +19,9 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen,
         block.draw_image(screen)
     for recource in droped_resources: 
         recource.draw_image(screen)
+    for item in interface:
+        item.draw_image(screen)
+        item.print_text(screen)
 
     #check for drawing in a idle
     if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False: 
