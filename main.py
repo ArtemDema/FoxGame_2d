@@ -8,13 +8,9 @@ tick = pygame.time.Clock()
 #saves the last motion vector (0 - left, 1 - right)
 last_side = 0
 
-<<<<<<< HEAD
 egg_count = 0
 meat_count = 0
 key_count = 0
-
-=======
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
 #counters (elements for the array) for changing the sprite:
 idle_count = 0
 run_count = 0
@@ -50,12 +46,7 @@ while game_run:
     if keys[pygame.K_a]:
         move_crouch = False
         dict_left = mod.check_run(mod.player.x, mod.player.y, mod.player.width, mod.player.height, move_jump, mod.player.speed, "left")
-<<<<<<< HEAD
         if "move_left" in dict_left: move_left = dict_left["move_left"]
-=======
-        if "move_left" in dict_left:
-            move_left = dict_left["move_left"]
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
         last_side = dict_left["last_side"]
     else:
         move_left = False
@@ -64,12 +55,7 @@ while game_run:
     if keys[pygame.K_d]:
         move_crouch = False
         dict_right = mod.check_run(mod.player.x, mod.player.y, mod.player.width, mod.player.height, move_jump, mod.player.speed, "right")
-<<<<<<< HEAD
         if "move_right" in dict_right: move_right = dict_right["move_right"]
-=======
-        if "move_right" in dict_right:
-            move_right = dict_right["move_right"]
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
         last_side = dict_right["last_side"]
     else:
         move_right = False
@@ -82,15 +68,8 @@ while game_run:
     else:
         list = mod.player.strength_jump = mod.check_jump(mod.player.x, mod.player.y, mod.player.width, 
                                                   mod.player.height, mod.player.strength_jump, mod.blocks, mod.player.speed, move_jump)
-<<<<<<< HEAD
         if "move_jump" in list: move_jump = list["move_jump"]
         if "player_strength_jump" in list: mod.player.strength_jump = list["player_strength_jump"]
-=======
-        if "move_jump" in list:
-            move_jump = list["move_jump"]
-        if "player_strength_jump" in list:
-            mod.player.strength_jump = list["player_strength_jump"]
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
 
     #SQUAT
     if keys[pygame.K_LSHIFT]:
@@ -100,10 +79,7 @@ while game_run:
         move_crouch = False
 
     #GRAVITY
-<<<<<<< HEAD
       #PLAYER GRAVITY
-=======
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
     for block in mod.blocks:
         answer_fall = block.check_collision_top_wall(mod.player.x, mod.player.y, #checking whether the player is standing on some block
                                                      mod.player.x + mod.player.width, mod.player.y + mod.player.height)
@@ -115,7 +91,6 @@ while game_run:
             move_bottom = True
             for block in mod.blocks:
                 block.y -= mod.player.speed
-<<<<<<< HEAD
             for recource in mod.droped_resources:
                 recource.y -= mod.player.speed
       #RESOURCES GRAVITY
@@ -135,24 +110,10 @@ while game_run:
         if "meat_count" in return_dict: 
             meat_count = return_dict["meat_count"]
             print(f"meat: {meat_count}")
-=======
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
-
     #DRAWING
     return_dict = mod.render(move_left, move_right, move_jump, move_crouch, move_bottom, mod.screen, 
                              mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count)
-<<<<<<< HEAD
     if "run_count" in return_dict: run_count = return_dict["run_count"]
     if "idle_count" in return_dict: idle_count = return_dict["idle_count"]
     if "crouch_count" in return_dict: crouch_count = return_dict["crouch_count"]
     if "number_for_choose_sprite" in return_dict: number_for_choose_sprite = return_dict["number_for_choose_sprite"]
-=======
-    if "run_count" in return_dict:
-        run_count = return_dict["run_count"]
-    if "idle_count" in return_dict:
-        idle_count = return_dict["idle_count"]
-    if "crouch_count" in return_dict:
-        crouch_count = return_dict["crouch_count"]
-    if "number_for_choose_sprite" in return_dict:
-        number_for_choose_sprite = return_dict["number_for_choose_sprite"]
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
