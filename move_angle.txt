@@ -1,0 +1,29 @@
+<<<<<<< HEAD
+сохранить до лучших времён
+
+=======
+>>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
+if self.direction >= 0 and self.direction <= 90:
+            koef = self.speed / 90
+            speed_x = koef * self.direction
+            speed_y = self.speed - (koef * self.direction)
+            self.x += speed_x 
+            self.y -= speed_y
+        elif self.direction <= 0 and self.direction >= -90:
+            koef = self.speed / 90
+            speed_x = koef * self.direction
+            speed_y = self.speed - ((koef * self.direction) * -1)
+            self.x += speed_x 
+            self.y -= speed_y
+        elif self.direction >= 90 and self.direction <= 180: 
+            koef = self.speed / 90
+            speed_x = koef * (self.direction - 90)
+            speed_y = self.speed - (koef * (self.direction - 90))
+            self.x += speed_x 
+            self.y += speed_y
+        elif self.direction <= -90 and self.direction >= -180: 
+            koef = self.speed / 90
+            speed_x = koef * (self.direction + 90)
+            speed_y = self.speed - ((koef * (self.direction + 90)) * -1)
+            self.x += speed_x 
+            self.y += speed_y
