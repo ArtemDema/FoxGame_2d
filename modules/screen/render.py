@@ -3,11 +3,12 @@ import pygame
 from .map import background, blocks
 from ..resourses import droped_resources
 from ..interface import interface
+from ..chest import chests
 
 pygame.init()
 
 def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, 
-           player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count):
+           player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, hide):
     
     return_dict = {}
 
@@ -17,14 +18,27 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen,
     #rendering all blocks
     for block in blocks: 
         block.draw_image(screen)
+
+    for chest in chests:
+        if hide == False:
+            if chest.open_chest == True:
+                chest.image = "images/chest/chest_open.png"
+            else:
+                chest.image = "images/chest/chest_lock.png"
+        else:
+            chest.image = "images/chest/chest_player_in.png"
+        chest.load_image()
+        chest.draw_image(screen)
+
     for recource in droped_resources: 
         recource.draw_image(screen)
+
     for item in interface:
         item.draw_image(screen)
         item.print_text(screen)
 
     #check for drawing in a idle
-    if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False: 
+    if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False and hide == False: 
         player.idle(idle_count, screen, last_side)
         if number_for_choose_sprite == 10:
             if idle_count != 3:

@@ -5,3 +5,4 @@ from .screen import *
 from .json import *
 from .resourses import *
 from .interface import *
+from .chest import *

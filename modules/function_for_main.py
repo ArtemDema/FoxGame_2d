@@ -1,5 +1,6 @@
 from .screen.map import blocks
 from .resourses import droped_resources
+from .chest import chests
 
 def check_run(player_x, player_y, player_width, player_height, move_jump, player_speed, side):
     dict_return = {}
@@ -18,6 +19,8 @@ def check_run(player_x, player_y, player_width, player_height, move_jump, player
                 block.x -= player_speed
             for resource in droped_resources:
                 resource.x -= player_speed
+            for chest in chests:
+                chest.x -= player_speed
 
     else:
         for block in blocks:
@@ -34,6 +37,8 @@ def check_run(player_x, player_y, player_width, player_height, move_jump, player
                 block.x += player_speed
             for resource in droped_resources:
                 resource.x += player_speed
+            for chest in chests:
+                chest.x += player_speed
     return dict_return
 
 def check_jump(player_x, player_y, player_width, player_height, player_strength_jump, blocks, player_speed, move_jump):
@@ -51,6 +56,8 @@ def check_jump(player_x, player_y, player_width, player_height, player_strength_
                 block.y += player_speed * 3
             for resource in droped_resources:
                 resource.y += player_speed * 3
+            for chest in chests:
+                chest.y += player_speed * 3
             return_dict["player_strength_jump"] = player_strength_jump - 1
             return return_dict
     else:

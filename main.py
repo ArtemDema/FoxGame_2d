@@ -8,6 +8,8 @@ tick = pygame.time.Clock()
 #saves the last motion vector (0 - left, 1 - right)
 last_side = 0
 
+reload_chest = 0
+
 #counters (elements for the array) for changing the sprite:
 idle_count = 0
 run_count = 0
@@ -17,9 +19,9 @@ crouch_count = 0
 move_left = False
 move_right = False
 move_bottom = False
-move_top = False
 move_jump = False
 move_crouch = False
+hide = False
 
 #sprite change frequency
 number_for_choose_sprite = 10
@@ -39,9 +41,21 @@ while game_run:
             mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
             game_run = False
 
+    #CHEST open and hide in him
+    if keys[pygame.K_e]:
+        if reload_chest == 2:
+            for chest in mod.chests:
+                answer = chest.check_open(mod.key.count, mod.player)
+                if answer: mod.key.count -= 1
+                elif answer == False: hide = True
+            reload_chest = 0
+        else:
+            reload_chest += 1
+
     #MOVE LEFT
     if keys[pygame.K_a]:
         move_crouch = False
+        hide = False
         dict_left = mod.check_run(mod.player.x, mod.player.y, mod.player.width, mod.player.height, move_jump, mod.player.speed, "left")
         if "move_left" in dict_left: move_left = dict_left["move_left"]
         last_side = dict_left["last_side"]
@@ -51,6 +65,7 @@ while game_run:
     #MOVE RIGHT
     if keys[pygame.K_d]:
         move_crouch = False
+        hide = False
         dict_right = mod.check_run(mod.player.x, mod.player.y, mod.player.width, mod.player.height, move_jump, mod.player.speed, "right")
         if "move_right" in dict_right: move_right = dict_right["move_right"]
         last_side = dict_right["last_side"]
@@ -62,6 +77,7 @@ while game_run:
         if keys[pygame.K_SPACE]:    #и потом он нажимает space
             if move_bottom == False: #если он сейчас не падает
                 move_jump = True        #то мы говорим что он сейчас будет прыгать
+                hide = False
     else:
         list = mod.player.strength_jump = mod.check_jump(mod.player.x, mod.player.y, mod.player.width, 
                                                   mod.player.height, mod.player.strength_jump, mod.blocks, mod.player.speed, move_jump)
@@ -70,7 +86,7 @@ while game_run:
 
     #SQUAT
     if keys[pygame.K_LSHIFT]:
-        if move_bottom == False and move_jump == False and move_right == False and move_left == False:
+        if move_bottom == False and move_jump == False and move_right == False and move_left == False and hide == False:
             move_crouch = True
     else:
         move_crouch = False
@@ -90,6 +106,8 @@ while game_run:
                 block.y -= mod.player.speed
             for recource in mod.droped_resources:
                 recource.y -= mod.player.speed
+            for chest in mod.chests:
+                chest.y -= mod.player.speed
       #RESOURCES GRAVITY
     for recource in mod.droped_resources:
         recource.gravity(mod.player)
@@ -104,7 +122,7 @@ while game_run:
 
     #DRAWING
     return_dict = mod.render(move_left, move_right, move_jump, move_crouch, move_bottom, mod.screen, 
-                             mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count)
+                             mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, hide)
     if "run_count" in return_dict: run_count = return_dict["run_count"]
     if "idle_count" in return_dict: idle_count = return_dict["idle_count"]
     if "crouch_count" in return_dict: crouch_count = return_dict["crouch_count"]
