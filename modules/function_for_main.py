@@ -41,7 +41,7 @@ def check_run(player_x, player_y, player_width, player_height, move_jump, player
                 chest.x += player_speed
     return dict_return
 
-def check_jump(player_x, player_y, player_width, player_height, player_strength_jump, blocks, player_speed, move_jump):
+def check_jump(player_x, player_y, player_width, player_height, player_strength_jump, blocks, player_speed):
     return_dict = {}
     if player_strength_jump != 0:
             for block in blocks:

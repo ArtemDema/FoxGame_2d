@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 сохранить до лучших времён
 
-=======
->>>>>>> e7e5459d04f7b2c44e4a912a28f6c35d42377547
 if self.direction >= 0 and self.direction <= 90:
             koef = self.speed / 90
             speed_x = koef * self.direction

@@ -8,7 +8,7 @@ from ..chest import chests
 pygame.init()
 
 def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, 
-           player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, hide):
+           player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, hide, with_chest):
     
     return_dict = {}
 
@@ -38,8 +38,8 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen,
         item.print_text(screen)
 
     #check for drawing in a idle
-    if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False and hide == False: 
-        player.idle(idle_count, screen, last_side)
+    if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False and hide == False:
+        player.idle(idle_count, screen, last_side, with_chest)
         if number_for_choose_sprite == 10:
             if idle_count != 3:
                 return_dict["idle_count"] = idle_count + 1
@@ -55,7 +55,7 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen,
     
     #check falling rendering
     elif move_bottom:
-        player.fall(screen, last_side)
+        player.fall(screen, last_side, with_chest)
 
     #check for squat rendering
     elif move_crouch:
@@ -73,7 +73,7 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen,
 
     #check for moving rendering
     elif move_left or move_right:
-        player.run(run_count, screen, last_side)
+        player.run(run_count, screen, last_side, with_chest)
         if number_for_choose_sprite == 10:
             if run_count != 5:
                 return_dict["run_count"] = run_count + 1

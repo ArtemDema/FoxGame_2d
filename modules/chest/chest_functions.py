@@ -47,6 +47,22 @@ class Chest(Block):
                                             right_x_p = player.x + player.width, bottom_y_p = player.y + player.height)
             if answer: return False
 
+    def check_up_the_chest(self, player):
+        if self.open_chest == True:
+            answer = self.check_collision_bottom_wall(left_x_p = player.x, top_y_p = player.y, 
+                                            right_x_p = player.x + player.width, bottom_y_p = player.y + player.height)
+            if answer: return True
+            answer = self.check_collision_left_wall(left_x_p = player.x, top_y_p = player.y, 
+                                            right_x_p = player.x + player.width, bottom_y_p = player.y + player.height)
+            if answer: return True
+            answer = self.check_collision_right_wall(left_x_p = player.x, top_y_p = player.y, 
+                                            right_x_p = player.x + player.width, bottom_y_p = player.y + player.height)
+            if answer: return True
+            answer = self.check_collision_top_wall(left_x_p = player.x, top_y_p = player.y, 
+                                            right_x_p = player.x + player.width, bottom_y_p = player.y + player.height)
+            if answer: return True
+        return False
+
 chest1 = Chest(900, 700, 50, 50, "images/chest/chest_lock.png", False)
 
 chests.append(chest1)
