@@ -30,6 +30,7 @@ move_jump = False
 move_crouch = False
 hide = False
 with_chest = False
+push_chest = False
 
 class Hero(Enemy):
     def __init__(self, x, y, width, height, image, hp, speed, strength_jump):

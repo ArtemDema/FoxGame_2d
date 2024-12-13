@@ -1,4 +1,4 @@
-from .function_for_main import check_run, check_jump
+from .function_for_main import check_run, check_jump, gravity, gravity_resources, check_push_chest, gravity_chests
 
 
 from .screen import *

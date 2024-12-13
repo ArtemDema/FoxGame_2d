@@ -9,6 +9,8 @@ tick = pygame.time.Clock()
 last_side = 0
 
 reload_chest = 0
+let_go_chest = 0
+
 
 #counters (elements for the array) for changing the sprite:
 idle_count = 0
@@ -45,31 +47,48 @@ while game_run:
                 reload_chest = 0
         else:
             reload_chest += 1
+
       #UP THE CHEST
     if keys[pygame.K_q]:
-        for chest in mod.chests:
-            answer = chest.check_up_the_chest(mod.player)
-            if answer:
-                if mod.with_chest == False:
+        if mod.hide == False and mod.with_chest == False:
+            for chest in mod.chests:
+                answer = chest.check_up_the_chest(mod.player)
+                if answer:
                     mod.with_chest = True
-                    mod.player.height = 140
-                    for block in mod.blocks:
-                        block.y += 60
-                    for recource in mod.droped_resources:
-                        recource.y += 60
-                    for chest in mod.chests:
-                        chest.y += 60
+                    chest_player = chest
+    if mod.with_chest:
+        chest_player.x = mod.player.x + 18
+        chest_player.y = mod.player.y - 18
 
-
+      #PUSH THE CHEST
+    if keys[pygame.K_r]:
+        mod.push_chest = mod.check_push_chest(mod.player, last_side)
+      
+      #DROPE CHEST
+    if keys[pygame.K_g]:
+        if mod.with_chest == True:
+            mod.with_chest = False
+            if last_side == 0:
+                for index in range(50):
+                    chest_player.throw_chest(-45, mod.player)
+            else:
+                for index in range(50):
+                    chest_player.throw_chest(45, mod.player)
 
     #MOVE
       #LEFT
     if keys[pygame.K_a]:
         mod.move_crouch = False
         mod.hide = False
-        dict_left = mod.check_run(mod.player.x, mod.player.y, mod.player.width, mod.player.height, mod.move_jump, mod.player.speed, "left")
+        if mod.with_chest:
+            dict_left = mod.check_run(mod.player.x, chest_player.y, mod.player.width, 
+                                    mod.player.height, mod.move_jump, mod.player.speed, "left", mod.push_chest)
+        else:
+            dict_left = mod.check_run(mod.player.x, mod.player.y, mod.player.width, 
+                                    mod.player.height, mod.move_jump, mod.player.speed, "left", mod.push_chest)
         if "move_left" in dict_left: mod.move_left = dict_left["move_left"]
-        last_side = dict_left["last_side"]
+        if "last_side" in dict_left: last_side = dict_left["last_side"]
+        if "push_chest" in dict_left: mod.push_chest = dict_left["push_chest"]
     else:
         mod.move_left = False
     
@@ -77,24 +96,30 @@ while game_run:
     if keys[pygame.K_d]:
         mod.move_crouch = False
         mod.hide = False
-        dict_right = mod.check_run(mod.player.x, mod.player.y, mod.player.width, mod.player.height, mod.move_jump, mod.player.speed, "right")
+        if mod.with_chest:
+            dict_right = mod.check_run(mod.player.x, chest_player.y, mod.player.width, 
+                                    mod.player.height, mod.move_jump, mod.player.speed, "right", mod.push_chest)
+        else:
+            dict_right = mod.check_run(mod.player.x, mod.player.y, mod.player.width, 
+                                    mod.player.height, mod.move_jump, mod.player.speed, "right", mod.push_chest)
         if "move_right" in dict_right: mod.move_right = dict_right["move_right"]
-        last_side = dict_right["last_side"]
+        if "last_side" in dict_right: last_side = dict_right["last_side"]
+        if "push_chest" in dict_right: mod.push_chest = dict_right["push_chest"]
     else:
         mod.move_right = False
 
       #JUMP
-    if mod.with_chest == False:
-        if mod.move_jump == False:          #если игрок сейчас не прыгает
+    if mod.move_jump == False: #если игрок сейчас не прыгает и не с сундуком
+        if mod.with_chest == False:
             if keys[pygame.K_SPACE]:    #и потом он нажимает space
                 if mod.move_bottom == False: #если он сейчас не падает
                     mod.move_jump = True        #то мы говорим что он сейчас будет прыгать
                     mod.hide = False
-        else:
-            list = mod.player.strength_jump = mod.check_jump(mod.player.x, mod.player.y, mod.player.width, 
-                                                    mod.player.height, mod.player.strength_jump, mod.blocks, mod.player.speed)
-            if "move_jump" in list: mod.move_jump = list["move_jump"]
-            if "player_strength_jump" in list: mod.player.strength_jump = list["player_strength_jump"]
+    else:
+        list = mod.player.strength_jump = mod.check_jump(mod.player.x, mod.player.y, mod.player.width, 
+                                                mod.player.height, mod.player.strength_jump, mod.blocks, mod.player.speed)
+        if "move_jump" in list: mod.move_jump = list["move_jump"]
+        if "player_strength_jump" in list: mod.player.strength_jump = list["player_strength_jump"]
 
       #SQUAT
     if keys[pygame.K_LSHIFT]:
@@ -105,24 +130,12 @@ while game_run:
 
     #GRAVITY
       #PLAYER GRAVITY
-    for block in mod.blocks:
-        answer_fall = block.check_collision_top_wall(mod.player.x, mod.player.y, #checking whether the player is standing on some block
-                                                     mod.player.x + mod.player.width, mod.player.y + mod.player.height)
-        if answer_fall: #if the player is standing on some block
-            mod.move_bottom = False
-            break
-    if answer_fall != True: #if he does not
-        if mod.move_jump == False:
-            mod.move_bottom = True
-            for block in mod.blocks:
-                block.y -= mod.player.speed
-            for recource in mod.droped_resources:
-                recource.y -= mod.player.speed
-            for chest in mod.chests:
-                chest.y -= mod.player.speed
-      #RESOURCES GRAVITY
-    for recource in mod.droped_resources:
-        recource.gravity(mod.player)
+    list_return = mod.gravity(mod.player, mod.move_jump)
+    if "move_bottom" in list_return: mod.move_bottom = list_return["move_bottom"]
+
+      #GRAVITY RESOURCES AND CHESTS
+    mod.gravity_resources(mod.player)
+    mod.gravity_chests(mod.player)
 
 
     #COLLECT RECOURCES
