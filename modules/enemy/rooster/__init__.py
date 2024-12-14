@@ -1,0 +1,1 @@
+from .rooster_class import rooster1

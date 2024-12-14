@@ -9,8 +9,6 @@ tick = pygame.time.Clock()
 last_side = 0
 
 reload_chest = 0
-let_go_chest = 0
-
 
 #counters (elements for the array) for changing the sprite:
 idle_count = 0
@@ -34,6 +32,10 @@ while game_run:
         if event.type == pygame.QUIT:
             mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
             game_run = False
+
+    #ENEMY
+    for enemy in mod.list_rooster:
+        enemy.move()
 
     #CHEST 
       #OPEN AND HIDE IN HIM
@@ -136,7 +138,7 @@ while game_run:
       #GRAVITY RESOURCES AND CHESTS
     mod.gravity_resources(mod.player)
     mod.gravity_chests(mod.player)
-
+    mod.gravity_enemy(mod.player)
 
     #COLLECT RECOURCES
     for recource in mod.droped_resources:

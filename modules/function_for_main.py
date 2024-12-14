@@ -1,6 +1,7 @@
 from .screen.map import blocks
 from .resourses import droped_resources
 from .chest import chests
+from .enemy import list_rooster
 
 def check_run(player_x, player_y, player_width, player_height, move_jump, player_speed, side, push_chest):
     dict_return = {}
@@ -39,6 +40,8 @@ def check_run(player_x, player_y, player_width, player_height, move_jump, player
                 resource.x -= player_speed
             for chest in chests:
                 chest.x -= player_speed
+            for enemy in list_rooster:
+                enemy.x -= player_speed
 
     else:
         for block in blocks:
@@ -75,6 +78,9 @@ def check_run(player_x, player_y, player_width, player_height, move_jump, player
                 resource.x += player_speed
             for chest in chests:
                 chest.x += player_speed
+            for enemy in list_rooster:
+                enemy.x += player_speed
+
     return dict_return
 
 def check_push_chest(player, last_side):
@@ -116,6 +122,9 @@ def check_jump(player_x, player_y, player_width, player_height, player_strength_
                 resource.y += player_speed * 3
             for chest in chests:
                 chest.y += player_speed * 3
+            for enemy in list_rooster:
+                enemy.y += player_speed * 3
+
             return_dict["player_strength_jump"] = player_strength_jump - 1
             return return_dict
     else:
@@ -147,6 +156,9 @@ def gravity(player, move_jump):
                 recource.y -= player.speed
             for chest in chests:
                 chest.y -= player.speed
+            for enemy in list_rooster:
+                enemy.y -= player.speed
+
     return list_return
 
 def gravity_resources(player):
@@ -156,3 +168,7 @@ def gravity_resources(player):
 def gravity_chests(player):
     for chest in chests:
         chest.gravity(player)
+
+def gravity_enemy(player):
+    for enemy in list_rooster:
+        enemy.gravity(player, blocks)

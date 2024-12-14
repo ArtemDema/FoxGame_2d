@@ -1,0 +1,1 @@
+from .frog_class import frog1

@@ -4,6 +4,7 @@ from .map import background, blocks
 from ..resourses import droped_resources
 from ..interface import interface
 from ..chest import chests
+from ..enemy import chicken1, rooster1
 
 pygame.init()
 
@@ -18,6 +19,8 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen,
     #rendering all blocks
     for block in blocks: 
         block.draw_image(screen)
+
+    rooster1.draw_image(screen)
 
     for chest in chests:
         if hide == False:

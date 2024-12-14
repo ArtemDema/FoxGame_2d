@@ -27,6 +27,48 @@ class Enemy(Settings):
         self.hp = hp
         self.speed = speed
         super().__init__(x, y, width, height, image)
+    
+    def idle(self, idle_count, screen, last_side, list_idle):
+        if last_side == 0:
+            self.image = list_idle[idle_count]
+            self.load_image()
+            self.image = pygame.transform.flip(self.image, 1, 0)
+            self.draw_image(screen)
+        else:
+            self.image = list_idle[idle_count]
+            self.load_image()
+            self.draw_image(screen)
+
+    def run(self, run_count, screen, last_side, list_run):
+        if last_side == 0:
+            self.image = list_run[run_count]
+            self.load_image()
+            self.image = pygame.transform.flip(self.image, 1, 0)
+            self.draw_image(screen)
+        else:
+            self.image = list_run[run_count]
+            self.load_image()
+            self.draw_image(screen)
+
+    def fall(self, screen, last_side, list_jump):
+        if last_side == 0:
+            self.image = list_jump[1]
+            self.load_image()
+            self.image = pygame.transform.flip(self.image, 1, 0)
+            self.draw_image(screen)
+        else:
+            self.image = list_jump[1]
+            self.load_image()
+            self.draw_image(screen)
+    
+    def gravity(self, player, blocks):
+        for block in blocks:
+            answer_fall_r = block.check_collision_top_wall(self.x - 15, self.y,
+                                                        self.x + self.width + 15, self.y + self.height)
+            if answer_fall_r:
+                break
+        if answer_fall_r != True: #if he does not
+            self.y += player.speed
 
 class Block(Settings):
     def __init__(self, x, y, width, height, image):

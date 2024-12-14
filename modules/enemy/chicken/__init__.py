@@ -1,0 +1,1 @@
+from .chicken_class import chicken1
