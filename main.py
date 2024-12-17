@@ -35,6 +35,7 @@ while game_run:
 
     #ENEMY
     for enemy in mod.list_enemy:
+        enemy.check_death()
         enemy.move()
 
     #CHEST 

@@ -25,6 +25,11 @@ class Chicken(Enemy):
     def move(self):
         if self.random_move >= 0:
             if self.vector_move == 0:
+                # for block in blocks:
+                #     answer = block.check_collision_top_wall(self.x, self.y, self.x + self.width, self.y + self.height)
+                #     if answer != True:
+                #         self.random_move = 0
+
                 for block in blocks:
                     answer = block.check_collision_right_wall(self.x, self.y, 
                                                             self.x + self.width, self.y + self.height)
@@ -65,6 +70,11 @@ class Chicken(Enemy):
                             self.sprite_frequency_chicken = 0
                         else: self.sprite_frequency_chicken += 1
             else:
+                # for block in blocks:
+                #     answer = block.check_collision_top_wall(self.x, self.y, self.x + self.width, self.y + self.height)
+                #     if answer != True:
+                #         self.random_move = 0
+
                 for block in blocks:
                     answer = block.check_collision_left_wall(self.x, self.y, 
                                                             self.x + self.width, self.y + self.height)
@@ -118,7 +128,14 @@ class Chicken(Enemy):
             self.vector_move = random.randint(0, 1)
             self.random_move = random.randint(50, 250)
 
-
+    def check_death(self):
+        for chest in chests:
+            answer = chest.check_collision_bottom_wall(self.x, self.y, 
+                                                    self.x + self.width, self.y + self.height)
+            if answer:
+                print("dead")
+                self.x = 10000
+                self.y = 10000
 
 list_chicken = []
 

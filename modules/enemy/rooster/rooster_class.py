@@ -93,6 +93,15 @@ class Rooster(Enemy):
                         self.run_count += 1
                         self.sprite_frequency_rooster = 0
                     else: self.sprite_frequency_rooster += 1
+    
+    def check_death(self):
+        for chest in chests:
+            answer = chest.check_collision_bottom_wall(self.x, self.y, 
+                                                    self.x + self.width, self.y + self.height)
+            if answer:
+                print("dead")
+                self.x = 10000
+                self.y = 10000
 
 list_rooster = []
 
