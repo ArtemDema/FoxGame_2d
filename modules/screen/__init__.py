@@ -3,3 +3,5 @@ from .hero import move_bottom, move_crouch, move_jump, move_left, move_right, hi
 from .map import map, background, blocks
 from .render import render
 from .screen import WIDTH, HEIGHT, screen
+from .move import move_left_player, move_right_player
+from .render_enemy import render_enemy

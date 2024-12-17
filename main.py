@@ -9,6 +9,7 @@ tick = pygame.time.Clock()
 last_side = 0
 
 reload_chest = 0
+chest_player = 0
 
 #counters (elements for the array) for changing the sprite:
 idle_count = 0
@@ -17,7 +18,6 @@ crouch_count = 0
 
 #sprite change frequency
 number_for_choose_sprite = 10
-
 #getting information from the last session
 mod.get_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
 
@@ -34,7 +34,7 @@ while game_run:
             game_run = False
 
     #ENEMY
-    for enemy in mod.list_rooster:
+    for enemy in mod.list_enemy:
         enemy.move()
 
     #CHEST 
@@ -60,7 +60,7 @@ while game_run:
                     chest_player = chest
     if mod.with_chest:
         chest_player.x = mod.player.x + 18
-        chest_player.y = mod.player.y - 18
+        chest_player.y = mod.player.y - 19
 
       #PUSH THE CHEST
     if keys[pygame.K_r]:
@@ -82,12 +82,7 @@ while game_run:
     if keys[pygame.K_a]:
         mod.move_crouch = False
         mod.hide = False
-        if mod.with_chest:
-            dict_left = mod.check_run(mod.player.x, chest_player.y, mod.player.width, 
-                                    mod.player.height, mod.move_jump, mod.player.speed, "left", mod.push_chest)
-        else:
-            dict_left = mod.check_run(mod.player.x, mod.player.y, mod.player.width, 
-                                    mod.player.height, mod.move_jump, mod.player.speed, "left", mod.push_chest)
+        dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_chest, mod.with_chest, chest_player)
         if "move_left" in dict_left: mod.move_left = dict_left["move_left"]
         if "last_side" in dict_left: last_side = dict_left["last_side"]
         if "push_chest" in dict_left: mod.push_chest = dict_left["push_chest"]
@@ -98,12 +93,7 @@ while game_run:
     if keys[pygame.K_d]:
         mod.move_crouch = False
         mod.hide = False
-        if mod.with_chest:
-            dict_right = mod.check_run(mod.player.x, chest_player.y, mod.player.width, 
-                                    mod.player.height, mod.move_jump, mod.player.speed, "right", mod.push_chest)
-        else:
-            dict_right = mod.check_run(mod.player.x, mod.player.y, mod.player.width, 
-                                    mod.player.height, mod.move_jump, mod.player.speed, "right", mod.push_chest)
+        dict_right = mod.move_right_player(mod.player, mod.move_jump, mod.push_chest, mod.with_chest, chest_player)
         if "move_right" in dict_right: mod.move_right = dict_right["move_right"]
         if "last_side" in dict_right: last_side = dict_right["last_side"]
         if "push_chest" in dict_right: mod.push_chest = dict_right["push_chest"]
@@ -111,11 +101,11 @@ while game_run:
         mod.move_right = False
 
       #JUMP
-    if mod.move_jump == False: #если игрок сейчас не прыгает и не с сундуком
+    if mod.move_jump == False:
         if mod.with_chest == False:
-            if keys[pygame.K_SPACE]:    #и потом он нажимает space
-                if mod.move_bottom == False: #если он сейчас не падает
-                    mod.move_jump = True        #то мы говорим что он сейчас будет прыгать
+            if keys[pygame.K_SPACE]:
+                if mod.move_bottom == False:
+                    mod.move_jump = True
                     mod.hide = False
     else:
         list = mod.player.strength_jump = mod.check_jump(mod.player.x, mod.player.y, mod.player.width, 
