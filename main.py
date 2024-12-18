@@ -36,7 +36,8 @@ while game_run:
     #ENEMY
     for enemy in mod.list_enemy:
         enemy.check_death()
-        enemy.move()
+        if enemy.is_dead == False:
+            enemy.move()
 
     #CHEST 
       #OPEN AND HIDE IN HIM

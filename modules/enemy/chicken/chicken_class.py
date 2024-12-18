@@ -14,12 +14,14 @@ list_jump = []
 class Chicken(Enemy):
     def __init__(self, x, y, width, height, image, hp, speed, 
                  vector_move, run_count, sprite_frequency_chicken,
-                 random_idle, random_move):
+                 random_idle, random_move, is_dead, death_count):
         self.vector_move = vector_move
         self.run_count = run_count
         self.sprite_frequency_chicken = sprite_frequency_chicken
         self.random_idle = random_idle
         self.random_move = random_move
+        self.is_dead = is_dead
+        self.death_count = death_count
         super().__init__(x, y, width, height, image, hp, speed)
 
     def move(self):
@@ -133,12 +135,21 @@ class Chicken(Enemy):
             answer = chest.check_collision_bottom_wall(self.x, self.y, 
                                                     self.x + self.width, self.y + self.height)
             if answer:
-                print("dead")
-                self.x = 10000
-                self.y = 10000
+                self.is_dead = True
+
+    def dead_count(self):
+        if self.death_count == 6:
+            self.x = 10000
+            self.y = 10000
+        else:
+            if self.sprite_frequency_chicken >= 10: 
+                self.death_count += 1
+                self.sprite_frequency_chicken = 0
+            else: self.sprite_frequency_chicken += 1
+
 
 list_chicken = []
 
-chicken1 = Chicken(300, 710, 40, 40, "images/enemy/chicken/run/0.png", 3, 2, 2, 0, 0, 0, 0)
+chicken1 = Chicken(300, 710, 40, 40, "images/enemy/chicken/run/0.png", 3, 2, 2, 0, 0, 0, 0, False, 0)
 
 list_chicken.append(chicken1)

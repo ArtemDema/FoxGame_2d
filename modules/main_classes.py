@@ -61,6 +61,11 @@ class Enemy(Settings):
             self.load_image()
             self.draw_image(screen)
     
+    def death(self, death_count, screen: pygame.Surface, list_death):
+        self.image = list_death[death_count]
+        self.load_image()
+        self.draw_image(screen)
+
     def gravity(self, player, blocks):
         for block in blocks:
             answer_fall_r = block.check_collision_top_wall(self.x - 15, self.y,
