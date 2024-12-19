@@ -1,6 +1,8 @@
 from ..main_classes import Block
 from ..screen import blocks
 
+import math
+
 chests = []
 
 class Chest(Block):
@@ -63,9 +65,9 @@ class Chest(Block):
         if answer: return True
         return False
     
-    def throw_chest(self, angle, player):
-        koef = player.speed / 90
-        if angle >= 0 and angle <= 90:
+    def throw_chest(self, angle):
+        for_jump = math.pi / 180
+        if angle == -45:
             for block in blocks:
                 answer = block.check_collision_bottom_wall(left_x_p = self.x, top_y_p = self.y, 
                                             right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
@@ -76,11 +78,9 @@ class Chest(Block):
                                                 right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
                         if answer: break
             if answer != True:
-                speed_x = koef * angle
-                speed_y = player.speed - (koef * angle)
-                self.x += speed_x 
-                self.y -= speed_y
-        elif angle <= 0 and angle >= -90:
+                self.x = self.x + 150 * math.cos(angle * for_jump)
+                self.y = self.y + 150 * math.sin(angle * for_jump)
+        else:
             for block in blocks:
                 answer = block.check_collision_bottom_wall(left_x_p = self.x, top_y_p = self.y, 
                                             right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
@@ -91,20 +91,8 @@ class Chest(Block):
                                                 right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
                         if answer: break
             if answer != True:
-                speed_x = koef * angle
-                speed_y = player.speed - ((koef * angle) * -1)
-                self.x += speed_x 
-                self.y -= speed_y
-        elif angle >= 90 and angle <= 180: 
-            speed_x = koef * (angle - 90)
-            speed_y = player.speed - (koef * (angle - 90))
-            self.x += speed_x 
-            self.y += speed_y
-        elif angle <= -90 and angle >= -180: 
-            speed_x = koef * (angle + 90)
-            speed_y = player.speed - ((koef * (angle + 90)) * -1)
-            self.x += speed_x 
-            self.y += speed_y
+                self.x = self.x + 150 * math.cos(angle * for_jump)
+                self.y = self.y + 150 * math.sin(angle * for_jump)
 
     def gravity(self, player):
         for block in blocks:

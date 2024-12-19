@@ -33,13 +33,14 @@ while game_run:
             mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
             game_run = False
 
-    #ENEMY
+    #ENEMY--------------------------------------------
     for enemy in mod.list_enemy:
-        enemy.check_death()
+        enemy.check_death(mod.player.x, mod.player.y, mod.player.x + mod.player.width, mod.player.y + mod.player.height)
         if enemy.is_dead == False:
             enemy.move()
+    #--------------------------------------------
 
-    #CHEST 
+    #CHEST--------------------------------------------
       #OPEN AND HIDE IN HIM
     if keys[pygame.K_e]:
         if reload_chest == 2:
@@ -73,13 +74,12 @@ while game_run:
         if mod.with_chest == True:
             mod.with_chest = False
             if last_side == 0:
-                for index in range(50):
-                    chest_player.throw_chest(-45, mod.player)
+                chest_player.throw_chest(-135)
             else:
-                for index in range(50):
-                    chest_player.throw_chest(45, mod.player)
+                chest_player.throw_chest(-45)
+    #--------------------------------------------
 
-    #MOVE
+    #MOVE--------------------------------------------
       #LEFT
     if keys[pygame.K_a]:
         mod.move_crouch = False
@@ -121,8 +121,9 @@ while game_run:
             mod.move_crouch = True
     else:
         mod.move_crouch = False
+    #--------------------------------------------
 
-    #GRAVITY
+    #GRAVITY--------------------------------------------
       #PLAYER GRAVITY
     list_return = mod.gravity(mod.player, mod.move_jump)
     if "move_bottom" in list_return: mod.move_bottom = list_return["move_bottom"]
@@ -131,15 +132,17 @@ while game_run:
     mod.gravity_resources(mod.player)
     mod.gravity_chests(mod.player)
     mod.gravity_enemy(mod.player)
+    #--------------------------------------------
 
-    #COLLECT RECOURCES
+    #COLLECT RECOURCES--------------------------------------------
     for recource in mod.droped_resources:
         return_dict = recource.check_collect_recource(mod.player, mod.meat.count, mod.egg.count, mod.key.count)
         if "egg_count" in return_dict: mod.egg.count = return_dict["egg_count"]
         if "key_count" in return_dict: mod.key.count = return_dict["key_count"]
         if "meat_count" in return_dict: mod.meat.count = return_dict["meat_count"]
+    #--------------------------------------------
 
-    #DRAWING
+    #DRAWING--------------------------------------------
     return_dict = mod.render(mod.move_left, mod.move_right, mod.move_jump, mod.move_crouch, mod.move_bottom, mod.screen, 
                              mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, mod.hide, mod.with_chest)
     if "run_count" in return_dict: run_count = return_dict["run_count"]

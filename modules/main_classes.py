@@ -162,16 +162,16 @@ class Block(Settings):
         #левый угол
         if bottom_y_p >= bottom_y:
             if left_x_p + 20 <= self.x:
-                    if right_x_p - 20 >= self.x:
-                        if top_y_p + 20 <= bottom_y:
-                            return True
+                if right_x_p - 20 >= self.x:
+                    if top_y_p + 20 <= bottom_y:
+                        return True
                         
         #middle (golden)
         if bottom_y_p >= bottom_y:
             if left_x_p + 20 >= self.x:
                 if right_x_p - 20 <= right_x:
-                        if top_y_p + 20 <= bottom_y:
-                            return True
+                    if top_y_p + 20 <= bottom_y:
+                        return True
         
         #правый угол
         if bottom_y_p >= bottom_y:
