@@ -25,16 +25,16 @@ class Chicken(Enemy):
         self.death_count = death_count
         super().__init__(x, y, width, height, image, hp, speed)
 
-    def move(self):
+    def move(self): #FUNCTION MOVE
         if self.random_move >= 0:
             if self.vector_move == 0:
-                for block in blocks:
+                for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
                     answer = block.check_collision_top_wall(self.x - 15, self.y, self.x + self.width - 15, self.y + self.height + 20)
                     if answer:
                         break
                     
                 if answer:
-                    for block in blocks:
+                    for block in blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
                         answer = block.check_collision_right_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
@@ -48,7 +48,7 @@ class Chicken(Enemy):
                                     self.sprite_frequency_chicken = 0
                                 else: self.sprite_frequency_chicken += 1
                     
-                    for chest in chests:
+                    for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
                         answer = chest.check_collision_right_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
@@ -76,13 +76,13 @@ class Chicken(Enemy):
                 else:
                     self.random_move = -1
             else:
-                for block in blocks:
+                for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
                     answer = block.check_collision_top_wall(self.x + 15, self.y, self.x + self.width + 15, self.y + self.height + 20)
                     if answer:
                         break
                     
                 if answer:
-                    for block in blocks:
+                    for block in blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
                         answer = block.check_collision_left_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
@@ -96,7 +96,7 @@ class Chicken(Enemy):
                                     self.sprite_frequency_chicken = 0
                                 else: self.sprite_frequency_chicken += 1
 
-                    for chest in chests:
+                    for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
                         answer = chest.check_collision_left_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
@@ -129,7 +129,7 @@ class Chicken(Enemy):
         else:
             self.actions_chicken()
 
-    def actions_chicken(self):
+    def actions_chicken(self): #RANDOM ACTION
         random_antion = random.randint(0, 1)
         if random_antion == 0:
             self.random_idle = random.randint(120, 260)
@@ -137,9 +137,9 @@ class Chicken(Enemy):
             self.vector_move = random.randint(0, 1)
             self.random_move = random.randint(50, 250)
 
-    def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p):
-        for chest in chests:
-            answer = chest.check_collision_bottom_wall(self.x, self.y, 
+    def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECK DEATH CHICKEN
+        for chest in chests: 
+            answer = chest.check_collision_bottom_wall(self.x, self.y, #CHECK CHEST FOR DEATH
                                                     self.x + self.width, self.y + self.height)
             if answer:
                 self.is_dead = True
@@ -151,7 +151,7 @@ class Chicken(Enemy):
             if left_x_p + 33 <= self.x:
                 if right_x_p - 30 >= self.x:
                     if top_y_p + 20 <= self.y:
-                        if bottom_y_p <= bottom_y:
+                        if bottom_y_p + 10 <= bottom_y:
                             self.is_dead = True
 
         #middle (golden)
@@ -159,7 +159,7 @@ class Chicken(Enemy):
             if left_x_p + 33 >= self.x:
                 if right_x_p - 30 <= right_x:
                     if top_y_p + 20 <= self.y:
-                        if bottom_y_p <= bottom_y:
+                        if bottom_y_p + 10 <= bottom_y:
                             self.is_dead = True
                                     
         #right angle
@@ -167,11 +167,11 @@ class Chicken(Enemy):
             if left_x_p + 33 <= right_x:
                 if right_x_p - 30 >= right_x:
                     if top_y_p + 20 <= self.y:
-                        if bottom_y_p <= bottom_y:
+                        if bottom_y_p + 10 <= bottom_y:
                             self.is_dead = True
 
 
-    def dead_count(self):
+    def dead_count(self): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         if self.death_count == 6:
             meat1 = Discarded_Item(x = self.x, y = self.y, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
             droped_resources.append(meat1)

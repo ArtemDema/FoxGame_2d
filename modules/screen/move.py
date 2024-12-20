@@ -2,8 +2,9 @@ from .map import blocks
 from ..chest import chests
 from ..resourses import droped_resources
 from ..enemy import list_enemy
+from ..tree import list_trees
 
-def move_left_player(player, move_jump, push_chest, with_chest, chest_player):
+def move_left_player(player, move_jump, push_chest, with_chest, chest_player): #CHECK MOVE LEFT
     dict_return = {}
     if with_chest:
         for block in blocks:
@@ -42,6 +43,8 @@ def move_left_player(player, move_jump, push_chest, with_chest, chest_player):
                 chest.x += player.speed
             for enemy in list_enemy:
                 enemy.x += player.speed
+            for tree in list_trees:
+                tree.x += player.speed
     else:
         for block in blocks:
             answer = block.check_collision_right_wall(player.x, player.y, 
@@ -79,10 +82,12 @@ def move_left_player(player, move_jump, push_chest, with_chest, chest_player):
                 chest.x += player.speed
             for enemy in list_enemy:
                 enemy.x += player.speed
+            for tree in list_trees:
+                tree.x += player.speed
 
     return dict_return
 
-def move_right_player(player, move_jump, push_chest, with_chest, chest_player):
+def move_right_player(player, move_jump, push_chest, with_chest, chest_player): #CHECK MOVE RIGHT
     dict_return = {}
     if with_chest:
         for block in blocks:
@@ -121,6 +126,8 @@ def move_right_player(player, move_jump, push_chest, with_chest, chest_player):
                 chest.x -= player.speed
             for enemy in list_enemy:
                 enemy.x -= player.speed
+            for tree in list_trees:
+                tree.x -= player.speed
     else:
         for block in blocks:
             answer = block.check_collision_left_wall(player.x, player.y, 
@@ -158,5 +165,7 @@ def move_right_player(player, move_jump, push_chest, with_chest, chest_player):
                 chest.x -= player.speed
             for enemy in list_enemy:
                 enemy.x -= player.speed
+            for tree in list_trees:
+                tree.x -= player.speed
 
     return dict_return

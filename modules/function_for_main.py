@@ -2,8 +2,9 @@ from .screen.map import blocks
 from .resourses import droped_resources
 from .chest import chests
 from .enemy import list_enemy
+from .tree import list_trees
 
-def check_push_chest(player, last_side):
+def check_push_chest(player, last_side): #CHECK PUSH CHEST
     if last_side == 1:
         for chest in chests:
             answer = chest.check_collision_left_wall(player.x, player.y, 
@@ -18,7 +19,7 @@ def check_push_chest(player, last_side):
                 return True
     return False
 
-def check_jump(player_x, player_y, player_width, player_height, player_strength_jump, blocks, player_speed):
+def check_jump(player_x, player_y, player_width, player_height, player_strength_jump, blocks, player_speed): #CHECK JUMP
     return_dict = {}
     if player_strength_jump != 0:
             for block in blocks:
@@ -44,6 +45,8 @@ def check_jump(player_x, player_y, player_width, player_height, player_strength_
                 chest.y += player_speed * 3
             for enemy in list_enemy:
                 enemy.y += player_speed * 3
+            for tree in list_trees:
+                tree.y += player_speed * 3
 
             return_dict["player_strength_jump"] = player_strength_jump - 1
             return return_dict
@@ -52,7 +55,7 @@ def check_jump(player_x, player_y, player_width, player_height, player_strength_
         return_dict["player_strength_jump"] = 17
         return return_dict
     
-def gravity(player, move_jump):
+def gravity(player, move_jump): #GRAVITY PLAYER
     list_return = {}
     for block in blocks:
         answer_fall = block.check_collision_top_wall(player.x, player.y, #checking whether the player is standing on some block
@@ -78,17 +81,19 @@ def gravity(player, move_jump):
                 chest.y -= player.speed
             for enemy in list_enemy:
                 enemy.y -= player.speed
+            for tree in list_trees:
+                tree.y -= player.speed
 
     return list_return
 
-def gravity_resources(player):
+def gravity_resources(player): #GRAVITY RESOURCES
     for recource in droped_resources:
         recource.gravity(player)
 
-def gravity_chests(player):
-    for chest in chests:
+def gravity_chests(player): #GRAVITY CHESTS
+    for chest in chests: 
         chest.gravity(player)
 
-def gravity_enemy(player):
+def gravity_enemy(player): #GRAVITY ENEMY
     for enemy in list_enemy:
         enemy.gravity(player, blocks)

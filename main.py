@@ -19,7 +19,11 @@ crouch_count = 0
 #sprite change frequency
 number_for_choose_sprite = 10
 #getting information from the last session
-mod.get_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
+info = mod.get_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
+WIDTH = info["width"]
+HEIGHT = info["height"]
+mod.player.hp = info["hp"]
+mod.hp.count = mod.player.hp
 
 game_run = True
 while game_run:
@@ -29,12 +33,18 @@ while game_run:
 
     #events
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT: #SAVES INFORMATION
             mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
             game_run = False
 
+    #TREE--------------------------------------------
+    for tree in mod.list_trees:
+        tree.idle()
+        tree.drop_egg(mod.player)
+    #--------------------------------------------
+
     #ENEMY--------------------------------------------
-    for enemy in mod.list_enemy:
+    for enemy in mod.list_enemy: #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
         enemy.check_death(mod.player.x, mod.player.y, mod.player.x + mod.player.width, mod.player.y + mod.player.height)
         if enemy.is_dead == False:
             enemy.move()
@@ -45,8 +55,8 @@ while game_run:
     if keys[pygame.K_e]:
         if reload_chest == 2:
             if mod.with_chest == False:
-                for chest in mod.chests:
-                    answer = chest.check_open(mod.key.count, mod.player)
+                for chest in mod.chests: #CHECKING AN ATTEMPT TO OPEN A CHEST
+                    answer = chest.check_open(mod.key.count, mod.player) #
                     if answer: mod.key.count -= 1
                     elif answer == False: mod.hide = True
                 reload_chest = 0
@@ -56,18 +66,22 @@ while game_run:
       #UP THE CHEST
     if keys[pygame.K_q]:
         if mod.hide == False and mod.with_chest == False:
-            for chest in mod.chests:
-                answer = chest.check_up_the_chest(mod.player)
+            for chest in mod.chests: #CHECKING AN ATTEMPT TO UP A CHEST
+                answer = chest.check_up_the_chest(mod.player) #
                 if answer:
                     mod.with_chest = True
                     chest_player = chest
+                    if chest.random_key == 1:
+                        key1 = mod.Discarded_Item(x = chest.x, y = chest.y, width = 25, height = 25, image = "images/resources/key.png", whatIsThis= "key")
+                        mod.droped_resources.append(key1)
+                        chest.random_key = 0
     if mod.with_chest:
         chest_player.x = mod.player.x + 18
         chest_player.y = mod.player.y - 19
 
       #PUSH THE CHEST
     if keys[pygame.K_r]:
-        mod.push_chest = mod.check_push_chest(mod.player, last_side)
+        mod.push_chest = mod.check_push_chest(mod.player, last_side) #CHEST PUSH TEST
       
       #DROPE CHEST
     if keys[pygame.K_g]:
@@ -84,7 +98,7 @@ while game_run:
     if keys[pygame.K_a]:
         mod.move_crouch = False
         mod.hide = False
-        dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_chest, mod.with_chest, chest_player)
+        dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_chest, mod.with_chest, chest_player) #FUNCTION FOR PLAYER WALKING TO THE LEFT
         if "move_left" in dict_left: mod.move_left = dict_left["move_left"]
         if "last_side" in dict_left: last_side = dict_left["last_side"]
         if "push_chest" in dict_left: mod.push_chest = dict_left["push_chest"]
@@ -95,7 +109,7 @@ while game_run:
     if keys[pygame.K_d]:
         mod.move_crouch = False
         mod.hide = False
-        dict_right = mod.move_right_player(mod.player, mod.move_jump, mod.push_chest, mod.with_chest, chest_player)
+        dict_right = mod.move_right_player(mod.player, mod.move_jump, mod.push_chest, mod.with_chest, chest_player) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
         if "move_right" in dict_right: mod.move_right = dict_right["move_right"]
         if "last_side" in dict_right: last_side = dict_right["last_side"]
         if "push_chest" in dict_right: mod.push_chest = dict_right["push_chest"]
@@ -110,7 +124,7 @@ while game_run:
                     mod.move_jump = True
                     mod.hide = False
     else:
-        list = mod.player.strength_jump = mod.check_jump(mod.player.x, mod.player.y, mod.player.width, 
+        list = mod.player.strength_jump = mod.check_jump(mod.player.x, mod.player.y, mod.player.width, #JUMP FUNCTION
                                                 mod.player.height, mod.player.strength_jump, mod.blocks, mod.player.speed)
         if "move_jump" in list: mod.move_jump = list["move_jump"]
         if "player_strength_jump" in list: mod.player.strength_jump = list["player_strength_jump"]
@@ -123,27 +137,32 @@ while game_run:
         mod.move_crouch = False
     #--------------------------------------------
 
+    #DAMAGE TO THE PLAYER--------------------------------------------
+    if mod.player.timer_damage > 0:
+        mod.player.timer_damage -= 1
+    #--------------------------------------------
+
     #GRAVITY--------------------------------------------
       #PLAYER GRAVITY
-    list_return = mod.gravity(mod.player, mod.move_jump)
+    list_return = mod.gravity(mod.player, mod.move_jump) #PLAYER GRAVITY
     if "move_bottom" in list_return: mod.move_bottom = list_return["move_bottom"]
 
       #GRAVITY RESOURCES AND CHESTS
-    mod.gravity_resources(mod.player)
-    mod.gravity_chests(mod.player)
-    mod.gravity_enemy(mod.player)
+    mod.gravity_resources(mod.player) #RESOURCE GRAVITY
+    mod.gravity_chests(mod.player) #GRAVITY OF CHESTS
+    mod.gravity_enemy(mod.player) #ENEMIES GRAVITY
     #--------------------------------------------
 
     #COLLECT RECOURCES--------------------------------------------
-    for recource in mod.droped_resources:
-        return_dict = recource.check_collect_recource(mod.player, mod.meat.count, mod.egg.count, mod.key.count)
+    for recource in mod.droped_resources: 
+        return_dict = recource.check_collect_recource(mod.player, mod.meat.count, mod.egg.count, mod.key.count) #CHECKING FOR SELECTION OF RESOURCES
         if "egg_count" in return_dict: mod.egg.count = return_dict["egg_count"]
         if "key_count" in return_dict: mod.key.count = return_dict["key_count"]
         if "meat_count" in return_dict: mod.meat.count = return_dict["meat_count"]
     #--------------------------------------------
 
     #DRAWING--------------------------------------------
-    return_dict = mod.render(mod.move_left, mod.move_right, mod.move_jump, mod.move_crouch, mod.move_bottom, mod.screen, 
+    return_dict = mod.render(mod.move_left, mod.move_right, mod.move_jump, mod.move_crouch, mod.move_bottom, mod.screen, #DRAWING EVERYTHING
                              mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, mod.hide, mod.with_chest)
     if "run_count" in return_dict: run_count = return_dict["run_count"]
     if "idle_count" in return_dict: idle_count = return_dict["idle_count"]

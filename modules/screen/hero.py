@@ -1,4 +1,5 @@
 from ..main_classes import Enemy
+from ..interface import hp
 
 import pygame
 
@@ -35,9 +36,10 @@ push_chest = False
 class Hero(Enemy):
     def __init__(self, x, y, width, height, image, hp, speed, strength_jump):
         self.strength_jump = strength_jump
+        self.timer_damage = 0
         super().__init__(x, y, width, height, image, hp, speed)
         
-    def idle(self, idle_count, screen, last_side, with_chest):
+    def idle(self, idle_count, screen, last_side, with_chest): #DRAWING IDLE POSITION
         if last_side == 0:
             if with_chest: self.image = list_idle_with_chest[idle_count]
             else: self.image = list_idle[idle_count]
@@ -50,7 +52,7 @@ class Hero(Enemy):
             self.load_image()
             self.draw_image(screen)
 
-    def run(self, run_count, screen, last_side, with_chest):
+    def run(self, run_count, screen, last_side, with_chest): #DRAWING RUN POSITION
         if last_side == 0:
             if with_chest: self.image = list_run_with_chest[run_count]
             else: self.image = list_run[run_count]
@@ -63,7 +65,7 @@ class Hero(Enemy):
             self.load_image()
             self.draw_image(screen)
 
-    def jump(self, screen, last_side):
+    def jump(self, screen, last_side): #DRAWING JUMP POSITION
         if last_side == 0:
             self.image = list_jump[0]
             self.load_image()
@@ -74,7 +76,7 @@ class Hero(Enemy):
             self.load_image()
             self.draw_image(screen)
 
-    def fall(self, screen, last_side, with_chest):
+    def fall(self, screen, last_side, with_chest): #DRAWING FALL POSITION
         if last_side == 0:
             if with_chest: self.image = list_jump_with_chest[0]
             else: self.image = list_jump[1]
@@ -87,7 +89,7 @@ class Hero(Enemy):
             self.load_image()
             self.draw_image(screen)
 
-    def crouch(self, crouch_count, screen, last_side):
+    def crouch(self, crouch_count, screen, last_side): #DRAWING CROUCH POSITION
         if last_side == 0:
             self.image = list_crouch[crouch_count]
             self.load_image()
@@ -97,5 +99,11 @@ class Hero(Enemy):
             self.image = list_crouch[crouch_count]
             self.load_image()
             self.draw_image(screen)
+    
+    def damage_player(self):
+        if self.timer_damage == 0:
+            self.hp -= 1
+            hp.count -= 1
+            self.timer_damage = 360
 
 player = Hero(x = 600, y = 400, width = 80, height = 80, image=list_idle[0], hp = 3, speed = 4, strength_jump = 17)

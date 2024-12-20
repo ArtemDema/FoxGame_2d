@@ -28,7 +28,7 @@ class Enemy(Settings):
         self.speed = speed
         super().__init__(x, y, width, height, image)
     
-    def idle(self, idle_count, screen, last_side, list_idle):
+    def idle(self, idle_count, screen, last_side, list_idle): #DRAWING A IDLE
         if last_side == 0:
             self.image = list_idle[idle_count]
             self.load_image()
@@ -39,7 +39,7 @@ class Enemy(Settings):
             self.load_image()
             self.draw_image(screen)
 
-    def run(self, run_count, screen, last_side, list_run):
+    def run(self, run_count, screen, last_side, list_run): #DRAWING A RUN
         if last_side == 0:
             self.image = list_run[run_count]
             self.load_image()
@@ -50,7 +50,7 @@ class Enemy(Settings):
             self.load_image()
             self.draw_image(screen)
 
-    def fall(self, screen, last_side, list_jump):
+    def fall(self, screen, last_side, list_jump): #DRAWING A FALL
         if last_side == 0:
             self.image = list_jump[1]
             self.load_image()
@@ -61,12 +61,12 @@ class Enemy(Settings):
             self.load_image()
             self.draw_image(screen)
     
-    def death(self, death_count, screen: pygame.Surface, list_death):
+    def death(self, death_count, screen: pygame.Surface, list_death): #DRAWING A DEATH
         self.image = list_death[death_count]
         self.load_image()
         self.draw_image(screen)
 
-    def gravity(self, player, blocks):
+    def gravity(self, player, blocks): #CHECKING IF THE PLAYER IS TOUCHING THE FLOOR
         for block in blocks:
             answer_fall_r = block.check_collision_top_wall(self.x - 15, self.y,
                                                         self.x + self.width + 15, self.y + self.height)
@@ -79,7 +79,7 @@ class Block(Settings):
     def __init__(self, x, y, width, height, image):
         super().__init__(x, y, width, height, image)
 
-    def check_collision_right_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p):
+    def check_collision_right_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECKING FOR TOUCHING THE RIGHT WALL
         right_x = self.x + self.width
         bottom_y = self.y + self.height
 
@@ -104,7 +104,7 @@ class Block(Settings):
                     if right_x_p - 20 >= right_x:
                         return True
     
-    def check_collision_left_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p):
+    def check_collision_left_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECKING FOR TOUCHING THE LEFT WALL
         right_x = self.x + self.width
         bottom_y = self.y + self.height
         
@@ -129,7 +129,7 @@ class Block(Settings):
                     if right_x_p - 15 >= self.x:
                         return True
     
-    def check_collision_top_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p):
+    def check_collision_top_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECKING FOR TOUCHING THE TOP WALL
 
         right_x = self.x + self.width
         bottom_y = self.y + self.height
@@ -155,7 +155,7 @@ class Block(Settings):
                     if top_y_p + 20 <= self.y:
                         return True
 
-    def check_collision_bottom_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p):
+    def check_collision_bottom_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECKING FOR TOUCHING THE BOTTOM WALL
         right_x = self.x + self.width
         bottom_y = self.y + self.height
 

@@ -5,10 +5,11 @@ from ..resourses import droped_resources
 from ..interface import interface
 from ..chest import chests
 from .render_enemy import render_enemy
+from ..tree import list_trees
 
 pygame.init()
 
-def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, 
+def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #DRAWING ALL
            player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, hide, with_chest):
     
     return_dict = {}
@@ -19,6 +20,9 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen,
     #rendering all blocks
     for block in blocks: 
         block.draw_image(screen)
+
+    for tree in list_trees:
+        tree.draw_image(screen)
 
     for chest in chests:
         if hide == False:
@@ -38,7 +42,7 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen,
         item.draw_image(screen)
         item.print_text(screen)
 
-    render_enemy()
+    render_enemy() #RENDER ALL ENEMY
 
     #check for drawing in a idle
     if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False and hide == False:
