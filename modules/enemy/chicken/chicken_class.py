@@ -185,6 +185,6 @@ class Chicken(Enemy):
 
 list_chicken = []
 
-chicken1 = Chicken(300, 680, 40, 40, "images/enemy/chicken/run/0.png", 3, 2, 2, 0, 0, 0, 0, False, 0)
+chicken1 = Chicken(500, 680, 40, 40, "images/enemy/chicken/run/0.png", 3, 2, 2, 0, 0, 0, 0, False, 0)
 
 list_chicken.append(chicken1)

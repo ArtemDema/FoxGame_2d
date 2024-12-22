@@ -196,6 +196,6 @@ class Rooster(Enemy):
 
 list_rooster = []
 
-rooster1 = Rooster(1025, 650, 40, 40, list_run_rooster[0], 3, 3, 0, 0, 0, False, 0)
+rooster1 = Rooster(1025, 650, 40, 40, list_run_rooster[0], 3, 2, 0, 0, 0, False, 0)
 
 list_rooster.append(rooster1)

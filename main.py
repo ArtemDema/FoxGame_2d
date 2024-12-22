@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 import modules as mod
 
 pygame.init()
@@ -37,10 +37,30 @@ while game_run:
             mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
             game_run = False
 
+    #CLOUD--------------------------------------------
+    if len(mod.list_of_clouds) != 10:
+      for i in range(10 - len(mod.list_of_clouds)):
+          cloud = mod.Cloud(x = 1600, 
+                            y = -25, 
+                            width = random.randint(80, 180),
+                            height = random.randint(40, 140), 
+                            image = f"images/cloud/cloud_{random.randint(0, 7)}.png")
+          mod.list_of_clouds.append(cloud)
+
+    for cloud in mod.list_of_clouds:
+        answer = cloud.move()
+        if answer:
+            mod.list_of_clouds.remove(cloud)
+    #--------------------------------------------
+
     #TREE--------------------------------------------
     for tree in mod.list_trees:
         tree.idle()
-        tree.drop_egg(mod.player)
+        answer = tree.drop_egg(mod.player)
+        if answer:
+            egg1 = mod.Discarded_Item(x = tree.x + 70, y = tree.y - 30, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+            mod.droped_resources.append(egg1)
+            tree.ramdom_egg = 0
     #--------------------------------------------
 
     #ENEMY--------------------------------------------
@@ -64,17 +84,17 @@ while game_run:
             reload_chest += 1
 
       #UP THE CHEST
-    if keys[pygame.K_q]:
-        if mod.hide == False and mod.with_chest == False:
-            for chest in mod.chests: #CHECKING AN ATTEMPT TO UP A CHEST
-                answer = chest.check_up_the_chest(mod.player) #
-                if answer:
-                    mod.with_chest = True
-                    chest_player = chest
-                    if chest.random_key == 1:
-                        key1 = mod.Discarded_Item(x = chest.x, y = chest.y, width = 25, height = 25, image = "images/resources/key.png", whatIsThis= "key")
-                        mod.droped_resources.append(key1)
-                        chest.random_key = 0
+    # if keys[pygame.K_q]:
+    #     if mod.hide == False and mod.with_chest == False:
+    #         for chest in mod.chests: #CHECKING AN ATTEMPT TO UP A CHEST
+    #             answer = chest.check_up_the_chest(mod.player) #
+    #             if answer:
+    #                 mod.with_chest = True
+    #                 chest_player = chest
+    #                 if chest.random_key == 1:
+    #                     key1 = mod.Discarded_Item(x = chest.x, y = chest.y, width = 35, height = 25, image = "images/resources/key.png", whatIsThis= "key")
+    #                     mod.droped_resources.append(key1)
+    #                     chest.random_key = 0
     if mod.with_chest:
         chest_player.x = mod.player.x + 18
         chest_player.y = mod.player.y - 19
@@ -84,13 +104,13 @@ while game_run:
         mod.push_chest = mod.check_push_chest(mod.player, last_side) #CHEST PUSH TEST
       
       #DROPE CHEST
-    if keys[pygame.K_g]:
-        if mod.with_chest == True:
-            mod.with_chest = False
-            if last_side == 0:
-                chest_player.throw_chest(-135)
-            else:
-                chest_player.throw_chest(-45)
+    # if keys[pygame.K_g]:
+    #     if mod.with_chest == True:
+    #         mod.with_chest = False
+    #         if last_side == 0:
+    #             chest_player.throw_chest(-135)
+    #         else:
+    #             chest_player.throw_chest(-45)
     #--------------------------------------------
 
     #MOVE--------------------------------------------

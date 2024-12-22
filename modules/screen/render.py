@@ -1,11 +1,10 @@
 import pygame
 
-from .map import background, blocks
+from .map import background, blocks, list_trees, list_of_clouds
 from ..resourses import droped_resources
 from ..interface import interface
 from ..chest import chests
 from .render_enemy import render_enemy
-from ..tree import list_trees
 
 pygame.init()
 
@@ -15,7 +14,10 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
     return_dict = {}
 
     #background rendering
-    background.draw_image(screen) 
+    background.draw_image(screen)
+
+    for cloud in list_of_clouds:
+        cloud.draw_image(screen)
 
     #rendering all blocks
     for block in blocks: 

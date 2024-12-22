@@ -1,8 +1,7 @@
-from .map import blocks
+from .map import blocks, list_trees, list_of_clouds
 from ..chest import chests
 from ..resourses import droped_resources
 from ..enemy import list_enemy
-from ..tree import list_trees
 
 def move_left_player(player, move_jump, push_chest, with_chest, chest_player): #CHECK MOVE LEFT
     dict_return = {}
@@ -45,6 +44,8 @@ def move_left_player(player, move_jump, push_chest, with_chest, chest_player): #
                 enemy.x += player.speed
             for tree in list_trees:
                 tree.x += player.speed
+            for cloud in list_of_clouds:
+                cloud.x += player.speed
     else:
         for block in blocks:
             answer = block.check_collision_right_wall(player.x, player.y, 
@@ -84,6 +85,8 @@ def move_left_player(player, move_jump, push_chest, with_chest, chest_player): #
                 enemy.x += player.speed
             for tree in list_trees:
                 tree.x += player.speed
+            for cloud in list_of_clouds:
+                cloud.x += player.speed
 
     return dict_return
 
@@ -128,6 +131,8 @@ def move_right_player(player, move_jump, push_chest, with_chest, chest_player): 
                 enemy.x -= player.speed
             for tree in list_trees:
                 tree.x -= player.speed
+            for cloud in list_of_clouds:
+                cloud.x -= player.speed
     else:
         for block in blocks:
             answer = block.check_collision_left_wall(player.x, player.y, 
@@ -167,5 +172,7 @@ def move_right_player(player, move_jump, push_chest, with_chest, chest_player): 
                 enemy.x -= player.speed
             for tree in list_trees:
                 tree.x -= player.speed
+            for cloud in list_of_clouds:
+                cloud.x -= player.speed
 
     return dict_return

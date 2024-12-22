@@ -175,6 +175,6 @@ class Frog(Enemy):
 
 list_frog = []
 
-frog1 = Frog(300, 660, 45, 45, "images/enemy/frog/idle/0.png", 3, 2, 2, 0, 0, False)
+frog1 = Frog(400, 660, 45, 45, "images/enemy/frog/idle/0.png", 3, 2, 2, 0, 0, False)
 
 list_frog.append(frog1)

@@ -1,15 +1,13 @@
 from ..main_classes import Block
 from ..screen import blocks
 
-import math, random
+import math
 
 chests = []
 
 class Chest(Block):
-    def __init__(self, x, y, width, height, image, open_chest, random_key):
+    def __init__(self, x, y, width, height, image, open_chest):
         self.open_chest = open_chest
-        self.random_key = random_key
-        print(f"chest: {self.random_key}")
         super().__init__(x, y, width, height, image)
     
     def check_open(self, count_key, player): #CHECK OPEN
@@ -105,6 +103,6 @@ class Chest(Block):
         if answer_fall_r != True: #if he does not
             self.y += player.speed
 
-chest1 = Chest(750, 500, 50, 50, "images/chest/chest_lock.png", False, random_key = random.randint(0, 1))
+chest1 = Chest(2100, 500, 50, 50, "images/chest/chest_lock.png", False)
 
 chests.append(chest1)

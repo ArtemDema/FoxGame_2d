@@ -1,1 +1,1 @@
-from .class_tree import list_trees
+from .class_tree import Tree

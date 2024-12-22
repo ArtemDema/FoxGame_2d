@@ -5,3 +5,4 @@ from .resourses import *
 from .interface import *
 from .chest import *
 from .enemy import *
+from .cloud import *
