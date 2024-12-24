@@ -4,6 +4,7 @@ from .map import background, blocks, list_trees, list_of_clouds
 from ..resourses import droped_resources
 from ..interface import interface
 from ..chest import chests
+from ..box import boxes
 from .render_enemy import render_enemy
 
 pygame.init()
@@ -27,15 +28,26 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
         tree.draw_image(screen)
 
     for chest in chests:
-        if hide == False:
-            if chest.open_chest == True:
-                chest.image = "images/chest/chest_open.png"
+        if chest.open_chest == True:
+            if chest.hide_in_him:
+                chest.image = "images/chest/chest_player_in.png"
             else:
-                chest.image = "images/chest/chest_lock.png"
+                chest.image = "images/chest/chest_open.png"
         else:
-            chest.image = "images/chest/chest_player_in.png"
+            chest.image = "images/chest/chest_lock.png"
         chest.load_image()
         chest.draw_image(screen)
+    
+    for box in boxes:
+        if box.open_box == True:
+            if box.hide_in_him:
+                box.image = "images/box/box_player_in.png"
+            else:
+                box.image = "images/box/box_open.png"
+        else:
+            box.image = "images/box/box_lock.png"
+        box.load_image()
+        box.draw_image(screen)
 
     for recource in droped_resources: 
         recource.draw_image(screen)

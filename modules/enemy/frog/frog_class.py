@@ -1,7 +1,7 @@
 from ...main_classes import Enemy
 from ...resourses import droped_resources, Discarded_Item
 from ...chest import chests
-from ...screen import blocks, player
+from ...screen import blocks
 
 import random, math
 
@@ -20,9 +20,10 @@ class Frog(Enemy):
         self.angle = 0
         self.is_dead = is_dead
         self.death_count = 0
+        self.player_visibility = False
         super().__init__(x, y, width, height, image, hp, speed)
 
-    def move(self): #MOVE JUMP
+    def move(self, player): #MOVE JUMP
         left_x_p = player.x
         right_x_p = player.x + player.width
         top_y_p = player.y

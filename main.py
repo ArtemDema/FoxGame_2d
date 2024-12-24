@@ -9,7 +9,7 @@ tick = pygame.time.Clock()
 last_side = 0
 
 reload_chest = 0
-chest_player = 0
+box_player = 0
 
 #counters (elements for the array) for changing the sprite:
 idle_count = 0
@@ -40,7 +40,7 @@ while game_run:
     #CLOUD--------------------------------------------
     if len(mod.list_of_clouds) != 10:
       for i in range(10 - len(mod.list_of_clouds)):
-          cloud = mod.Cloud(x = 1600, 
+          cloud = mod.Cloud(x = 1430, 
                             y = -25, 
                             width = random.randint(80, 180),
                             height = random.randint(40, 140), 
@@ -64,53 +64,64 @@ while game_run:
     #--------------------------------------------
 
     #ENEMY--------------------------------------------
-    for enemy in mod.list_enemy: #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
-        enemy.check_death(mod.player.x, mod.player.y, mod.player.x + mod.player.width, mod.player.y + mod.player.height)
+    for enemy in mod.list_enemy:
+        enemy.check_death(mod.player.x, mod.player.y, mod.player.x + mod.player.width, mod.player.y + mod.player.height) #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
         if enemy.is_dead == False:
-            enemy.move()
+            enemy.player_visibility = enemy.player_visibility_zone(mod.player)
+            enemy.move(mod.player) #ENEMY MOVE
     #--------------------------------------------
 
-    #CHEST--------------------------------------------
-      #OPEN AND HIDE IN HIM
+    #CHEST AND BOX--------------------------------------------
+      #OPEN AND HIDE IN CHEST AND BOX
     if keys[pygame.K_e]:
         if reload_chest == 2:
-            if mod.with_chest == False:
+            if mod.with_box == False:
                 for chest in mod.chests: #CHECKING AN ATTEMPT TO OPEN A CHEST
                     answer = chest.check_open(mod.key.count, mod.player) #
-                    if answer: mod.key.count -= 1
-                    elif answer == False: mod.hide = True
+                    if answer: 
+                        mod.key.count -= 1
+                    elif answer == False: 
+                        mod.hide = True
+                        chest.hide_in_him = True
+
+                for box in mod.boxes: #CHECKING AN ATTEMPT TO OPEN A BOX
+                    answer = box.check_open(mod.key.count, mod.player) #
+                    if answer: 
+                        mod.key.count -= 1
+                    elif answer == False: 
+                        mod.hide = True
+                        box.hide_in_him = True
                 reload_chest = 0
         else:
             reload_chest += 1
-
       #UP THE CHEST
-    # if keys[pygame.K_q]:
-    #     if mod.hide == False and mod.with_chest == False:
-    #         for chest in mod.chests: #CHECKING AN ATTEMPT TO UP A CHEST
-    #             answer = chest.check_up_the_chest(mod.player) #
-    #             if answer:
-    #                 mod.with_chest = True
-    #                 chest_player = chest
-    #                 if chest.random_key == 1:
-    #                     key1 = mod.Discarded_Item(x = chest.x, y = chest.y, width = 35, height = 25, image = "images/resources/key.png", whatIsThis= "key")
-    #                     mod.droped_resources.append(key1)
-    #                     chest.random_key = 0
-    if mod.with_chest:
-        chest_player.x = mod.player.x + 18
-        chest_player.y = mod.player.y - 19
+    if keys[pygame.K_q]:
+        if mod.hide == False and mod.with_box == False:
+            for box in mod.boxes: #CHECKING AN ATTEMPT TO UP A BOX 
+                answer = box.check_up_the_box(mod.player) #
+                if answer:
+                    mod.with_box = True
+                    box_player = box
+                    if box.random_key == 1:
+                        key1 = mod.Discarded_Item(x = box.x, y = box.y, width = 35, height = 25, image = "images/resources/key.png", whatIsThis= "key")
+                        mod.droped_resources.append(key1)
+                        box.random_key = 0
+    if mod.with_box:
+        box_player.x = mod.player.x + 18
+        box_player.y = mod.player.y - 19
 
       #PUSH THE CHEST
     if keys[pygame.K_r]:
-        mod.push_chest = mod.check_push_chest(mod.player, last_side) #CHEST PUSH TEST
+        mod.push_box = mod.check_push_box(mod.player, last_side) #BOX PUSH TEST
       
       #DROPE CHEST
-    # if keys[pygame.K_g]:
-    #     if mod.with_chest == True:
-    #         mod.with_chest = False
-    #         if last_side == 0:
-    #             chest_player.throw_chest(-135)
-    #         else:
-    #             chest_player.throw_chest(-45)
+    if keys[pygame.K_g]:
+        if mod.with_box == True:
+            mod.with_box = False
+            if last_side == 0:
+                box_player.throw_box(-135)
+            else:
+                box_player.throw_box(-45)
     #--------------------------------------------
 
     #MOVE--------------------------------------------
@@ -118,10 +129,16 @@ while game_run:
     if keys[pygame.K_a]:
         mod.move_crouch = False
         mod.hide = False
-        dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_chest, mod.with_chest, chest_player) #FUNCTION FOR PLAYER WALKING TO THE LEFT
+
+        for chest in mod.chests:
+            chest.hide_in_him = False
+        for box in mod.boxes:
+            box.hide_in_him = False
+
+        dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_box, mod.with_box, box_player) #FUNCTION FOR PLAYER WALKING TO THE LEFT
         if "move_left" in dict_left: mod.move_left = dict_left["move_left"]
         if "last_side" in dict_left: last_side = dict_left["last_side"]
-        if "push_chest" in dict_left: mod.push_chest = dict_left["push_chest"]
+        if "push_box" in dict_left: mod.push_box = dict_left["push_box"]
     else:
         mod.move_left = False
     
@@ -129,20 +146,31 @@ while game_run:
     if keys[pygame.K_d]:
         mod.move_crouch = False
         mod.hide = False
-        dict_right = mod.move_right_player(mod.player, mod.move_jump, mod.push_chest, mod.with_chest, chest_player) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
+
+        for chest in mod.chests:
+            chest.hide_in_him = False
+        for box in mod.boxes:
+            box.hide_in_him = False
+
+        dict_right = mod.move_right_player(mod.player, mod.move_jump, mod.push_box, mod.with_box, box_player) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
         if "move_right" in dict_right: mod.move_right = dict_right["move_right"]
         if "last_side" in dict_right: last_side = dict_right["last_side"]
-        if "push_chest" in dict_right: mod.push_chest = dict_right["push_chest"]
+        if "push_box" in dict_right: mod.push_box = dict_right["push_box"]
     else:
         mod.move_right = False
 
       #JUMP
     if mod.move_jump == False:
-        if mod.with_chest == False:
+        if mod.with_box == False:
             if keys[pygame.K_SPACE]:
                 if mod.move_bottom == False:
                     mod.move_jump = True
                     mod.hide = False
+
+                    for chest in mod.chests:
+                        chest.hide_in_him = False
+                    for box in mod.boxes:
+                        box.hide_in_him = False
     else:
         list = mod.player.strength_jump = mod.check_jump(mod.player.x, mod.player.y, mod.player.width, #JUMP FUNCTION
                                                 mod.player.height, mod.player.strength_jump, mod.blocks, mod.player.speed)
@@ -151,7 +179,7 @@ while game_run:
 
       #SQUAT
     if keys[pygame.K_LSHIFT]:
-        if mod.move_bottom == False and mod.move_jump == False and mod.move_right == False and mod.move_left == False and mod.hide == False and mod.with_chest == False:
+        if mod.move_bottom == False and mod.move_jump == False and mod.move_right == False and mod.move_left == False and mod.hide == False and mod.with_box == False:
             mod.move_crouch = True
     else:
         mod.move_crouch = False
@@ -169,7 +197,7 @@ while game_run:
 
       #GRAVITY RESOURCES AND CHESTS
     mod.gravity_resources(mod.player) #RESOURCE GRAVITY
-    mod.gravity_chests(mod.player) #GRAVITY OF CHESTS
+    mod.gravity_boxes(mod.player) #GRAVITY OF BOX
     mod.gravity_enemy(mod.player) #ENEMIES GRAVITY
     #--------------------------------------------
 
@@ -183,7 +211,7 @@ while game_run:
 
     #DRAWING--------------------------------------------
     return_dict = mod.render(mod.move_left, mod.move_right, mod.move_jump, mod.move_crouch, mod.move_bottom, mod.screen, #DRAWING EVERYTHING
-                             mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, mod.hide, mod.with_chest)
+                             mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, mod.hide, mod.with_box)
     if "run_count" in return_dict: run_count = return_dict["run_count"]
     if "idle_count" in return_dict: idle_count = return_dict["idle_count"]
     if "crouch_count" in return_dict: crouch_count = return_dict["crouch_count"]

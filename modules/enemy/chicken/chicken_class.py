@@ -23,9 +23,22 @@ class Chicken(Enemy):
         self.random_move = random_move
         self.is_dead = is_dead
         self.death_count = death_count
+        self.player_visibility = False
         super().__init__(x, y, width, height, image, hp, speed)
 
-    def move(self): #FUNCTION MOVE
+    def move(self, player): #FUNCTION MOVE
+        print(self.player_visibility)
+        if self.player_visibility:
+            if self.random_move <= 0:
+                distance = player.x - self.x
+                if distance <= 0:
+                    self.random_move = 200
+                    self.vector_move = 1
+                else:
+                    self.random_move = 200
+                    self.vector_move = 0
+
+
         if self.random_move >= 0:
             if self.vector_move == 0:
                 for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
@@ -38,8 +51,6 @@ class Chicken(Enemy):
                         answer = block.check_collision_right_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
-                            self.vector_move = 1
-
                             if self.run_count == 3: 
                                 self.run_count = 0
                             else:
@@ -47,13 +58,13 @@ class Chicken(Enemy):
                                     self.run_count += 1
                                     self.sprite_frequency_chicken = 0
                                 else: self.sprite_frequency_chicken += 1
+                            self.random_move =- 1
+                            return
                     
                     for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
                         answer = chest.check_collision_right_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
-                            self.vector_move = 1
-
                             if self.run_count == 3: 
                                 self.run_count = 0
                             else:
@@ -61,6 +72,8 @@ class Chicken(Enemy):
                                     self.run_count += 1
                                     self.sprite_frequency_chicken = 0
                                 else: self.sprite_frequency_chicken += 1
+                            self.random_move =- 1
+                            return
 
                     if answer != True:
                         self.x -= self.speed
@@ -86,8 +99,6 @@ class Chicken(Enemy):
                         answer = block.check_collision_left_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
-                            self.vector_move = 0
-
                             if self.run_count == 3: 
                                 self.run_count = 0
                             else:
@@ -95,13 +106,13 @@ class Chicken(Enemy):
                                     self.run_count += 1
                                     self.sprite_frequency_chicken = 0
                                 else: self.sprite_frequency_chicken += 1
+                            self.random_move =- 1
+                            return
 
                     for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
                         answer = chest.check_collision_left_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
-                            self.vector_move = 0
-
                             if self.run_count == 3: 
                                 self.run_count = 0
                             else:
@@ -109,6 +120,8 @@ class Chicken(Enemy):
                                     self.run_count += 1
                                     self.sprite_frequency_chicken = 0
                                 else: self.sprite_frequency_chicken += 1
+                            self.random_move =- 1
+                            return
 
                     if answer != True:
                         self.x += self.speed

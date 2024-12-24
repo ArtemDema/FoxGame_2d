@@ -1,18 +1,19 @@
 from .screen import blocks, list_of_clouds, list_trees
 from .resourses import droped_resources
-from .chest import chests
+from .box import boxes
 from .enemy import list_enemy
+from .chest import chests
 
-def check_push_chest(player, last_side): #CHECK PUSH CHEST
+def check_push_box(player, last_side): #CHECK PUSH BOX
     if last_side == 1:
-        for chest in chests:
-            answer = chest.check_collision_left_wall(player.x, player.y, 
+        for box in boxes:
+            answer = box.check_collision_left_wall(player.x, player.y, 
                                                     player.x + player.width, player.y + player.height)
             if answer:
                 return True
     else:
-        for chest in chests:
-            answer = chest.check_collision_right_wall(player.x, player.y, 
+        for box in boxes:
+            answer = box.check_collision_right_wall(player.x, player.y, 
                                                     player.x + player.width, player.y + player.height)
             if answer:
                 return True
@@ -28,8 +29,8 @@ def check_jump(player_x, player_y, player_width, player_height, player_strength_
                     return_dict["move_jump"] = False
                     return_dict["player_strength_jump"] = 17
                     return return_dict
-            for chest in chests:
-                answer = chest.check_collision_bottom_wall(player_x, player_y, 
+            for box in boxes:
+                answer = box.check_collision_bottom_wall(player_x, player_y, 
                                                     player_x + player_width, player_y + player_height)
                 if answer:
                     return_dict["move_jump"] = False
@@ -40,6 +41,8 @@ def check_jump(player_x, player_y, player_width, player_height, player_strength_
                 block.y += player_speed * 3
             for resource in droped_resources:
                 resource.y += player_speed * 3
+            for box in boxes:
+                box.y += player_speed * 3
             for chest in chests:
                 chest.y += player_speed * 3
             for enemy in list_enemy:
@@ -64,6 +67,14 @@ def gravity(player, move_jump): #GRAVITY PLAYER
         if answer_fall: #if the player is standing on some block
             list_return["move_bottom"] = False
             return list_return
+        
+    for box in boxes:
+        answer_fall = box.check_collision_top_wall(player.x, player.y,
+                                                     player.x + player.width, player.y + player.height)
+        if answer_fall:
+            list_return["move_bottom"] = False
+            return list_return
+        
     for chest in chests:
         answer_fall = chest.check_collision_top_wall(player.x, player.y,
                                                      player.x + player.width, player.y + player.height)
@@ -78,6 +89,8 @@ def gravity(player, move_jump): #GRAVITY PLAYER
                 block.y -= player.speed
             for recource in droped_resources:
                 recource.y -= player.speed
+            for box in boxes:
+                box.y -= player.speed
             for chest in chests:
                 chest.y -= player.speed
             for enemy in list_enemy:
@@ -93,9 +106,9 @@ def gravity_resources(player): #GRAVITY RESOURCES
     for recource in droped_resources:
         recource.gravity(player)
 
-def gravity_chests(player): #GRAVITY CHESTS
-    for chest in chests: 
-        chest.gravity(player)
+def gravity_boxes(player): #GRAVITY boxS
+    for box in boxes: 
+        box.gravity(player)
 
 def gravity_enemy(player): #GRAVITY ENEMY
     for enemy in list_enemy:

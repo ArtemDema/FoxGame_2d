@@ -66,6 +66,9 @@ class Enemy(Settings):
         self.load_image()
         self.draw_image(screen)
 
+    def player_visibility_area(self):
+        pass
+
     def gravity(self, player, blocks): #CHECKING IF THE PLAYER IS TOUCHING THE FLOOR
         for block in blocks:
             answer_fall_r = block.check_collision_top_wall(self.x - 15, self.y,
@@ -74,6 +77,20 @@ class Enemy(Settings):
                 break
         if answer_fall_r != True: #if he does not
             self.y += player.speed
+
+    def player_visibility_zone(self, player):
+        if player.x >= self.x - 350:
+            if player.x <= self.x:
+                if player.y <= self.y + self.height:
+                    if player.y >= self.y - 70:
+                        return True
+                
+        if player.x <= self.x + self.width + 350:
+            if player.x >= self.x + self.width:
+                if player.y <= self.y + self.height:
+                    if player.y >= self.y - 70:
+                        return True
+        return False
 
 class Block(Settings):
     def __init__(self, x, y, width, height, image):

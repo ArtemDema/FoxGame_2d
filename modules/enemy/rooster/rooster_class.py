@@ -1,5 +1,6 @@
 from ...main_classes import Enemy
-from ...screen import blocks, player
+from ...screen import blocks
+from ...box import boxes
 from ...chest import chests
 from ...resourses import droped_resources, Discarded_Item
 
@@ -16,9 +17,10 @@ class Rooster(Enemy):
         self.sprite_frequency_rooster = sprite_frequency_rooster
         self.is_dead = is_dead
         self.death_count = death_count
+        self.player_visibility = False
         super().__init__(x, y, width, height, image, hp, speed)
 
-    def move(self): #RUN ROOSTER
+    def move(self, player): #RUN ROOSTER
         right_x = self.x + self.width
         bottom_y = self.y + self.height
         if self.vector_move == 0:
@@ -138,6 +140,20 @@ class Rooster(Enemy):
                             self.run_count += 1
                             self.sprite_frequency_rooster = 0
                         else: self.sprite_frequency_rooster += 1
+            
+            for box in boxes:
+                answer = box.check_collision_left_wall(self.x, self.y, #CHECKING TOUCH LEFT WALL OF BOXES
+                                                        self.x + self.width, self.y + self.height)
+                if answer:
+                    self.vector_move = 0
+
+                    if self.run_count == 3: 
+                        self.run_count = 0
+                    else:
+                        if self.sprite_frequency_rooster >= 10: 
+                            self.run_count += 1
+                            self.sprite_frequency_rooster = 0
+                        else: self.sprite_frequency_rooster += 1
 
             if answer != True:
                 self.x += self.speed
@@ -151,8 +167,8 @@ class Rooster(Enemy):
                     else: self.sprite_frequency_rooster += 1
     
     def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECK DEATH ROOSTER
-        for chest in chests:
-            answer = chest.check_collision_bottom_wall(self.x, self.y, #CHECKING TOUCH CHEST
+        for box in boxes:
+            answer = box.check_collision_bottom_wall(self.x, self.y, #CHECKING TOUCH CHEST
                                                     self.x + self.width, self.y + self.height)
             if answer:
                 self.is_dead = True
