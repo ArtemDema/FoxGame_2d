@@ -81,7 +81,7 @@ while game_run:
                     if answer: 
                         mod.key.count -= 1
                     elif answer == False: 
-                        mod.hide = True
+                        mod.player.hide = True
                         chest.hide_in_him = True
 
                 for box in mod.boxes: #CHECKING AN ATTEMPT TO OPEN A BOX
@@ -89,14 +89,14 @@ while game_run:
                     if answer: 
                         mod.key.count -= 1
                     elif answer == False: 
-                        mod.hide = True
+                        mod.player.hide = True
                         box.hide_in_him = True
                 reload_chest = 0
         else:
             reload_chest += 1
       #UP THE CHEST
     if keys[pygame.K_q]:
-        if mod.hide == False and mod.with_box == False:
+        if mod.player.hide == False and mod.with_box == False:
             for box in mod.boxes: #CHECKING AN ATTEMPT TO UP A BOX 
                 answer = box.check_up_the_box(mod.player) #
                 if answer:
@@ -128,7 +128,7 @@ while game_run:
       #LEFT
     if keys[pygame.K_a]:
         mod.move_crouch = False
-        mod.hide = False
+        mod.player.hide = False
 
         for chest in mod.chests:
             chest.hide_in_him = False
@@ -145,7 +145,7 @@ while game_run:
       #RIGHT
     if keys[pygame.K_d]:
         mod.move_crouch = False
-        mod.hide = False
+        mod.player.hide = False
 
         for chest in mod.chests:
             chest.hide_in_him = False
@@ -165,7 +165,7 @@ while game_run:
             if keys[pygame.K_SPACE]:
                 if mod.move_bottom == False:
                     mod.move_jump = True
-                    mod.hide = False
+                    mod.player.hide = False
 
                     for chest in mod.chests:
                         chest.hide_in_him = False
@@ -179,7 +179,7 @@ while game_run:
 
       #SQUAT
     if keys[pygame.K_LSHIFT]:
-        if mod.move_bottom == False and mod.move_jump == False and mod.move_right == False and mod.move_left == False and mod.hide == False and mod.with_box == False:
+        if mod.move_bottom == False and mod.move_jump == False and mod.move_right == False and mod.move_left == False and mod.player.hide == False and mod.with_box == False:
             mod.move_crouch = True
     else:
         mod.move_crouch = False
@@ -211,7 +211,7 @@ while game_run:
 
     #DRAWING--------------------------------------------
     return_dict = mod.render(mod.move_left, mod.move_right, mod.move_jump, mod.move_crouch, mod.move_bottom, mod.screen, #DRAWING EVERYTHING
-                             mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, mod.hide, mod.with_box)
+                             mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, mod.player.hide, mod.with_box)
     if "run_count" in return_dict: run_count = return_dict["run_count"]
     if "idle_count" in return_dict: idle_count = return_dict["idle_count"]
     if "crouch_count" in return_dict: crouch_count = return_dict["crouch_count"]

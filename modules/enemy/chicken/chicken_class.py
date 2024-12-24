@@ -27,7 +27,6 @@ class Chicken(Enemy):
         super().__init__(x, y, width, height, image, hp, speed)
 
     def move(self, player): #FUNCTION MOVE
-        print(self.player_visibility)
         if self.player_visibility:
             if self.random_move <= 0:
                 distance = player.x - self.x

@@ -37,6 +37,7 @@ class Hero(Enemy):
     def __init__(self, x, y, width, height, image, hp, speed, strength_jump):
         self.strength_jump = strength_jump
         self.timer_damage = 0
+        self.hide = False
         super().__init__(x, y, width, height, image, hp, speed)
         
     def idle(self, idle_count, screen, last_side, with_chest): #DRAWING IDLE POSITION
