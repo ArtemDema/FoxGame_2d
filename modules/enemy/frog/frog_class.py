@@ -21,6 +21,7 @@ class Frog(Enemy):
         self.is_dead = is_dead
         self.death_count = 0
         self.player_visibility = False
+        self.frequency_jump = 60
         super().__init__(x, y, width, height, image, hp, speed)
 
     def move(self, player): #MOVE JUMP
@@ -30,6 +31,22 @@ class Frog(Enemy):
         bottom_y_p = player.y + player.height
         right_x = self.x + self.width
         bottom_y = self.y + self.height
+
+        if self.player_visibility:
+            if player.hide == False:
+                if self.frequency_jump == 0:
+                    if self.angle == 0:
+                        distance = player.x - self.x
+                        if distance <= 0:
+                            self.angle = -135
+                            self.vector_move = 0
+                        else:
+                            self.angle = -45
+                            self.vector_move = 1
+                        self.frequency_jump = 60
+                else:
+                    self.frequency_jump -= 1
+
         #top corner
         if left_x_p + 20 <= self.x:
             if top_y_p + 30 <= self.y:

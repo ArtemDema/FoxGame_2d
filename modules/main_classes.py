@@ -65,10 +65,7 @@ class Enemy(Settings):
         self.image = list_death[death_count]
         self.load_image()
         self.draw_image(screen)
-
-    def player_visibility_area(self):
-        pass
-
+        
     def gravity(self, player, blocks): #CHECKING IF THE PLAYER IS TOUCHING THE FLOOR
         for block in blocks:
             answer_fall_r = block.check_collision_top_wall(self.x - 15, self.y,
