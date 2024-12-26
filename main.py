@@ -203,10 +203,11 @@ while game_run:
 
     #COLLECT RECOURCES--------------------------------------------
     for recource in mod.droped_resources: 
-        return_dict = recource.check_collect_recource(mod.player, mod.meat.count, mod.egg.count, mod.key.count) #CHECKING FOR SELECTION OF RESOURCES
+        return_dict = recource.check_collect_recource(mod.player, mod.meat.count, mod.egg.count, mod.key.count, mod.hp.count) #CHECKING FOR SELECTION OF RESOURCES
         if "egg_count" in return_dict: mod.egg.count = return_dict["egg_count"]
         if "key_count" in return_dict: mod.key.count = return_dict["key_count"]
         if "meat_count" in return_dict: mod.meat.count = return_dict["meat_count"]
+        if "heart_count" in return_dict: mod.hp.count = return_dict["heart_count"]
     #--------------------------------------------
 
     #DRAWING--------------------------------------------

@@ -1,6 +1,7 @@
 from ..main_classes import Block
 from ..screen import blocks
 from ..chest import chests
+from ..resourses import droped_resources, Discarded_Item
 
 import math, random
 
@@ -20,24 +21,44 @@ class Box(Block):
             if answer:
                 if count_key >= 1:
                     self.open_box = True
+                    random_n = random.randint(0, 1)
+                    if random_n == 1:
+                        for i in range(5):
+                            egg = Discarded_Item(x = self.x + (self.width / 2), y = self.y + self.width + 10, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+                            droped_resources.append(egg)
                     return True
             answer = self.check_collision_left_wall(left_x_p = player.x, top_y_p = player.y, #IS THE PLAYER STANDING NEXT TO THE CHEST ON THE LEFT
                                             right_x_p = player.x + player.width, bottom_y_p = player.y + player.height)
             if answer:
                 if count_key >= 1:
                     self.open_box = True
+                    random_n = random.randint(0, 1)
+                    if random_n == 1:
+                        for i in range(5):
+                            egg = Discarded_Item(x = self.x - 10, y = self.y, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+                            droped_resources.append(egg)
                     return True
             answer = self.check_collision_right_wall(left_x_p = player.x, top_y_p = player.y, #IS THE PLAYER STANDING NEXT TO THE CHEST ON THE RIGHT
                                             right_x_p = player.x + player.width, bottom_y_p = player.y + player.height)
             if answer:
                 if count_key >= 1:
                     self.open_box = True
+                    random_n = random.randint(0, 1)
+                    if random_n == 1:
+                        for i in range(5):
+                            egg = Discarded_Item(x = self.x + self.width + 10, y = self.y, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+                            droped_resources.append(egg)
                     return True
             answer = self.check_collision_top_wall(left_x_p = player.x, top_y_p = player.y, #IS THE PLAYER STANDING NEXT TO THE CHEST ON THE TOP
                                             right_x_p = player.x + player.width, bottom_y_p = player.y + player.height)
             if answer:
                 if count_key >= 1:
                     self.open_box = True
+                    random_n = random.randint(0, 1)
+                    if random_n == 1:
+                        for i in range(5):
+                            egg = Discarded_Item(x = self.x + (self.width / 2), y = self.y - 20, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+                            droped_resources.append(egg)
                     return True
         else:
             answer = self.check_collision_bottom_wall(left_x_p = player.x, top_y_p = player.y, #IS THE PLAYER STANDING NEXT TO THE CHEST ON THE BOTTOM
