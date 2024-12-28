@@ -2,6 +2,7 @@ from ...main_classes import Enemy
 from ...resourses import droped_resources, Discarded_Item
 from ...chest import chests
 from ...screen import blocks
+from ...interface import interface
 
 import random, math
 
@@ -147,37 +148,42 @@ class Frog(Enemy):
             else: self.angle = -45
 
     def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECK DEATH CHICKEN
-        for chest in chests:
-            answer = chest.check_collision_bottom_wall(self.x, self.y, #CHECK CHEST FOR DEATH
-                                                    self.x + self.width, self.y + self.height)
-            if answer:
-                self.is_dead = True
+        if self.is_dead == False:
+            for chest in chests:
+                answer = chest.check_collision_bottom_wall(self.x, self.y, #CHECK CHEST FOR DEATH
+                                                        self.x + self.width, self.y + self.height)
+                if answer:
+                    self.is_dead = True
+                    interface[4].count += 1
 
-        right_x = self.x + self.width
-        bottom_y = self.y + self.height
-        #left angle
-        if bottom_y_p >= self.y:
-            if left_x_p + 33 <= self.x:
-                if right_x_p - 30 >= self.x:
-                    if top_y_p + 20 <= self.y:
-                        if bottom_y_p + 10 <= bottom_y:
-                            self.is_dead = True
+            right_x = self.x + self.width
+            bottom_y = self.y + self.height
+            #left angle
+            if bottom_y_p >= self.y:
+                if left_x_p + 33 <= self.x:
+                    if right_x_p - 30 >= self.x:
+                        if top_y_p + 20 <= self.y:
+                            if bottom_y_p + 10 <= bottom_y:
+                                self.is_dead = True
+                                interface[4].count += 1
 
-        #middle (golden)
-        if bottom_y_p >= self.y:
-            if left_x_p + 33 >= self.x:
-                if right_x_p - 30 <= right_x:
-                    if top_y_p + 20 <= self.y:
-                        if bottom_y_p + 10 <= bottom_y:
-                            self.is_dead = True
-                                    
-        #right angle
-        if bottom_y_p >= self.y:
-            if left_x_p + 33 <= right_x:
-                if right_x_p - 30 >= right_x:
-                    if top_y_p + 20 <= self.y:
-                        if bottom_y_p + 10 <= bottom_y:
-                            self.is_dead = True
+            #middle (golden)
+            if bottom_y_p >= self.y:
+                if left_x_p + 33 >= self.x:
+                    if right_x_p - 30 <= right_x:
+                        if top_y_p + 20 <= self.y:
+                            if bottom_y_p + 10 <= bottom_y:
+                                self.is_dead = True
+                                interface[4].count += 1
+                                        
+            #right angle
+            if bottom_y_p >= self.y:
+                if left_x_p + 33 <= right_x:
+                    if right_x_p - 30 >= right_x:
+                        if top_y_p + 20 <= self.y:
+                            if bottom_y_p + 10 <= bottom_y:
+                                self.is_dead = True
+                                interface[4].count += 1
 
 
     def dead_count(self): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT

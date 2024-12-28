@@ -2,10 +2,12 @@ from ...main_classes import Enemy
 from ...screen import blocks
 from ...chest import chests
 from ...resourses import Discarded_Item, droped_resources
+from ...interface import interface
 
 import random
 
-list_idle = []
+list_idle_chicken = ["images/enemy/chicken/idle/0.png", "images/enemy/chicken/idle/1.png", 
+            "images/enemy/chicken/idle/2.png", "images/enemy/chicken/idle/3.png"]
 
 list_run_chicken = ["images/enemy/chicken/run/0.png", "images/enemy/chicken/run/1.png", 
                     "images/enemy/chicken/run/2.png", "images/enemy/chicken/run/3.png"]
@@ -24,6 +26,7 @@ class Chicken(Enemy):
         self.is_dead = is_dead
         self.death_count = death_count
         self.player_visibility = False
+        self.idle_count = 0
         super().__init__(x, y, width, height, image, hp, speed)
 
     def move(self, player): #FUNCTION MOVE
@@ -137,6 +140,13 @@ class Chicken(Enemy):
                     self.random_move = -1
         elif self.random_idle >= 0:
             self.random_idle -= 1
+            if self.idle_count == 3: 
+                self.idle_count = 0
+            else:
+                if self.sprite_frequency_chicken >= 10: 
+                    self.idle_count += 1
+                    self.sprite_frequency_chicken = 0
+                else: self.sprite_frequency_chicken += 1
             return
         else:
             self.actions_chicken()
@@ -150,37 +160,42 @@ class Chicken(Enemy):
             self.random_move = random.randint(50, 250)
 
     def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECK DEATH CHICKEN
-        for chest in chests: 
-            answer = chest.check_collision_bottom_wall(self.x, self.y, #CHECK CHEST FOR DEATH
-                                                    self.x + self.width, self.y + self.height)
-            if answer:
-                self.is_dead = True
+        if self.is_dead == False:
+            for chest in chests: 
+                answer = chest.check_collision_bottom_wall(self.x, self.y, #CHECK CHEST FOR DEATH
+                                                        self.x + self.width, self.y + self.height)
+                if answer:
+                    self.is_dead = True
+                    interface[5].count += 1
 
-        right_x = self.x + self.width
-        bottom_y = self.y + self.height
-        #left angle
-        if bottom_y_p >= self.y:
-            if left_x_p + 33 <= self.x:
-                if right_x_p - 30 >= self.x:
-                    if top_y_p + 20 <= self.y:
-                        if bottom_y_p + 10 <= bottom_y:
-                            self.is_dead = True
+            right_x = self.x + self.width
+            bottom_y = self.y + self.height
+            #left angle
+            if bottom_y_p >= self.y:
+                if left_x_p + 33 <= self.x:
+                    if right_x_p - 30 >= self.x:
+                        if top_y_p + 20 <= self.y:
+                            if bottom_y_p + 10 <= bottom_y:
+                                self.is_dead = True
+                                interface[5].count += 1
 
-        #middle (golden)
-        if bottom_y_p >= self.y:
-            if left_x_p + 33 >= self.x:
-                if right_x_p - 30 <= right_x:
-                    if top_y_p + 20 <= self.y:
-                        if bottom_y_p + 10 <= bottom_y:
-                            self.is_dead = True
-                                    
-        #right angle
-        if bottom_y_p >= self.y:
-            if left_x_p + 33 <= right_x:
-                if right_x_p - 30 >= right_x:
-                    if top_y_p + 20 <= self.y:
-                        if bottom_y_p + 10 <= bottom_y:
-                            self.is_dead = True
+            #middle (golden)
+            if bottom_y_p >= self.y:
+                if left_x_p + 33 >= self.x:
+                    if right_x_p - 30 <= right_x:
+                        if top_y_p + 20 <= self.y:
+                            if bottom_y_p + 10 <= bottom_y:
+                                self.is_dead = True
+                                interface[5].count += 1
+                                        
+            #right angle
+            if bottom_y_p >= self.y:
+                if left_x_p + 33 <= right_x:
+                    if right_x_p - 30 >= right_x:
+                        if top_y_p + 20 <= self.y:
+                            if bottom_y_p + 10 <= bottom_y:
+                                self.is_dead = True
+                                interface[5].count += 1
 
 
     def dead_count(self): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
@@ -197,6 +212,6 @@ class Chicken(Enemy):
 
 list_chicken = []
 
-chicken1 = Chicken(500, 680, 40, 40, "images/enemy/chicken/run/0.png", 3, 2, 2, 0, 0, 0, 0, False, 0)
+chicken1 = Chicken(500, 680, 40, 50, "images/enemy/chicken/run/0.png", 3, 2, 2, 0, 0, 0, 0, False, 0)
 
 list_chicken.append(chicken1)

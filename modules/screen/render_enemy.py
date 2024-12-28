@@ -1,5 +1,5 @@
 from ..enemy import list_run_rooster, list_rooster, list_chicken
-from ..enemy import list_run_chicken, list_animation_death, list_frog, list_jump_frog, list_idle_frog, list_animation_death_birds
+from ..enemy import list_run_chicken, list_animation_death, list_frog, list_jump_frog, list_idle_frog, list_animation_death_birds, list_idle_chicken, list_idle_rooster
 from .screen import screen
 
 def render_enemy():
@@ -8,14 +8,20 @@ def render_enemy():
             rooster.death(rooster.death_count, screen, list_animation_death_birds) #RENDER DEATH SPRITE
             rooster.dead_count() #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         else:
-            rooster.run(rooster.run_count, screen, rooster.vector_move, list_run_rooster) #RENDER RUN SPRITE
+            if rooster.random_move >= 0:
+                rooster.run(rooster.run_count, screen, rooster.vector_move, list_run_rooster) #RENDER RUN SPRITE
+            else:
+                rooster.idle(rooster.idle_count, screen, rooster.vector_move, list_idle_rooster) #RENDER IDLE SPRITE
 
     for chicken in list_chicken:
         if chicken.is_dead:
             chicken.death(chicken.death_count, screen, list_animation_death_birds) #RENDER DEATH SPRITE
             chicken.dead_count() #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         else:
-            chicken.run(chicken.run_count, screen, chicken.vector_move, list_run_chicken) #RENDER RUN SPRITE
+            if chicken.random_move >= 0:
+                chicken.run(chicken.run_count, screen, chicken.vector_move, list_run_chicken) #RENDER RUN SPRITE
+            else:
+                chicken.idle(chicken.idle_count, screen, chicken.vector_move, list_idle_chicken) #RENDER IDLE SPRITE
 
     for frog in list_frog:
         if frog.is_dead:
