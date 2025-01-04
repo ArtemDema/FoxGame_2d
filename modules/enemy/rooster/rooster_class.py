@@ -1,7 +1,5 @@
 from ...main_classes import Enemy
-from ...screen import blocks
-from ...box import boxes
-from ...chest import chests
+from ...screen import blocks,chests, boxes
 from ...resourses import droped_resources, Discarded_Item
 from ...interface import interface
 
@@ -261,6 +259,6 @@ class Rooster(Enemy):
 
 list_rooster = []
 
-rooster1 = Rooster(1025, 650, 45, 55, list_run_rooster[0], 3, 2, 0, 0, False, 0)
+rooster1 = Rooster(1025, 650, 55, 55, list_run_rooster[0], 3, 2, 0, 0, False, 0)
 
 list_rooster.append(rooster1)

@@ -1,8 +1,6 @@
-from .screen import blocks, list_of_clouds, list_trees
+from .screen import blocks, list_of_clouds, list_trees, chests, boxes
 from .resourses import droped_resources
-from .box import boxes
 from .enemy import list_enemy
-from .chest import chests
 
 def check_push_box(player, last_side): #CHECK PUSH BOX
     if last_side == 1:
@@ -104,11 +102,11 @@ def gravity(player, move_jump): #GRAVITY PLAYER
 
 def gravity_resources(player): #GRAVITY RESOURCES
     for recource in droped_resources:
-        recource.gravity(player)
+        recource.gravity(player, blocks)
 
 def gravity_boxes(player): #GRAVITY boxS
     for box in boxes: 
-        box.gravity(player)
+        box.gravity(player, blocks, chests)
 
 def gravity_enemy(player): #GRAVITY ENEMY
     for enemy in list_enemy:

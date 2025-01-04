@@ -1,6 +1,4 @@
-from .map import blocks, list_trees, list_of_clouds
-from ..chest import chests
-from ..box import boxes
+from .map import blocks, list_trees, list_of_clouds,chests, boxes
 from ..resourses import droped_resources
 from ..enemy import list_enemy
 

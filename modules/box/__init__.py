@@ -1,1 +1,1 @@
-from .box_class import boxes, Box
+from .box_class import Box

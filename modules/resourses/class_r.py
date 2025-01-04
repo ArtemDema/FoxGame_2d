@@ -1,5 +1,4 @@
 from ..main_classes import Block
-from ..screen.map import blocks
 
 droped_resources = []
 
@@ -8,7 +7,7 @@ class Discarded_Item(Block):
         self.whatIsThis = whatIsThis
         super().__init__(x,y,width,height,image)
 
-    def gravity(self,player): #
+    def gravity(self,player, blocks): #
         for block in blocks:
             answer_fall_r = block.check_collision_top_wall(self.x, self.y, #
                                                         self.x + self.width, self.y + self.height)

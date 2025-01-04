@@ -1,7 +1,6 @@
 from ...main_classes import Enemy
 from ...resourses import droped_resources, Discarded_Item
-from ...chest import chests
-from ...screen import blocks
+from ...screen import blocks, chests
 from ...interface import interface
 
 import random, math

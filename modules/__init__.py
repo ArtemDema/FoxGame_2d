@@ -6,3 +6,4 @@ from .interface import *
 from .chest import *
 from .enemy import *
 from .cloud import *
+from .modal_window import *

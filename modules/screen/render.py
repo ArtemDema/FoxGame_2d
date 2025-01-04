@@ -1,10 +1,8 @@
 import pygame
 
-from .map import background, blocks, list_trees, list_of_clouds
+from .map import background, blocks, list_trees, list_of_clouds, chests, boxes
 from ..resourses import droped_resources
 from ..interface import interface
-from ..chest import chests
-from ..box import boxes
 from .render_enemy import render_enemy
 
 pygame.init()
@@ -107,5 +105,4 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
     #check for climbing rendering
     else:
         pass #climb 
-    pygame.display.flip()
     return return_dict

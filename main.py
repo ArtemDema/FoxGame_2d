@@ -10,6 +10,7 @@ last_side = 0
 
 reload_chest = 0
 box_player = 0
+modal_window_info = False
 
 #counters (elements for the array) for changing the sprite:
 idle_count = 0
@@ -36,6 +37,17 @@ while game_run:
         if event.type == pygame.QUIT: #SAVES INFORMATION
             mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
             game_run = False
+        
+        if event.type == pygame.MOUSEMOTION:
+                position_mouse = event.pos
+        
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if modal_window_info:
+                if position_mouse[0] >= mod.modal_w.x_continue:
+                    if position_mouse[0] <= mod.modal_w.x_continue + mod.modal_w.width:
+                        if position_mouse[1] >= mod.modal_w.y_continue:
+                            if position_mouse[1] <= mod.modal_w.y_continue + mod.modal_w.height:
+                                modal_window_info = False
 
     #CLOUD--------------------------------------------
     if len(mod.list_of_clouds) != 10:
@@ -78,23 +90,27 @@ while game_run:
             if mod.with_box == False:
                 for chest in mod.chests: #CHECKING AN ATTEMPT TO OPEN A CHEST
                     answer = chest.check_open(mod.key.count, mod.player) #
-                    if answer: 
+                    if answer[0]: 
                         mod.key.count -= 1
-                    elif answer == False: 
+                        modal_window_info = True
+                        claim = answer[1]
+                    elif answer[0] == False: 
                         mod.player.hide = True
                         chest.hide_in_him = True
 
                 for box in mod.boxes: #CHECKING AN ATTEMPT TO OPEN A BOX
                     answer = box.check_open(mod.key.count, mod.player) #
-                    if answer: 
+                    if answer[0] == True: 
                         mod.key.count -= 1
-                    elif answer == False: 
+                        modal_window_info = True
+                        claim = answer[1]
+                    elif answer[0] == False: 
                         mod.player.hide = True
                         box.hide_in_him = True
                 reload_chest = 0
         else:
             reload_chest += 1
-      #UP THE CHEST
+      #UP THE BOX
     if keys[pygame.K_q]:
         if mod.player.hide == False and mod.with_box == False:
             for box in mod.boxes: #CHECKING AN ATTEMPT TO UP A BOX 
@@ -110,18 +126,18 @@ while game_run:
         box_player.x = mod.player.x + 18
         box_player.y = mod.player.y - 19
 
-      #PUSH THE CHEST
+      #PUSH THE BOX
     if keys[pygame.K_r]:
         mod.push_box = mod.check_push_box(mod.player, last_side) #BOX PUSH TEST
       
-      #DROPE CHEST
+      #DROPE BOX
     if keys[pygame.K_g]:
         if mod.with_box == True:
             mod.with_box = False
             if last_side == 0:
-                box_player.throw_box(-135)
+                box_player.throw_box(-135, mod.blocks)
             else:
-                box_player.throw_box(-45)
+                box_player.throw_box(-45, mod.blocks)
     #--------------------------------------------
 
     #MOVE--------------------------------------------
@@ -217,3 +233,11 @@ while game_run:
     if "idle_count" in return_dict: idle_count = return_dict["idle_count"]
     if "crouch_count" in return_dict: crouch_count = return_dict["crouch_count"]
     if "number_for_choose_sprite" in return_dict: number_for_choose_sprite = return_dict["number_for_choose_sprite"]
+    #--------------------------------------------
+
+    #MODAL_INFO--------------------------------------------
+    if modal_window_info:
+        mod.modal_w.print_text_on_screen(1200, 800, mod.screen, claim)
+        pygame.time.delay(120)
+    
+    pygame.display.flip()

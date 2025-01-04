@@ -1,1 +1,1 @@
-from .chest_functions import chests
+from .chest_functions import Chest
