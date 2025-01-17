@@ -119,7 +119,6 @@ class Block(Settings):
                         return True
     
     def check_collision_left_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECKING FOR TOUCHING THE LEFT WALL
-        right_x = self.x + self.width
         bottom_y = self.y + self.height
         
         #top corner
@@ -144,11 +143,9 @@ class Block(Settings):
                         return True
     
     def check_collision_top_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECKING FOR TOUCHING THE TOP WALL
-
         right_x = self.x + self.width
-        bottom_y = self.y + self.height
         
-        #левый угол
+        #left angle
         if bottom_y_p >= self.y:
             if left_x_p + 23 <= self.x:
                 if right_x_p - 20 >= self.x:
@@ -162,7 +159,7 @@ class Block(Settings):
                     if top_y_p + 20 <= self.y:
                         return True
                                     
-        #правый угол
+        #right angle
         if bottom_y_p >= self.y:
             if left_x_p + 23 <= right_x:
                 if right_x_p - 20 >= right_x:
@@ -173,7 +170,7 @@ class Block(Settings):
         right_x = self.x + self.width
         bottom_y = self.y + self.height
 
-        #левый угол
+        #left angle
         if bottom_y_p >= bottom_y:
             if left_x_p + 20 <= self.x:
                 if right_x_p - 20 >= self.x:
@@ -187,7 +184,7 @@ class Block(Settings):
                     if top_y_p + 20 <= bottom_y:
                         return True
         
-        #правый угол
+        #right angle
         if bottom_y_p >= bottom_y:
             if right_x_p - 20 >= right_x:
                 if left_x_p + 20 <= right_x:

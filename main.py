@@ -30,6 +30,8 @@ game_run = True
 while game_run:
     tick.tick(60) #set the number of fps
 
+    # print(len(mod.list_feather))
+
     keys = pygame.key.get_pressed() #getting keys to process pressed keys
 
     #events
@@ -81,6 +83,10 @@ while game_run:
         if enemy.is_dead == False:
             enemy.player_visibility = enemy.player_visibility_zone(mod.player)
             enemy.move(mod.player) #ENEMY MOVE
+
+    if len(mod.list_feather) != 0:
+        for feather in mod.list_feather:
+            feather.move(mod.WIDTH, mod.HEIGHT)
     #--------------------------------------------
 
     #CHEST AND BOX--------------------------------------------
@@ -150,11 +156,11 @@ while game_run:
             chest.hide_in_him = False
         for box in mod.boxes:
             box.hide_in_him = False
-
-        dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_box, mod.with_box, box_player) #FUNCTION FOR PLAYER WALKING TO THE LEFT
-        if "move_left" in dict_left: mod.move_left = dict_left["move_left"]
-        if "last_side" in dict_left: last_side = dict_left["last_side"]
-        if "push_box" in dict_left: mod.push_box = dict_left["push_box"]
+        if mod.player.x >= 1:
+            dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_box, mod.with_box, box_player) #FUNCTION FOR PLAYER WALKING TO THE LEFT
+            if "move_left" in dict_left: mod.move_left = dict_left["move_left"]
+            if "last_side" in dict_left: last_side = dict_left["last_side"]
+            if "push_box" in dict_left: mod.push_box = dict_left["push_box"]
     else:
         mod.move_left = False
     
@@ -168,7 +174,8 @@ while game_run:
         for box in mod.boxes:
             box.hide_in_him = False
 
-        dict_right = mod.move_right_player(mod.player, mod.move_jump, mod.push_box, mod.with_box, box_player) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
+        dict_right = mod.move_right_player(mod.player, mod.move_jump, 
+                                           mod.push_box, mod.with_box, box_player, mod.WIDTH) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
         if "move_right" in dict_right: mod.move_right = dict_right["move_right"]
         if "last_side" in dict_right: last_side = dict_right["last_side"]
         if "push_box" in dict_right: mod.push_box = dict_right["push_box"]
@@ -237,7 +244,7 @@ while game_run:
 
     #MODAL_INFO--------------------------------------------
     if modal_window_info:
-        mod.modal_w.print_text_on_screen(1200, 800, mod.screen, claim)
+        mod.modal_w.print_text_on_screen(mod.WIDTH, mod.HEIGHT, mod.screen, claim)
         pygame.time.delay(120)
     
     pygame.display.flip()

@@ -2,8 +2,9 @@ from ...main_classes import Enemy
 from ...screen import blocks,chests, boxes
 from ...resourses import droped_resources, Discarded_Item
 from ...interface import interface
+from .feather import list_feather, Feather
 
-import random
+import random, math, pygame
 
 list_idle_rooster = ["images/enemy/rooster/idle/0.png", "images/enemy/rooster/idle/1.png", 
                     "images/enemy/rooster/idle/2.png", "images/enemy/rooster/idle/3.png"]
@@ -22,20 +23,36 @@ class Rooster(Enemy):
         self.death_count = death_count
         self.player_visibility = False
         self.idle_count = 0
+        self.angle = 0
+        self.timer_throw_feather = 20
         super().__init__(x, y, width, height, image, hp, speed)
 
     def move(self, player): #RUN ROOSTER
+        self.throw_rooster_feather(player)
         if self.player_visibility:
             if player.hide == False:
-                if self.random_move <= 0:
-                    distance = player.x - self.x
-                    if distance <= 0:
-                        self.random_move = 200
-                        self.vector_move = 0
+                distance = player.x - self.x
+                if distance <= 0:
+                    self.random_move = 75
+                    self.vector_move = 0
+                    if self.timer_throw_feather <= 0:
+                        feather = Feather(self.x, self.y + (self.height // 2), 25, 25, "images/enemy/rooster/feather/0.png", self.angle)
+                        feather.image = pygame.transform.rotate(feather.image, self.angle - 240)
+                        list_feather.append(feather)
+                        self.timer_throw_feather = 100
                     else:
-                        self.random_move = 200
-                        self.vector_move = 1
-
+                        self.timer_throw_feather -= 1
+                else:
+                    self.random_move = 75
+                    self.vector_move = 1
+                    if self.timer_throw_feather <= 0:
+                        feather = Feather(self.x, self.y + (self.height // 2) + 8, 25, 25, "images/enemy/rooster/feather/0.png", self.angle)
+                        feather.image = pygame.transform.rotate(feather.image, self.angle - 200)
+                        list_feather.append(feather)
+                        self.timer_throw_feather = 100
+                    else:
+                        self.timer_throw_feather -= 1
+ 
         left_x_p = player.x
         right_x_p = player.x + player.width
         top_y_p = player.y
@@ -45,6 +62,7 @@ class Rooster(Enemy):
         if self.random_move >= 0:
             if self.vector_move == 0:
 
+                #top corner
                 if left_x_p + 15 <= right_x:
                     if top_y_p + 30 <= self.y:
                         if bottom_y_p - 5 >= self.y:
@@ -246,6 +264,10 @@ class Rooster(Enemy):
                                 self.is_dead = True
                                 interface[6].count += 1
 
+    def throw_rooster_feather(self, player):
+        randian = math.atan2(self.y - player.y, self.x - player.x)
+        self.angle = (randian * 180 / math.pi) - 180
+
     def dead_count(self): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         if self.death_count == 6:
             meat1 = Discarded_Item(x = self.x, y = self.y, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
@@ -259,6 +281,6 @@ class Rooster(Enemy):
 
 list_rooster = []
 
-rooster1 = Rooster(1025, 650, 55, 55, list_run_rooster[0], 3, 2, 0, 0, False, 0)
+rooster1 = Rooster(2025, 650, 63, 63, list_run_rooster[0], 3, 2, 0, 0, False, 0)
 
 list_rooster.append(rooster1)

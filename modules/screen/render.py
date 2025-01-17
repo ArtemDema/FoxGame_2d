@@ -4,6 +4,7 @@ from .map import background, blocks, list_trees, list_of_clouds, chests, boxes
 from ..resourses import droped_resources
 from ..interface import interface
 from .render_enemy import render_enemy
+from ..enemy import list_feather
 
 pygame.init()
 
@@ -55,6 +56,10 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
         item.print_text(screen)
 
     render_enemy() #RENDER ALL ENEMY
+
+    if len(list_feather) != 0:
+        for feather in list_feather:
+            feather.draw_image(screen)
 
     #check for drawing in a idle
     if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False and hide == False:

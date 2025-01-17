@@ -116,7 +116,6 @@ class Box(Block):
         return False
     
     def throw_box(self, angle, blocks): #CHEST THROW
-        for_jump = math.pi / 180
         if angle == -45:
             for block in blocks: #DOES THE PLAYER TOUCH THE BOTTOM COLLISION BLOCK
                 answer = block.check_collision_bottom_wall(left_x_p = self.x, top_y_p = self.y, 
@@ -128,8 +127,8 @@ class Box(Block):
                                                 right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
                         if answer: break
             if answer != True:
-                self.x = self.x + 150 * math.cos(angle * for_jump)
-                self.y = self.y + 150 * math.sin(angle * for_jump)
+                self.x = self.x + 150 * math.cos(angle * (math.pi / 180))
+                self.y = self.y + 150 * math.sin(angle * (math.pi / 180))
         else:
             for block in blocks: #IS THE PLAYER TOUCHING THE BOTTOM WALL
                 answer = block.check_collision_bottom_wall(left_x_p = self.x, top_y_p = self.y, 
@@ -141,8 +140,8 @@ class Box(Block):
                                                 right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
                         if answer: break
             if answer != True:
-                self.x = self.x + 150 * math.cos(angle * for_jump)
-                self.y = self.y + 150 * math.sin(angle * for_jump)
+                self.x = self.x + 150 * math.cos(angle * (math.pi / 180))
+                self.y = self.y + 150 * math.sin(angle * (math.pi / 180))
 
     def gravity(self, player, blocks, chests): #GRAVITY CHEST
         for block in blocks: #DOES THE CHEST TOUCH THE FLOOR
