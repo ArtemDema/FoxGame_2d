@@ -1,4 +1,4 @@
-from .map import blocks, list_trees, list_of_clouds,chests, boxes, list_enemy
+from .map import blocks, list_trees, list_of_clouds,chests, boxes, list_enemy, list_bush
 from ..resourses import droped_resources
 from ..enemy import list_feather
 
@@ -150,6 +150,8 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                     cloud.x -= player.speed
                 for feather in list_feather:
                     feather.x -= player.speed
+                for bush in list_bush:
+                    bush.x -= player.speed
             else:
                 player.x += player.speed
     else:
@@ -213,6 +215,8 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                     cloud.x -= player.speed
                 for feather in list_feather:
                     feather.x -= player.speed
+                for bush in list_bush:
+                    bush.x -= player.speed
             else:
                 player.x += player.speed
 

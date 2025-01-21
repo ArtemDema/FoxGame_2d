@@ -1,4 +1,4 @@
-from ..enemy import list_run_rooster
+from ..enemy import list_run_rooster, list_feather
 from ..enemy import list_run_chicken, list_animation_death, list_jump_frog, list_idle_frog, list_animation_death_birds, list_idle_chicken, list_idle_rooster
 from .screen import screen
 from .map import list_frog, list_chicken, list_rooster
@@ -14,6 +14,12 @@ def render_enemy():
                 rooster.run(rooster.run_count, screen, rooster.vector_move, list_run_rooster) #RENDER RUN SPRITE
             else:
                 rooster.idle(rooster.idle_count, screen, rooster.vector_move, list_idle_rooster) #RENDER IDLE SPRITE
+
+    for feather in list_feather:
+        if feather.death_animation:
+            feather.death(feather.death_count, screen, list_animation_death)
+            if feather.death_count == 6:
+                list_feather.remove(feather)
 
     for chicken in list_chicken:
         if chicken.is_dead:

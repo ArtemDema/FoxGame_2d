@@ -1,6 +1,6 @@
 import pygame
 
-from .map import background, blocks, list_trees, list_of_clouds, chests, boxes
+from .map import background, blocks, list_trees, list_of_clouds, chests, boxes, list_bush
 from ..resourses import droped_resources
 from ..interface import interface
 from .render_enemy import render_enemy
@@ -106,6 +106,9 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
             return_dict["number_for_choose_sprite"] = 0
         else:
             return_dict["number_for_choose_sprite"] = number_for_choose_sprite + 1
+
+    for bush in list_bush:
+        bush.draw_image(screen)
     
     #check for climbing rendering
     else:

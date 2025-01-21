@@ -1,4 +1,4 @@
-from .screen import blocks, list_of_clouds, list_trees, chests, boxes, list_enemy
+from .screen import blocks, list_of_clouds, list_trees, chests, boxes, list_enemy, list_bush
 from .resourses import droped_resources
 from .enemy import list_feather
 
@@ -51,6 +51,8 @@ def check_jump(player_x, player_y, player_width, player_height, player_strength_
                 cloud.y += player_speed * 3
             for feather in list_feather:
                 feather.y += player_speed * 3
+            for bush in list_bush:
+                bush.y += player_speed * 3
 
             return_dict["player_strength_jump"] = player_strength_jump - 1
             return return_dict
@@ -101,6 +103,8 @@ def gravity(player, move_jump): #GRAVITY PLAYER
                 cloud.y -= player.speed
             for feather in list_feather:
                 feather.y -= player.speed
+            for bush in list_bush:
+                bush.y -= player.speed
 
     return list_return
 
