@@ -79,14 +79,14 @@ while game_run:
 
     #ENEMY--------------------------------------------
     for enemy in mod.list_enemy:
-        enemy.check_death(mod.player.x, mod.player.y, mod.player.x + mod.player.width, mod.player.y + mod.player.height) #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
+        enemy.check_death(mod.player.x, mod.player.y, mod.player.x + mod.player.width, mod.player.y + mod.player.height, mod.chests) #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
         if enemy.is_dead == False:
             enemy.player_visibility = enemy.player_visibility_zone(mod.player)
-            enemy.move(mod.player) #ENEMY MOVE
+            enemy.move(mod.player, mod.blocks, mod.chests, mod.boxes) #ENEMY MOVE
 
     if len(mod.list_feather) != 0:
         for feather in mod.list_feather:
-            feather.move(mod.WIDTH, mod.HEIGHT)
+            feather.move(mod.WIDTH, mod.HEIGHT, mod.player, mod.blocks, mod.chests, mod.boxes)
     #--------------------------------------------
 
     #CHEST AND BOX--------------------------------------------

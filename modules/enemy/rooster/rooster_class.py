@@ -1,5 +1,4 @@
 from ...main_classes import Enemy
-from ...screen import blocks,chests, boxes
 from ...resourses import droped_resources, Discarded_Item
 from ...interface import interface
 from .feather import list_feather, Feather
@@ -27,7 +26,7 @@ class Rooster(Enemy):
         self.timer_throw_feather = 20
         super().__init__(x, y, width, height, image, hp, speed)
 
-    def move(self, player): #RUN ROOSTER
+    def move(self, player, blocks, chests, boxes): #RUN ROOSTER
         self.throw_rooster_feather(player)
         if self.player_visibility:
             if player.hide == False:
@@ -46,45 +45,19 @@ class Rooster(Enemy):
                     self.random_move = 75
                     self.vector_move = 1
                     if self.timer_throw_feather <= 0:
-                        feather = Feather(self.x, self.y + (self.height // 2) + 8, 25, 25, "images/enemy/rooster/feather/0.png", self.angle)
+                        feather = Feather(self.x, self.y + (self.height // 2) + 3, 25, 25, "images/enemy/rooster/feather/0.png", self.angle)
                         feather.image = pygame.transform.rotate(feather.image, self.angle - 200)
                         list_feather.append(feather)
                         self.timer_throw_feather = 100
                     else:
                         self.timer_throw_feather -= 1
  
-        left_x_p = player.x
-        right_x_p = player.x + player.width
-        top_y_p = player.y
-        bottom_y_p = player.y + player.height
-        right_x = self.x + self.width
-        bottom_y = self.y + self.height
         if self.random_move >= 0:
             if self.vector_move == 0:
-
-                #top corner
-                if left_x_p + 15 <= right_x:
-                    if top_y_p + 30 <= self.y:
-                        if bottom_y_p - 5 >= self.y:
-                            if right_x_p - 20 >= right_x:
-                                if player.hide == False:
-                                    player.damage_player()
-            
-                #middle (golden)
-                if left_x_p + 15 <= right_x:
-                    if top_y_p + 30 >= self.y:
-                        if bottom_y_p <= bottom_y:
-                            if right_x_p - 20 >= right_x:
-                                    if player.hide == False:
-                                        player.damage_player()
-
-                #bottom corner                            
-                if left_x_p + 15 <= right_x:
-                    if top_y_p + 30 <= bottom_y:
-                        if bottom_y_p >= bottom_y:
-                            if right_x_p - 20 >= right_x:
-                                if player.hide == False:
-                                    player.damage_player()
+                if player.hide == False:
+                    answer = player.check_collision_right(self.x, self.y, self.x + self.width, self.y + self.height)
+                    if answer:
+                        player.damage_player()
 
                 for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
                     answer = block.check_collision_top_wall(self.x - 15, self.y, self.x + self.width - 15, self.y + self.height + 20)
@@ -105,9 +78,21 @@ class Rooster(Enemy):
                                 else: self.sprite_frequency_rooster += 1
                             self.random_move =- 1
                             return
-                    
                     for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
                         answer = chest.check_collision_right_wall(self.x, self.y, 
+                                                                self.x + self.width, self.y + self.height)
+                        if answer:
+                            if self.run_count == 3: 
+                                self.run_count = 0
+                            else:
+                                if self.sprite_frequency_rooster >= 10: 
+                                    self.run_count += 1
+                                    self.sprite_frequency_rooster = 0
+                                else: self.sprite_frequency_rooster += 1
+                            self.random_move =- 1
+                            return
+                    for box in boxes: #CHECK TOUCH RIGHT WALL OF BOX
+                        answer = box.check_collision_right_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
                             if self.run_count == 3: 
@@ -134,29 +119,10 @@ class Rooster(Enemy):
                 else:
                     self.random_move = -1
             else:
-                #top corner
-                if left_x_p + 20 <= self.x:
-                    if top_y_p + 30 <= self.y:
-                        if bottom_y_p - 5 >= self.y:
-                            if right_x_p - 15 >= self.x:
-                                if player.hide == False:
-                                    player.damage_player()
-                
-                #middle (golden)
-                if left_x_p + 20 <= self.x:
-                    if top_y_p + 30 >= self.y:
-                        if bottom_y_p <= bottom_y:
-                            if right_x_p - 15 >= self.x:
-                                if player.hide == False:
-                                    player.damage_player()
-                                            
-                #bottom corner
-                if left_x_p + 20 <= self.x:
-                    if top_y_p + 30 <= bottom_y:
-                        if bottom_y_p >= bottom_y:
-                            if right_x_p - 15 >= self.x:
-                                if player.hide == False:
-                                    player.damage_player()
+                if player.hide == False:
+                    answer = player.check_collision_left(self.x, self.y, self.x + self.width, self.y + self.height)
+                    if answer:
+                        player.damage_player()
 
                 for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
                     answer = block.check_collision_top_wall(self.x + 15, self.y, self.x + self.width + 15, self.y + self.height + 20)
@@ -177,9 +143,21 @@ class Rooster(Enemy):
                                 else: self.sprite_frequency_rooster += 1
                             self.random_move =- 1
                             return
-
                     for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
                         answer = chest.check_collision_left_wall(self.x, self.y, 
+                                                                self.x + self.width, self.y + self.height)
+                        if answer:
+                            if self.run_count == 3: 
+                                self.run_count = 0
+                            else:
+                                if self.sprite_frequency_rooster >= 10: 
+                                    self.run_count += 1
+                                    self.sprite_frequency_rooster = 0
+                                else: self.sprite_frequency_rooster += 1
+                            self.random_move =- 1
+                            return
+                    for box in boxes: #CHECK TOUCH RIGHT WALL OF BOX
+                        answer = box.check_collision_left_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
                             if self.run_count == 3: 
@@ -226,7 +204,7 @@ class Rooster(Enemy):
             self.vector_move = random.randint(0, 1)
             self.random_move = random.randint(50, 250)
     
-    def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECK DEATH ROOSTER
+    def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p, boxes): #CHECK DEATH ROOSTER
         if self.is_dead == False:
             for box in boxes:
                 answer = box.check_collision_bottom_wall(self.x, self.y, #CHECKING TOUCH CHEST
@@ -268,7 +246,7 @@ class Rooster(Enemy):
         randian = math.atan2(self.y - player.y, self.x - player.x)
         self.angle = (randian * 180 / math.pi) - 180
 
-    def dead_count(self): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
+    def dead_count(self, list_rooster): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         if self.death_count == 6:
             meat1 = Discarded_Item(x = self.x, y = self.y, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
             droped_resources.append(meat1)
@@ -278,9 +256,3 @@ class Rooster(Enemy):
                 self.death_count += 1
                 self.sprite_frequency_rooster = 0
             else: self.sprite_frequency_rooster += 1
-
-list_rooster = []
-
-rooster1 = Rooster(2025, 650, 63, 63, list_run_rooster[0], 3, 2, 0, 0, False, 0)
-
-list_rooster.append(rooster1)

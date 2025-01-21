@@ -1,6 +1,6 @@
-from .screen import blocks, list_of_clouds, list_trees, chests, boxes
+from .screen import blocks, list_of_clouds, list_trees, chests, boxes, list_enemy
 from .resourses import droped_resources
-from .enemy import list_enemy, list_feather
+from .enemy import list_feather
 
 def check_push_box(player, last_side): #CHECK PUSH BOX
     if last_side == 1:

@@ -1,6 +1,5 @@
 from ...main_classes import Enemy
 from ...resourses import droped_resources, Discarded_Item
-from ...screen import blocks, chests
 from ...interface import interface
 
 import random, math
@@ -25,14 +24,7 @@ class Frog(Enemy):
         self.move_bottom = False
         super().__init__(x, y, width, height, image, hp, speed)
 
-    def move(self, player): #MOVE JUMP
-        left_x_p = player.x
-        right_x_p = player.x + player.width
-        top_y_p = player.y
-        bottom_y_p = player.y + player.height
-        right_x = self.x + self.width
-        bottom_y = self.y + self.height
-
+    def move(self, player, blocks, chests, boxes): #MOVE JUMP
         if self.player_visibility:
             if player.hide == False:
                 if self.frequency_jump == 0:
@@ -48,47 +40,14 @@ class Frog(Enemy):
                 else:
                     self.frequency_jump -= 1
 
-        #top corner
-        if left_x_p + 20 <= self.x:
-            if top_y_p + 30 <= self.y:
-                if bottom_y_p - 5 >= self.y:
-                    if right_x_p - 15 >= self.x:
-                        player.damage_player()
+        if player.hide == False:
+            answer = player.check_collision_left(self.x, self.y, self.x + self.width, self.y + self.height)
+            if answer:
+                player.damage_player()
         
-        #middle (golden)
-        if left_x_p + 20 <= self.x:
-            if top_y_p + 30 >= self.y:
-                if bottom_y_p <= bottom_y:
-                    if right_x_p - 15 >= self.x:
-                        player.damage_player()
-                                    
-        #bottom corner
-        if left_x_p + 20 <= self.x:
-            if top_y_p + 30 <= bottom_y:
-                if bottom_y_p >= bottom_y:
-                    if right_x_p - 15 >= self.x:
-                        player.damage_player()
-        
-        #top corner
-        if left_x_p + 15 <= right_x:
-            if top_y_p + 30 <= self.y:
-                if bottom_y_p - 5 >= self.y:
-                    if right_x_p - 20 >= right_x:
-                        player.damage_player()
-        
-        #middle (golden)
-        if left_x_p + 15 <= right_x:
-            if top_y_p + 30 >= self.y:
-                if bottom_y_p <= bottom_y:
-                    if right_x_p - 20 >= right_x:
-                            player.damage_player()
-
-        #bottom corner                            
-        if left_x_p + 15 <= right_x:
-            if top_y_p + 30 <= bottom_y:
-                if bottom_y_p >= bottom_y:
-                    if right_x_p - 20 >= right_x:
-                        player.damage_player()
+            answer = player.check_collision_right(self.x, self.y, self.x + self.width, self.y + self.height)
+            if answer:
+                player.damage_player()
 
         if self.angle < 0:
             if self.angle == -135:
@@ -149,7 +108,7 @@ class Frog(Enemy):
     def check_floor(self):
         pass
 
-    def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECK DEATH CHICKEN
+    def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p, chests): #CHECK DEATH CHICKEN
         if self.is_dead == False:
             for chest in chests:
                 answer = chest.check_collision_bottom_wall(self.x, self.y, #CHECK CHEST FOR DEATH
@@ -188,7 +147,7 @@ class Frog(Enemy):
                                 interface[4].count += 1
 
 
-    def dead_count(self): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
+    def dead_count(self, list_frog): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         if self.death_count == 6:
             meat1 = Discarded_Item(x = self.x, y = self.y, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
             droped_resources.append(meat1)
@@ -198,9 +157,3 @@ class Frog(Enemy):
                 self.death_count += 1
                 self.sprite_frequency_frog = 0
             else: self.sprite_frequency_frog += 1
-
-list_frog = []
-
-frog1 = Frog(400, 660, 60, 60, "images/enemy/frog/idle/0.png", 3, 2, 2, 0, 0, False)
-
-list_frog.append(frog1)

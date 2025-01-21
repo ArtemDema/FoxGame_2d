@@ -107,4 +107,102 @@ class Hero(Enemy):
             hp.count -= 1
             self.timer_damage = 360
 
+    def check_collision_right(self, left_x_i, top_y_i, right_x_i, bottom_y_i): #CHECKING FOR TOUCHING THE RIGHT COLLISION
+        right_x = self.x + self.width
+        bottom_y = self.y + self.height
+
+        #top corner
+        if left_x_i <= right_x:
+            if top_y_i <= self.y:
+                if bottom_y_i >= self.y:
+                    if right_x_i >= right_x:
+                        return True
+        
+        #middle (golden)
+        if left_x_i <= right_x:
+            if top_y_i >= self.y:
+                if bottom_y_i <= bottom_y:
+                    if right_x_i >= right_x:
+                            return True
+
+        #bottom corner                            
+        if left_x_i <= right_x:
+            if top_y_i <= bottom_y:
+                if bottom_y_i >= bottom_y:
+                    if right_x_i >= right_x:
+                        return True
+    
+    def check_collision_left(self, left_x_i, top_y_i, right_x_i, bottom_y_i): #CHECKING FOR TOUCHING THE LEFT COLLISION
+        bottom_y = self.y + self.height
+        
+        #top corner
+        if left_x_i <= self.x:
+            if top_y_i <= self.y:
+                if bottom_y_i >= self.y:
+                    if right_x_i >= self.x:
+                        return True
+        
+        #middle (golden)
+        if left_x_i <= self.x:
+            if top_y_i >= self.y:
+                if bottom_y_i <= bottom_y:
+                    if right_x_i >= self.x:
+                        return True
+                                    
+        #bottom corner
+        if left_x_i <= self.x:
+            if top_y_i <= bottom_y:
+                if bottom_y_i >= bottom_y:
+                    if right_x_i >= self.x:
+                        return True
+    
+    def check_collision_top(self, left_x_i, top_y_i, right_x_i, bottom_y_i): #CHECKING FOR TOUCHING THE TOP COLLISION
+        right_x = self.x + self.width
+        
+        #left angle
+        if bottom_y_i >= self.y:
+            if left_x_i <= self.x:
+                if right_x_i >= self.x:
+                    if top_y_i <= self.y:
+                        return True
+
+        #middle (golden)
+        if bottom_y_i >= self.y:
+            if left_x_i >= self.x:
+                if right_x_i <= right_x:
+                    if top_y_i <= self.y:
+                        return True
+                                    
+        #right angle
+        if bottom_y_i >= self.y:
+            if left_x_i <= right_x:
+                if right_x_i >= right_x:
+                    if top_y_i <= self.y:
+                        return True
+
+    def check_collision_bottom(self, left_x_i, top_y_i, right_x_i, bottom_y_i): #CHECKING FOR TOUCHING THE BOTTOM COLLISION
+        right_x = self.x + self.width
+        bottom_y = self.y + self.height
+
+        #left angle
+        if bottom_y_i >= bottom_y:
+            if left_x_i <= self.x:
+                if right_x_i >= self.x:
+                    if top_y_i <= bottom_y:
+                        return True
+                        
+        #middle (golden)
+        if bottom_y_i >= bottom_y:
+            if left_x_i >= self.x:
+                if right_x_i <= right_x:
+                    if top_y_i <= bottom_y:
+                        return True
+        
+        #right angle
+        if bottom_y_i >= bottom_y:
+            if right_x_i >= right_x:
+                if left_x_i <= right_x:
+                    if top_y_i <= bottom_y:
+                        return True
+
 player = Hero(x = 600, y = 400, width = 80, height = 80, image=list_idle[0], hp = 3, speed = 4, strength_jump = 17)

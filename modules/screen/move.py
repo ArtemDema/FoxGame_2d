@@ -1,6 +1,6 @@
-from .map import blocks, list_trees, list_of_clouds,chests, boxes
+from .map import blocks, list_trees, list_of_clouds,chests, boxes, list_enemy
 from ..resourses import droped_resources
-from ..enemy import list_enemy, list_feather
+from ..enemy import list_feather
 
 def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHECK MOVE LEFT
     dict_return = {}

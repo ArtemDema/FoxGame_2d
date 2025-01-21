@@ -1,5 +1,4 @@
 from ...main_classes import Enemy
-from ...screen import blocks, chests
 from ...resourses import Discarded_Item, droped_resources
 from ...interface import interface
 
@@ -28,7 +27,7 @@ class Chicken(Enemy):
         self.idle_count = 0
         super().__init__(x, y, width, height, image, hp, speed)
 
-    def move(self, player): #FUNCTION MOVE
+    def move(self, player, blocks, chests, boxes): #FUNCTION MOVE
         if self.player_visibility:
             if self.random_move <= 0:
                 distance = player.x - self.x
@@ -64,6 +63,20 @@ class Chicken(Enemy):
                     
                     for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
                         answer = chest.check_collision_right_wall(self.x, self.y, 
+                                                                self.x + self.width, self.y + self.height)
+                        if answer:
+                            if self.run_count == 3: 
+                                self.run_count = 0
+                            else:
+                                if self.sprite_frequency_chicken >= 10: 
+                                    self.run_count += 1
+                                    self.sprite_frequency_chicken = 0
+                                else: self.sprite_frequency_chicken += 1
+                            self.random_move =- 1
+                            return
+                    
+                    for box in boxes: #CHECK TOUCH RIGHT WALL OF BOX
+                        answer = box.check_collision_right_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
                             if self.run_count == 3: 
@@ -123,6 +136,20 @@ class Chicken(Enemy):
                                 else: self.sprite_frequency_chicken += 1
                             self.random_move =- 1
                             return
+                        
+                    for box in boxes: #CHECK TOUCH RIGHT WALL OF BOX
+                        answer = box.check_collision_left_wall(self.x, self.y, 
+                                                                self.x + self.width, self.y + self.height)
+                        if answer:
+                            if self.run_count == 3: 
+                                self.run_count = 0
+                            else:
+                                if self.sprite_frequency_chicken >= 10: 
+                                    self.run_count += 1
+                                    self.sprite_frequency_chicken = 0
+                                else: self.sprite_frequency_chicken += 1
+                            self.random_move =- 1
+                            return
 
                     if answer != True:
                         self.x += self.speed
@@ -158,10 +185,10 @@ class Chicken(Enemy):
             self.vector_move = random.randint(0, 1)
             self.random_move = random.randint(50, 250)
 
-    def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECK DEATH CHICKEN
+    def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p, boxes): #CHECK DEATH CHICKEN
         if self.is_dead == False:
-            for chest in chests: 
-                answer = chest.check_collision_bottom_wall(self.x, self.y, #CHECK CHEST FOR DEATH
+            for box in boxes: 
+                answer = box.check_collision_bottom_wall(self.x, self.y, #CHECK BOX FOR DEATH
                                                         self.x + self.width, self.y + self.height)
                 if answer:
                     self.is_dead = True
@@ -197,7 +224,7 @@ class Chicken(Enemy):
                                 interface[5].count += 1
 
 
-    def dead_count(self): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
+    def dead_count(self, list_chicken): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         if self.death_count == 6:
             meat1 = Discarded_Item(x = self.x, y = self.y, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
             droped_resources.append(meat1)
@@ -207,10 +234,3 @@ class Chicken(Enemy):
                 self.death_count += 1
                 self.sprite_frequency_chicken = 0
             else: self.sprite_frequency_chicken += 1
-
-
-list_chicken = []
-
-chicken1 = Chicken(500, 680, 40, 50, "images/enemy/chicken/run/0.png", 3, 2, 2, 0, 0, 0, 0, False, 0)
-
-list_chicken.append(chicken1)
