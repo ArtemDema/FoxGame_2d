@@ -5,6 +5,7 @@ from ..resourses import droped_resources
 from ..interface import interface
 from .render_enemy import render_enemy
 from ..enemy import list_feather
+from .load_all_images import list_idle_with_chest, list_idle, list_jump, list_jump_with_chest, list_crouch, list_run_with_chest, list_run
 
 pygame.init()
 
@@ -63,7 +64,7 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
 
     #check for drawing in a idle
     if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False and hide == False:
-        player.idle(idle_count, screen, last_side, with_chest)
+        player.idle(idle_count, screen, last_side, with_chest, list_idle_with_chest, list_idle)
         if number_for_choose_sprite == 10:
             if idle_count != 3:
                 return_dict["idle_count"] = idle_count + 1
@@ -75,15 +76,15 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
 
     #Jump drawing check
     elif move_jump: 
-        player.jump(screen, last_side)
+        player.jump(screen, last_side, list_jump)
     
     #check falling rendering
     elif move_bottom:
-        player.fall(screen, last_side, with_chest)
+        player.fall(screen, last_side, with_chest, list_jump_with_chest, list_jump)
 
     #check for squat rendering
     elif move_crouch:
-        player.crouch(crouch_count, screen, last_side)
+        player.crouch(crouch_count, screen, last_side, list_crouch)
         if number_for_choose_sprite == 10:
             if crouch_count == 0:
                 return_dict["crouch_count"] = crouch_count + 1
@@ -97,7 +98,7 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
 
     #check for moving rendering
     elif move_left or move_right:
-        player.run(run_count, screen, last_side, with_chest)
+        player.run(run_count, screen, last_side, with_chest, list_run_with_chest, list_run)
         if number_for_choose_sprite == 10:
             if run_count != 5:
                 return_dict["run_count"] = run_count + 1

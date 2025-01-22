@@ -1,14 +1,5 @@
 from ..main_classes import Settings
 
-list_bubble_tree = ["images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0000.png","images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0001.png",
-                    "images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0002.png","images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0003.png",
-                    "images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0004.png","images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0005.png",
-                    "images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0006.png","images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0007.png",
-                    "images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0008.png","images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0009.png",
-                    "images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0010.png"]
-
-
-
 class Tree(Settings):
     def __init__(self, x, y, width, height, image, random_egg, sprite_frequency_tree):
         self.ramdom_egg = random_egg
@@ -16,9 +7,8 @@ class Tree(Settings):
         self.sprite_frequency_tree = sprite_frequency_tree
         super().__init__(x, y, width, height, image)
 
-    def idle(self): #DRAWING A IDLE
+    def idle(self, list_bubble_tree): #DRAWING A IDLE
             self.image = list_bubble_tree[self.idle_count]
-            self.load_image()
             if self.idle_count == 10: 
                 self.idle_count = 0
             else:

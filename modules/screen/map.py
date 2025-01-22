@@ -45,7 +45,9 @@ for idy, row in enumerate(map):
             blocks.append(block)
 
         elif column == "2":
-            tree = Tree(x = 50 * idx - 5, y = 50 * idy - 140, width = 160, height = 190, image ="images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0000.png", random_egg = random.randint(0, 1), sprite_frequency_tree=random.randint(0, 10))
+            tree = Tree(x = 50 * idx - 5, y = 50 * idy - 140, width = 160, height = 190, 
+                        image ="images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0000.png", 
+                        random_egg = random.randint(0, 1), sprite_frequency_tree=random.randint(0, 10))
             list_trees.append(tree)
 
         elif column == "c":

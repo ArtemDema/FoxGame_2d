@@ -30,7 +30,7 @@ game_run = True
 while game_run:
     tick.tick(60) #set the number of fps
 
-    # print(len(mod.list_feather))
+    print(tick.get_fps())
 
     keys = pygame.key.get_pressed() #getting keys to process pressed keys
 
@@ -69,7 +69,7 @@ while game_run:
 
     #TREE--------------------------------------------
     for tree in mod.list_trees:
-        tree.idle()
+        tree.idle(mod.list_bubble_tree)
         answer = tree.drop_egg(mod.player)
         if answer:
             egg1 = mod.Discarded_Item(x = tree.x + 70, y = tree.y - 30, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")

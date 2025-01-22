@@ -31,34 +31,28 @@ class Enemy(Settings):
     def idle(self, idle_count, screen, last_side, list_idle): #DRAWING A IDLE
         if last_side == 0:
             self.image = list_idle[idle_count]
-            self.load_image()
             self.image = pygame.transform.flip(self.image, 1, 0)
             self.draw_image(screen)
         else:
             self.image = list_idle[idle_count]
-            self.load_image()
             self.draw_image(screen)
 
     def run(self, run_count, screen, last_side, list_run): #DRAWING A RUN
         if last_side == 0:
             self.image = list_run[run_count]
-            self.load_image()
             self.image = pygame.transform.flip(self.image, 1, 0)
             self.draw_image(screen)
         else:
             self.image = list_run[run_count]
-            self.load_image()
             self.draw_image(screen)
 
     def fall(self, screen, last_side, list_jump): #DRAWING A FALL
         if last_side == 0:
             self.image = list_jump[1]
-            self.load_image()
             self.image = pygame.transform.flip(self.image, 1, 0)
             self.draw_image(screen)
         else:
             self.image = list_jump[1]
-            self.load_image()
             self.draw_image(screen)
     
     def death(self, death_count, screen: pygame.Surface, list_death): #DRAWING A DEATH

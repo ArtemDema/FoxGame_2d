@@ -2,6 +2,7 @@ from ..enemy import list_run_rooster, list_feather
 from ..enemy import list_run_chicken, list_animation_death, list_jump_frog, list_idle_frog, list_animation_death_birds, list_idle_chicken, list_idle_rooster
 from .screen import screen
 from .map import list_frog, list_chicken, list_rooster
+from .load_all_images import list_run_rooster, list_idle_rooster, list_idle_frog, list_jump_frog, list_run_chicken, list_idle_chicken
 
 
 def render_enemy():

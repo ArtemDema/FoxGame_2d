@@ -29,7 +29,7 @@ class Modal_Window(Settings):
         if claim == "nothing":
             text = self.what_claim.render(claim, True, (255, 255, 255))
             self.image = "images/resources/nothing.jpg"
-            self.load_image()
+            self.load_image() 
             screen.blit(text, (WIDTH // 2 - 70, HEIGHT // 2 + 50))
         elif claim == "meat":
             self.image = "images/resources/meat.png"
