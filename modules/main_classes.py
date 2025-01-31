@@ -4,6 +4,9 @@ import os
 pygame.init()
 
 class Settings:
+    """
+    ### A class that contains all base values
+    """
     def __init__(self, x, y, width, height, image):
         self.x = x
         self.y = y
@@ -23,6 +26,9 @@ class Settings:
 
 
 class Enemy(Settings):
+    """
+    ### Class for enemies
+    """
     def __init__(self, x, y, width, height, image, hp, speed):
         self.hp = hp
         self.speed = speed
@@ -70,12 +76,14 @@ class Enemy(Settings):
             self.y += player.speed
 
     def player_visibility_zone(self, player):
+        #left
         if player.x >= self.x - 350:
             if player.x <= self.x:
                 if player.y <= self.y + self.height:
                     if player.y >= self.y - 70:
                         return True
                 
+        #right
         if player.x <= self.x + self.width + 350:
             if player.x >= self.x + self.width:
                 if player.y <= self.y + self.height:
@@ -84,6 +92,9 @@ class Enemy(Settings):
         return False
 
 class Block(Settings):
+    """
+    ### Class for create blocks with check collision function
+    """
     def __init__(self, x, y, width, height, image):
         super().__init__(x, y, width, height, image)
 

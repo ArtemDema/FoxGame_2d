@@ -3,6 +3,9 @@ from ..resourses import droped_resources
 from ..enemy import list_feather
 
 def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHECK MOVE LEFT
+    """
+    ### Checking blocks for moving player to the left side
+    """
     dict_return = {}
     if with_box:
         for block in blocks:
@@ -90,6 +93,9 @@ def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHEC
     return dict_return
 
 def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH): #CHECK MOVE RIGHT
+    """
+    ### Checking blocks for moving player to the right side
+    """
     dict_return = {}
     if with_box:
         for block in blocks:

@@ -3,6 +3,9 @@ from .resourses import droped_resources
 from .enemy import list_feather
 
 def check_push_box(player, last_side): #CHECK PUSH BOX
+    """
+    ### The name speaks for itself
+    """
     if last_side == 1:
         for box in boxes:
             answer = box.check_collision_left_wall(player.x, player.y, 
@@ -18,6 +21,9 @@ def check_push_box(player, last_side): #CHECK PUSH BOX
     return False
 
 def check_jump(player_x, player_y, player_width, player_height, player_strength_jump, blocks, player_speed): #CHECK JUMP
+    """
+    ### Checking blocks for moving player to the up(jump) side
+    """
     return_dict = {}
     if player_strength_jump != 0:
             for block in blocks:
@@ -62,6 +68,9 @@ def check_jump(player_x, player_y, player_width, player_height, player_strength_
         return return_dict
     
 def gravity(player, move_jump): #GRAVITY PLAYER
+    """
+    ### Player gravity
+    """
     list_return = {}
     for block in blocks:
         answer_fall = block.check_collision_top_wall(player.x, player.y, #checking whether the player is standing on some block

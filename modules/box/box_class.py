@@ -4,6 +4,9 @@ from ..resourses import droped_resources, Discarded_Item
 import math, random
 
 class Box(Block):
+    """
+    ### Class of boxes with open, hide and push functions
+    """
     def __init__(self, x, y, width, height, image, open_box):
         self.open_box = open_box
         self.random_key = random.randint(0, 1)

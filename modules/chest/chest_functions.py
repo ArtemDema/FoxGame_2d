@@ -6,6 +6,9 @@ import random
 chests = []
 
 class Chest(Block):
+    """
+    ### Class of chests with open, hide functions
+    """
     def __init__(self, x, y, width, height, image, open_chest):
         self.open_chest = open_chest
         self.hide_in_him = False

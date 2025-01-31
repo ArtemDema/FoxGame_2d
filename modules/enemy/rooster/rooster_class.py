@@ -12,6 +12,9 @@ list_run_rooster = ["images/enemy/rooster/run/0.png", "images/enemy/rooster/run/
                     "images/enemy/rooster/run/2.png", "images/enemy/rooster/run/3.png"]
 
 class Rooster(Enemy):
+    """
+    ### Rooster class with aggressive character
+    """
     def __init__(self, x, y, width, height, image, hp, speed, vector_move, sprite_frequency_rooster, is_dead, death_count):
         self.vector_move = vector_move
         self.run_count = 0
@@ -27,7 +30,6 @@ class Rooster(Enemy):
         super().__init__(x, y, width, height, image, hp, speed)
 
     def move(self, player, blocks, chests, boxes): #RUN ROOSTER
-        self.throw_rooster_feather(player)
         if self.player_visibility:
             if player.hide == False:
                 distance = player.x - self.x
@@ -35,6 +37,7 @@ class Rooster(Enemy):
                     self.random_move = 75
                     self.vector_move = 0
                     if self.timer_throw_feather <= 0:
+                        self.throw_rooster_feather(player)
                         feather = Feather(self.x, self.y + (self.height // 2), 25, 25, "images/enemy/rooster/feather/0.png", self.angle)
                         feather.image = pygame.transform.rotate(feather.image, self.angle - 240)
                         list_feather.append(feather)
@@ -45,6 +48,7 @@ class Rooster(Enemy):
                     self.random_move = 75
                     self.vector_move = 1
                     if self.timer_throw_feather <= 0:
+                        self.throw_rooster_feather(player)
                         feather = Feather(self.x, self.y + (self.height // 2) + 3, 25, 25, "images/enemy/rooster/feather/0.png", self.angle)
                         feather.image = pygame.transform.rotate(feather.image, self.angle - 200)
                         list_feather.append(feather)

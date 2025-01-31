@@ -13,6 +13,9 @@ list_run_chicken = ["images/enemy/chicken/run/0.png", "images/enemy/chicken/run/
 list_jump = []
 
 class Chicken(Enemy):
+    """
+    ### Chicken class
+    """
     def __init__(self, x, y, width, height, image, hp, speed, 
                  vector_move, run_count, sprite_frequency_chicken,
                  random_idle, random_move, is_dead, death_count):

@@ -2,6 +2,9 @@ from ...main_classes import Enemy
 import math
 
 class Feather(Enemy):
+    """
+    ### Class of feather
+    """
     def __init__(self, x, y, width, height, image, angle):
         self.angle = angle
         self.is_dead = False

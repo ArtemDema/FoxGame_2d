@@ -13,6 +13,9 @@ with_box = False
 push_box = False
 
 class Hero(Enemy):
+    """
+    ### Class of main person
+    """
     def __init__(self, x, y, width, height, image, hp, speed, strength_jump):
         self.strength_jump = strength_jump
         self.timer_damage = 0

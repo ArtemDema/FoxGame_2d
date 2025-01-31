@@ -20,7 +20,7 @@ crouch_count = 0
 #sprite change frequency
 number_for_choose_sprite = 10
 #getting information from the last session
-info = mod.get_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
+info = mod.get_info()
 WIDTH = info["width"]
 HEIGHT = info["height"]
 mod.player.hp = info["hp"]
@@ -30,7 +30,7 @@ game_run = True
 while game_run:
     tick.tick(60) #set the number of fps
 
-    print(tick.get_fps())
+    # print(tick.get_fps())
 
     keys = pygame.key.get_pressed() #getting keys to process pressed keys
 
@@ -81,7 +81,7 @@ while game_run:
     for enemy in mod.list_enemy:
         enemy.check_death(mod.player.x, mod.player.y, mod.player.x + mod.player.width, mod.player.y + mod.player.height, mod.chests) #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
         if enemy.is_dead == False:
-            enemy.player_visibility = enemy.player_visibility_zone(mod.player)
+            enemy.player_visibility = enemy.player_visibility_zone(mod.player, mod.blocks, mod.chests, mod.boxes)
             enemy.move(mod.player, mod.blocks, mod.chests, mod.boxes) #ENEMY MOVE
 
     if len(mod.list_feather) != 0:
@@ -233,7 +233,7 @@ while game_run:
         if "heart_count" in return_dict: mod.hp.count = return_dict["heart_count"]
     #--------------------------------------------
 
-    #DRAWING--------------------------------------------
+    #RENDER--------------------------------------------
     return_dict = mod.render(mod.move_left, mod.move_right, mod.move_jump, mod.move_crouch, mod.move_bottom, mod.screen, #DRAWING EVERYTHING
                              mod.player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, mod.player.hide, mod.with_box)
     if "run_count" in return_dict: run_count = return_dict["run_count"]

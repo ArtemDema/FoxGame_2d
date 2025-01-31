@@ -10,6 +10,9 @@ list_jump_frog = ["images/enemy/frog/jump/0.png","images/enemy/frog/jump/1.png"]
 
 
 class Frog(Enemy):
+    """
+    ### Class of frogs with aggressive character
+    """
     def __init__(self, x, y, width, height, image, hp, speed, 
                  vector_move, idle_count, sprite_frequency_frog, is_dead):
         self.vector_move = vector_move
@@ -20,11 +23,12 @@ class Frog(Enemy):
         self.is_dead = is_dead
         self.death_count = 0
         self.player_visibility = False
-        self.frequency_jump = 60
+        self.frequency_jump = 40
         self.move_bottom = False
         super().__init__(x, y, width, height, image, hp, speed)
 
     def move(self, player, blocks, chests, boxes): #MOVE JUMP
+        self.check_state(blocks)
         if self.player_visibility:
             if player.hide == False:
                 if self.frequency_jump == 0:
@@ -36,7 +40,7 @@ class Frog(Enemy):
                         else:
                             self.angle = -45
                             self.vector_move = 0
-                        self.frequency_jump = 60
+                        self.frequency_jump = 40
                 else:
                     self.frequency_jump -= 1
 
@@ -50,37 +54,49 @@ class Frog(Enemy):
                 player.damage_player()
 
         if self.angle < 0:
-            if self.angle == -135:
-                if self.vector_move == 1:
+            if self.frequency_jump <= 0:
+                if self.angle == -135:
+                    if self.vector_move == 1:
 
-                    for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
-                        answer = block.check_collision_top_wall(self.x - 55, self.y, self.x + self.width - 55, self.y + self.height + 20)
-                        if answer:
-                            break
+                        for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
+                            answer = block.check_collision_top_wall(self.x - 55, self.y, self.x + self.width - 55, self.y + self.height + 20)
+                            if answer == None:
+                                answer = block.check_collision_top_wall(self.x - 55, self.y + 50, self.x + self.width - 55, self.y + self.height + 70)
+                            if answer:
+                                break
+
                         
-                    if answer:
-                        self.x = self.x + 90 * math.cos(self.angle * (math.pi / 180))
-                        self.y = self.y + 90 * math.sin(self.angle * (math.pi / 180))
-                        self.angle = 0
+                        if answer:
+                            self.x = self.x + 70 * math.cos(self.angle * (math.pi / 180))
+                            self.y = self.y + 70 * math.sin(self.angle * (math.pi / 180))
+                            self.angle = 0
+                            self.frequency_jump = 40
+                        else:
+                            self.angle = 0
                     else:
                         self.angle = 0
                 else:
-                    self.angle = 0
+                    if self.vector_move == 0:
+                        for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
+                            answer = block.check_collision_top_wall(self.x + 55, self.y, self.x + self.width + 55, self.y + self.height + 20)
+                            if answer == None:
+                                answer = block.check_collision_top_wall(self.x + 55, self.y + 50, self.x + self.width + 55, self.y + self.height + 70)
+                            if answer:
+                                break
+                            
+                        if answer:
+                            self.x = self.x + 70 * math.cos(self.angle * (math.pi / 180))
+                            self.y = self.y + 70 * math.sin(self.angle * (math.pi / 180))
+                            self.angle = 0
+                            self.frequency_jump = 40
+                        else:
+                            self.angle = 0
+                    else:
+                        self.angle = 0
             else:
-                if self.vector_move == 0:
-                    for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
-                        answer = block.check_collision_top_wall(self.x + 55, self.y, self.x + self.width + 55, self.y + self.height + 20)
-                        if answer:
-                            break
-                        
-                    if answer:
-                        self.x = self.x + 90 * math.cos(self.angle * (math.pi / 180))
-                        self.y = self.y + 90 * math.sin(self.angle * (math.pi / 180))
-                        self.angle = 0
-                    else:
-                        self.angle = 0
-                else:
-                    self.angle = 0
+                self.frequency_jump -= 1
+
+
 
         elif self.random_idle >= 0:
             self.random_idle -= 1
@@ -105,8 +121,16 @@ class Frog(Enemy):
             if random_antion == 0: self.angle = -135
             else: self.angle = -45
 
-    def check_floor(self):
-        pass
+    def check_state(self, blocks):
+        for block in blocks:
+            answer = block.check_collision_top_wall(self.x - 12, self.y, self.x + self.width + 12, self.y + self.height)
+            if answer:
+                break
+        
+        if answer:
+            self.move_bottom = False
+        else:
+            self.move_bottom = True
 
     def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p, chests): #CHECK DEATH CHICKEN
         if self.is_dead == False:

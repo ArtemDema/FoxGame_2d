@@ -1,6 +1,9 @@
 from ..main_classes import Settings
 
 class Tree(Settings):
+    """
+    ### Class of tree
+    """
     def __init__(self, x, y, width, height, image, random_egg, sprite_frequency_tree):
         self.ramdom_egg = random_egg
         self.idle_count = 0

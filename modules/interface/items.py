@@ -5,6 +5,9 @@ import pygame
 interface = []
 
 class Column_Meat_Egg_Hp_Key(Settings):
+    """
+    ### Class for viewing items of player
+    """
     def __init__(self, x, y, width, height, image, count):
         self.count = count
         super().__init__(x, y, width, height, image)

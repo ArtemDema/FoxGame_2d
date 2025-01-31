@@ -6,6 +6,9 @@ pygame.init()
 
 
 class Modal_Window(Settings):
+    """
+    ### Class for creating modal windows
+    """
     def __init__(self, text):
         self.text = text
         self.you_claim = pygame.font.Font(None, 56)

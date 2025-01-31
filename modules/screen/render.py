@@ -11,6 +11,9 @@ pygame.init()
 
 def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #DRAWING ALL
            player, last_side, number_for_choose_sprite, idle_count, crouch_count, run_count, hide, with_chest):
+    """
+    ### Render EVERYTHING what will be on the screen
+    """
     
     return_dict = {}
 

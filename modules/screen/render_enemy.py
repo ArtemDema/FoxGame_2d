@@ -6,6 +6,9 @@ from .load_all_images import list_run_rooster, list_idle_rooster, list_idle_frog
 
 
 def render_enemy():
+    """
+    ### Render all enemy sprites
+    """
     for rooster in list_rooster:
         if rooster.is_dead:
             rooster.death(rooster.death_count, screen, list_animation_death_birds) #RENDER DEATH SPRITE
@@ -37,7 +40,10 @@ def render_enemy():
             frog.death(frog.death_count, screen, list_animation_death) #RENDER DEATH SPRITE
             frog.dead_count(list_frog) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         else:
-            if frog.angle > 0:
-                frog.fall(screen, frog.vector_move, list_jump_frog) #RENDER FALL SPRITE
+            if frog.angle == 0:
+                if frog.move_bottom:
+                    frog.fall(screen, frog.vector_move, list_jump_frog) #RENDER FALL SPRITE
+                else:
+                    frog.idle(frog.idle_count, screen, frog.vector_move, list_idle_frog) #RENDER IDLE SPRITE
             else:
                 frog.idle(frog.idle_count, screen, frog.vector_move, list_idle_frog) #RENDER IDLE SPRITE

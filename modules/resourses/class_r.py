@@ -3,6 +3,9 @@ from ..main_classes import Block
 droped_resources = []
 
 class Discarded_Item(Block):
+    """
+    ### Class of discarded items
+    """
     def __init__(self, x, y, width, height, image, whatIsThis):
         self.whatIsThis = whatIsThis
         super().__init__(x,y,width,height,image)
