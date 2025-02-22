@@ -52,6 +52,14 @@ class Modal_Window(Settings):
         self.width = 225
         self.load_image()
         screen.blit(self.image, (self.x_continue, self.y_continue))
+    
+    def check_click(self, position_mouse_x, position_mouse_y):
+        if position_mouse_x >= self.x_continue:
+            if position_mouse_x <= self.x_continue + self.width:
+                if position_mouse_y >= self.y_continue:
+                    if position_mouse_y <= self.y_continue + self.height:
+                        return False
+        return True
         
 
 

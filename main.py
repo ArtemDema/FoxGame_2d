@@ -11,6 +11,7 @@ last_side = 0
 reload_chest = 0
 box_player = 0
 modal_window_info = False
+pause = False
 
 #counters (elements for the array) for changing the sprite:
 idle_count = 0
@@ -26,7 +27,8 @@ HEIGHT = info["height"]
 mod.player.hp = info["hp"]
 mod.hp.count = mod.player.hp
 
-game_run = True
+#show menu
+game_run = mod.main_menu.menu(screen = mod.screen)
 while game_run:
     tick.tick(60) #set the number of fps
 
@@ -45,11 +47,9 @@ while game_run:
         
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if modal_window_info:
-                if position_mouse[0] >= mod.modal_w.x_continue:
-                    if position_mouse[0] <= mod.modal_w.x_continue + mod.modal_w.width:
-                        if position_mouse[1] >= mod.modal_w.y_continue:
-                            if position_mouse[1] <= mod.modal_w.y_continue + mod.modal_w.height:
-                                modal_window_info = False
+                modal_window_info = mod.modal_w.check_click(position_mouse[0], position_mouse[1])
+            if pause:
+                pause = continue_b.check_click(position_mouse_x = position_mouse[0], position_mouse_y = position_mouse[1])
 
     #CLOUD--------------------------------------------
     if len(mod.list_of_clouds) != 10:
@@ -81,7 +81,7 @@ while game_run:
     for enemy in mod.list_enemy:
         enemy.check_death(mod.player.x, mod.player.y, mod.player.x + mod.player.width, mod.player.y + mod.player.height, mod.chests) #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
         if enemy.is_dead == False:
-            enemy.player_visibility = enemy.player_visibility_zone(mod.player, mod.blocks, mod.chests, mod.boxes)
+            enemy.player_visibility = enemy.player_visibility_zone(mod.player)
             enemy.move(mod.player, mod.blocks, mod.chests, mod.boxes) #ENEMY MOVE
 
     if len(mod.list_feather) != 0:
@@ -246,5 +246,16 @@ while game_run:
     if modal_window_info:
         mod.modal_w.print_text_on_screen(mod.WIDTH, mod.HEIGHT, mod.screen, claim)
         pygame.time.delay(120)
+    #--------------------------------------------
+
+    #Pause--------------------------------------------
+    if keys[pygame.K_ESCAPE]:
+        pause = True
+    if pause:
+        pygame.time.delay(120)
+        continue_b = mod.Button(525, 250, 190, 100, "images/resources/continue.png")
+        continue_b.screen_darkness(mod.screen)
+        continue_b.show_image(mod.screen)
+    #--------------------------------------------
     
     pygame.display.flip()

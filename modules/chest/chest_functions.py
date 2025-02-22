@@ -25,17 +25,17 @@ class Chest(Block):
                     self.open_chest = True
                     list_return[0] = True
                     if random_n == 1:
-                        egg = Discarded_Item(x = self.x + (self.width / 2), y = self.y + self.width + 10, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+                        egg = Discarded_Item(x = self.x + (self.width / 2) - 5, y = self.y + self.height + 15, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
                         droped_resources.append(egg)
                         list_return[1] = "egg"
                         return list_return
                     elif random_n == 2:
-                        meat = Discarded_Item(x = self.x + (self.width / 2), y = self.y + self.width + 10, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
+                        meat = Discarded_Item(x = self.x + (self.width / 2), y = self.y + self.height + 15, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
                         droped_resources.append(meat)
                         list_return[1] = "meat"
                         return list_return
                     elif random_n == 3:
-                        heart = Discarded_Item(x = self.x + (self.width / 2), y = self.y + self.width + 10, width = 30, height = 25, image = "images/resources/heart.png", whatIsThis= "heart")
+                        heart = Discarded_Item(x = self.x + (self.width / 2), y = self.y + self.height + 15, width = 30, height = 25, image = "images/resources/heart.png", whatIsThis= "heart")
                         droped_resources.append(heart)
                         list_return[1] = "heart"
                         return list_return
@@ -48,17 +48,17 @@ class Chest(Block):
                     self.open_chest = True
                     list_return[0] = True
                     if random_n == 1:
-                        egg = Discarded_Item(x = self.x - 10, y = self.y, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+                        egg = Discarded_Item(x = self.x - 15, y = self.y, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
                         droped_resources.append(egg)
                         list_return[1] = "egg"
                         return list_return
                     elif random_n == 2:
-                        meat = Discarded_Item(x = self.x - 10, y = self.y, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
+                        meat = Discarded_Item(x = self.x - 15, y = self.y, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
                         droped_resources.append(meat)
                         list_return[1] = "meat"
                         return list_return
                     elif random_n == 3:
-                        heart = Discarded_Item(x = self.x - 10, y = self.y, width = 30, height = 25, image = "images/resources/heart.png", whatIsThis= "heart")
+                        heart = Discarded_Item(x = self.x - 15, y = self.y, width = 30, height = 25, image = "images/resources/heart.png", whatIsThis= "heart")
                         droped_resources.append(heart)
                         list_return[1] = "heart"
                         return list_return
@@ -71,17 +71,17 @@ class Chest(Block):
                     self.open_chest = True
                     list_return[0] = True
                     if random_n == 1:
-                        egg = Discarded_Item(x = self.x + self.width + 10, y = self.y, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+                        egg = Discarded_Item(x = self.x + self.width + 25, y = self.y - 10, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
                         droped_resources.append(egg)
                         list_return[1] = "egg"
                         return list_return
                     elif random_n == 2:
-                        meat = Discarded_Item(x = self.x + self.width + 10, y = self.y, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
+                        meat = Discarded_Item(x = self.x + self.width + 25, y = self.y - 10, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
                         droped_resources.append(meat)
                         list_return[1] = "meat"
                         return list_return
                     elif random_n == 3:
-                        heart = Discarded_Item(x = self.x + self.width + 10, y = self.y, width = 30, height = 25, image = "images/resources/heart.png", whatIsThis= "heart")
+                        heart = Discarded_Item(x = self.x + self.width + 25, y = self.y - 10, width = 30, height = 25, image = "images/resources/heart.png", whatIsThis= "heart")
                         droped_resources.append(heart)
                         list_return[1] = "heart"
                         return list_return
@@ -94,17 +94,17 @@ class Chest(Block):
                     self.open_chest = True
                     list_return[0] = True
                     if random_n == 1:
-                        egg = Discarded_Item(x = self.x + (self.width / 2), y = self.y - 20, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+                        egg = Discarded_Item(x = self.x + 15, y = self.y - 40, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
                         droped_resources.append(egg)
                         list_return[1] = "egg"
                         return list_return
                     elif random_n == 2:
-                        meat = Discarded_Item(x = self.x + (self.width / 2), y = self.y - 20, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
+                        meat = Discarded_Item(x = self.x + 15, y = self.y - 40, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
                         droped_resources.append(meat)
                         list_return[1] = "meat"
                         return list_return
                     elif random_n == 3:
-                        heart = Discarded_Item(x = self.x + (self.width / 2), y = self.y - 20, width = 30, height = 25, image = "images/resources/heart.png", whatIsThis= "heart")
+                        heart = Discarded_Item(x = self.x + 15, y = self.y - 40, width = 30, height = 25, image = "images/resources/heart.png", whatIsThis= "heart")
                         droped_resources.append(heart)
                         list_return[1] = "heart"
                         return list_return
