@@ -50,6 +50,9 @@ while game_run:
                 modal_window_info = mod.modal_w.check_click(position_mouse[0], position_mouse[1])
             if pause:
                 pause = continue_b.check_click(position_mouse_x = position_mouse[0], position_mouse_y = position_mouse[1])
+                game_run = exit_b.check_click(position_mouse_x = position_mouse[0], position_mouse_y = position_mouse[1])
+                if game_run ==False:
+                    mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
 
     #CLOUD--------------------------------------------
     if len(mod.list_of_clouds) != 10:
@@ -254,8 +257,10 @@ while game_run:
     if pause:
         pygame.time.delay(120)
         continue_b = mod.Button(525, 250, 190, 100, "images/resources/continue.png")
+        exit_b = mod.Button(525, 450, 190, 100, "images/resources/exit.png")
         continue_b.screen_darkness(mod.screen)
         continue_b.show_image(mod.screen)
+        exit_b.show_image(mod.screen)
     #--------------------------------------------
     
     pygame.display.flip()

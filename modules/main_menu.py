@@ -25,10 +25,12 @@ class Button(Settings):
 
 def menu(screen: pygame.Surface):
     menu_run = True
-    button1 = Button(525, 250, 190, 100, image = "images/resources/continue.png")
+    button1 = Button(525, 250, 190, 100, image = "images/resources/play.png")
+    exit1 = Button(525, 450, 190, 100, image = "images/resources/exit.png")
     while menu_run:
         screen.fill((0, 0, 0))
         button1.show_image(screen)
+        exit1.show_image(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -42,9 +44,8 @@ def menu(screen: pygame.Surface):
                 menu_run = button1.check_click(position_mouse[0], position_mouse[1])
                 if menu_run == False:
                     return True
-        
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            pass
-
+                menu_run = exit1.check_click(position_mouse[0], position_mouse[1])
+                if menu_run == False:
+                    return False
 
         pygame.display.flip()
