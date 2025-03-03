@@ -32,6 +32,9 @@ game_run = mod.main_menu.menu(screen = mod.screen)
 while game_run:
     tick.tick(60) #set the number of fps
 
+    if mod.player.hp <= 0:
+        game_run = False
+
     # print(tick.get_fps())
 
     keys = pygame.key.get_pressed() #getting keys to process pressed keys
@@ -55,8 +58,8 @@ while game_run:
                     mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
 
     #CLOUD--------------------------------------------
-    if len(mod.list_of_clouds) != 10:
-      for i in range(10 - len(mod.list_of_clouds)):
+    if len(mod.list_of_clouds) < 5:
+      for i in range(5 - len(mod.list_of_clouds)):
           cloud = mod.Cloud(x = 1430, 
                             y = -25, 
                             width = random.randint(80, 180),
@@ -93,7 +96,7 @@ while game_run:
     #--------------------------------------------
 
     #CHEST AND BOX--------------------------------------------
-      #OPEN AND HIDE IN CHEST AND BOX
+      #OPEN AND HIDE IN CHEST
     if keys[pygame.K_e]:
         if reload_chest == 2:
             if mod.with_box == False:
@@ -106,17 +109,6 @@ while game_run:
                     elif answer[0] == False: 
                         mod.player.hide = True
                         chest.hide_in_him = True
-
-                for box in mod.boxes: #CHECKING AN ATTEMPT TO OPEN A BOX
-                    answer = box.check_open(mod.key.count, mod.player) #
-                    if answer[0] == True: 
-                        mod.key.count -= 1
-                        modal_window_info = True
-                        claim = answer[1]
-                    elif answer[0] == False: 
-                        mod.player.hide = True
-                        box.hide_in_him = True
-                reload_chest = 0
         else:
             reload_chest += 1
       #UP THE BOX
@@ -128,9 +120,15 @@ while game_run:
                     mod.with_box = True
                     box_player = box
                     if box.random_key == 1:
-                        key1 = mod.Discarded_Item(x = box.x, y = box.y, width = 35, height = 25, image = "images/resources/key.png", whatIsThis= "key")
-                        mod.droped_resources.append(key1)
-                        box.random_key = 0
+                        random_d = random.randint(0, 4)
+                        if random_d == 1:
+                            key1 = mod.Discarded_Item(x = box.x, y = box.y, width = 35, height = 25, image = "images/resources/key.png", whatIsThis= "key")
+                            mod.droped_resources.append(key1)
+                            box.random_key = 0
+                        else:
+                            egg1 = mod.Discarded_Item(x = box.x, y = box.y, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+                            mod.droped_resources.append(egg1)
+                            box.random_key = 0
     if mod.with_box:
         box_player.x = mod.player.x + 18
         box_player.y = mod.player.y - 19
@@ -221,7 +219,7 @@ while game_run:
     list_return = mod.gravity(mod.player, mod.move_jump) #PLAYER GRAVITY
     if "move_bottom" in list_return: mod.move_bottom = list_return["move_bottom"]
 
-      #GRAVITY RESOURCES AND CHESTS
+      #GRAVITY OF RESOURCES AND CHESTS
     mod.gravity_resources(mod.player) #RESOURCE GRAVITY
     mod.gravity_boxes(mod.player) #GRAVITY OF BOX
     mod.gravity_enemy(mod.player) #ENEMIES GRAVITY

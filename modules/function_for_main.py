@@ -72,24 +72,15 @@ def gravity(player, move_jump): #GRAVITY PLAYER
     ### Player gravity
     """
     list_return = {}
-    for block in blocks:
+    list_of_all_blocks = []
+    list_of_all_blocks += blocks
+    list_of_all_blocks += chests
+    list_of_all_blocks += boxes
+
+    for block in list_of_all_blocks:
         answer_fall = block.check_collision_top_wall(player.x, player.y, #checking whether the player is standing on some block
                                                      player.x + player.width, player.y + player.height)
         if answer_fall: #if the player is standing on some block
-            list_return["move_bottom"] = False
-            return list_return
-        
-    for box in boxes:
-        answer_fall = box.check_collision_top_wall(player.x, player.y,
-                                                     player.x + player.width, player.y + player.height)
-        if answer_fall:
-            list_return["move_bottom"] = False
-            return list_return
-        
-    for chest in chests:
-        answer_fall = chest.check_collision_top_wall(player.x, player.y,
-                                                     player.x + player.width, player.y + player.height)
-        if answer_fall:
             list_return["move_bottom"] = False
             return list_return
 
@@ -121,7 +112,7 @@ def gravity_resources(player): #GRAVITY RESOURCES
     for recource in droped_resources:
         recource.gravity(player, blocks)
 
-def gravity_boxes(player): #GRAVITY boxS
+def gravity_boxes(player): #GRAVITY BOXES
     for box in boxes: 
         box.gravity(player, blocks, chests)
 

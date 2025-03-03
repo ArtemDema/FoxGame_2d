@@ -61,15 +61,24 @@ class Enemy(Settings):
             self.image = list_jump[1]
             self.draw_image(screen)
     
+    def jump(self, screen, last_side, list_jump): #DRAWING A FALL
+        if last_side == 0:
+            self.image = list_jump[0]
+            self.image = pygame.transform.flip(self.image, 1, 0)
+            self.draw_image(screen)
+        else:
+            self.image = list_jump[0]
+            self.draw_image(screen)
+    
     def death(self, death_count, screen: pygame.Surface, list_death): #DRAWING A DEATH
         self.image = list_death[death_count]
         self.load_image()
         self.draw_image(screen)
         
-    def gravity(self, player, blocks): #CHECKING IF THE PLAYER IS TOUCHING THE FLOOR
+    def gravity(self, player, blocks): #CHECKING IF THE ENEMY IS TOUCHING THE FLOOR
         for block in blocks:
-            answer_fall_r = block.check_collision_top_wall(self.x - 15, self.y,
-                                                        self.x + self.width + 15, self.y + self.height)
+            answer_fall_r = block.check_collision_top_wall(self.x + 10, self.y,
+                                                        self.x + self.width - 10, self.y + self.height)
             if answer_fall_r:
                 break
         if answer_fall_r != True: #if he does not

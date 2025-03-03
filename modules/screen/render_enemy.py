@@ -40,10 +40,9 @@ def render_enemy():
             frog.death(frog.death_count, screen, list_animation_death) #RENDER DEATH SPRITE
             frog.dead_count(list_frog) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         else:
-            if frog.angle == 0:
-                if frog.move_bottom:
+            if frog.move_bottom:
                     frog.fall(screen, frog.vector_move, list_jump_frog) #RENDER FALL SPRITE
-                else:
-                    frog.idle(frog.idle_count, screen, frog.vector_move, list_idle_frog) #RENDER IDLE SPRITE
+            elif frog.move_jump:
+                    frog.jump(screen, frog.vector_move, list_jump_frog) #RENDER JUMP SPRITE
             else:
                 frog.idle(frog.idle_count, screen, frog.vector_move, list_idle_frog) #RENDER IDLE SPRITE

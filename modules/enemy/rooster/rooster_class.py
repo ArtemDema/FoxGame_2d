@@ -69,34 +69,13 @@ class Rooster(Enemy):
                         break
                     
                 if answer:
-                    for block in blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
+                    list_of_all_blocks = []
+                    list_of_all_blocks += blocks
+                    list_of_all_blocks += chests
+                    list_of_all_blocks += boxes
+
+                    for block in list_of_all_blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
                         answer = block.check_collision_right_wall(self.x, self.y, 
-                                                                self.x + self.width, self.y + self.height)
-                        if answer:
-                            if self.run_count == 3: 
-                                self.run_count = 0
-                            else:
-                                if self.sprite_frequency_rooster >= 10: 
-                                    self.run_count += 1
-                                    self.sprite_frequency_rooster = 0
-                                else: self.sprite_frequency_rooster += 1
-                            self.random_move =- 1
-                            return
-                    for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
-                        answer = chest.check_collision_right_wall(self.x, self.y, 
-                                                                self.x + self.width, self.y + self.height)
-                        if answer:
-                            if self.run_count == 3: 
-                                self.run_count = 0
-                            else:
-                                if self.sprite_frequency_rooster >= 10: 
-                                    self.run_count += 1
-                                    self.sprite_frequency_rooster = 0
-                                else: self.sprite_frequency_rooster += 1
-                            self.random_move =- 1
-                            return
-                    for box in boxes: #CHECK TOUCH RIGHT WALL OF BOX
-                        answer = box.check_collision_right_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
                             if self.run_count == 3: 
@@ -134,34 +113,13 @@ class Rooster(Enemy):
                         break
                     
                 if answer:
-                    for block in blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
+                    list_of_all_blocks = []
+                    list_of_all_blocks += blocks
+                    list_of_all_blocks += chests
+                    list_of_all_blocks += boxes
+
+                    for block in list_of_all_blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
                         answer = block.check_collision_left_wall(self.x, self.y, 
-                                                                self.x + self.width, self.y + self.height)
-                        if answer:
-                            if self.run_count == 3: 
-                                self.run_count = 0
-                            else:
-                                if self.sprite_frequency_rooster >= 10: 
-                                    self.run_count += 1
-                                    self.sprite_frequency_rooster = 0
-                                else: self.sprite_frequency_rooster += 1
-                            self.random_move =- 1
-                            return
-                    for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
-                        answer = chest.check_collision_left_wall(self.x, self.y, 
-                                                                self.x + self.width, self.y + self.height)
-                        if answer:
-                            if self.run_count == 3: 
-                                self.run_count = 0
-                            else:
-                                if self.sprite_frequency_rooster >= 10: 
-                                    self.run_count += 1
-                                    self.sprite_frequency_rooster = 0
-                                else: self.sprite_frequency_rooster += 1
-                            self.random_move =- 1
-                            return
-                    for box in boxes: #CHECK TOUCH RIGHT WALL OF BOX
-                        answer = box.check_collision_left_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
                             if self.run_count == 3: 

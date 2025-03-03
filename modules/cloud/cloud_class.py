@@ -14,4 +14,7 @@ class Cloud(Settings):
         if self.x  + self.width <= 0:
             return True
 
-        self.x -= self.speed
+        if self.speed == 1:
+            self.x -= self.speed - 0.5
+        else:
+            self.x -= self.speed - 1.3

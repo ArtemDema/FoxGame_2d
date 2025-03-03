@@ -31,6 +31,11 @@ class Chicken(Enemy):
         super().__init__(x, y, width, height, image, hp, speed)
 
     def move(self, player, blocks, chests, boxes): #FUNCTION MOVE
+        list_of_all_blocks = []
+        list_of_all_blocks += blocks
+        list_of_all_blocks += chests
+        list_of_all_blocks += boxes
+
         if self.player_visibility:
             if self.random_move <= 0:
                 distance = player.x - self.x
@@ -50,36 +55,8 @@ class Chicken(Enemy):
                         break
                     
                 if answer:
-                    for block in blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
+                    for block in list_of_all_blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
                         answer = block.check_collision_right_wall(self.x, self.y, 
-                                                                self.x + self.width, self.y + self.height)
-                        if answer:
-                            if self.run_count == 3: 
-                                self.run_count = 0
-                            else:
-                                if self.sprite_frequency_chicken >= 10: 
-                                    self.run_count += 1
-                                    self.sprite_frequency_chicken = 0
-                                else: self.sprite_frequency_chicken += 1
-                            self.random_move =- 1
-                            return
-                    
-                    for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
-                        answer = chest.check_collision_right_wall(self.x, self.y, 
-                                                                self.x + self.width, self.y + self.height)
-                        if answer:
-                            if self.run_count == 3: 
-                                self.run_count = 0
-                            else:
-                                if self.sprite_frequency_chicken >= 10: 
-                                    self.run_count += 1
-                                    self.sprite_frequency_chicken = 0
-                                else: self.sprite_frequency_chicken += 1
-                            self.random_move =- 1
-                            return
-                    
-                    for box in boxes: #CHECK TOUCH RIGHT WALL OF BOX
-                        answer = box.check_collision_right_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
                             if self.run_count == 3: 
@@ -112,36 +89,8 @@ class Chicken(Enemy):
                         break
                     
                 if answer:
-                    for block in blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
+                    for block in list_of_all_blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
                         answer = block.check_collision_left_wall(self.x, self.y, 
-                                                                self.x + self.width, self.y + self.height)
-                        if answer:
-                            if self.run_count == 3: 
-                                self.run_count = 0
-                            else:
-                                if self.sprite_frequency_chicken >= 10: 
-                                    self.run_count += 1
-                                    self.sprite_frequency_chicken = 0
-                                else: self.sprite_frequency_chicken += 1
-                            self.random_move =- 1
-                            return
-
-                    for chest in chests: #CHECK TOUCH RIGHT WALL OF CHEST
-                        answer = chest.check_collision_left_wall(self.x, self.y, 
-                                                                self.x + self.width, self.y + self.height)
-                        if answer:
-                            if self.run_count == 3: 
-                                self.run_count = 0
-                            else:
-                                if self.sprite_frequency_chicken >= 10: 
-                                    self.run_count += 1
-                                    self.sprite_frequency_chicken = 0
-                                else: self.sprite_frequency_chicken += 1
-                            self.random_move =- 1
-                            return
-                        
-                    for box in boxes: #CHECK TOUCH RIGHT WALL OF BOX
-                        answer = box.check_collision_left_wall(self.x, self.y, 
                                                                 self.x + self.width, self.y + self.height)
                         if answer:
                             if self.run_count == 3: 

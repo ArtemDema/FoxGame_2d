@@ -14,6 +14,11 @@ class Feather(Enemy):
         super().__init__(x, y, width, height, image, 0, 0)
 
     def move(self, WIDTH, HEIGHT, player, blocks, chests, boxes):
+        list_of_all_blocks = []
+        list_of_all_blocks += blocks
+        list_of_all_blocks += chests
+        list_of_all_blocks += boxes
+
         if self.is_dead == False:
             self.x = self.x + 4 * math.cos(self.angle * math.pi / 180)
             self.y = self.y + 4 * math.sin(self.angle * math.pi / 180)
@@ -45,7 +50,7 @@ class Feather(Enemy):
                     return
 
             #DEATH
-            for block in blocks:
+            for block in list_of_all_blocks:
                 answer = block.check_collision_top_wall(self.x - 23, self.y - 20, self.x + self.width + 20, self.y + self.height)
                 if answer:
                     self.is_dead = True
@@ -62,48 +67,6 @@ class Feather(Enemy):
                     return
 
                 answer = block.check_collision_right_wall(self.x - 15, self.y - 30, self.x + self.width + 20, self.y + self.height + 5)
-                if answer:
-                    self.is_dead = True
-                    return
-
-            for chest in chests:
-                answer = chest.check_collision_top_wall(self.x - 23, self.y - 20, self.x + self.width + 20, self.y + self.height)
-                if answer:
-                    self.is_dead = True
-                    return
-
-                answer = chest.check_collision_bottom_wall(self.x - 20, self.y - 20, self.x + self.width + 20, self.y + self.height)
-                if answer:
-                    self.is_dead = True
-                    return
-
-                answer = chest.check_collision_left_wall(self.x - 20, self.y - 30, self.x + self.width + 15, self.y + self.height + 5)
-                if answer:
-                    self.is_dead = True
-                    return
-
-                answer = chest.check_collision_right_wall(self.x - 15, self.y - 30, self.x + self.width + 20, self.y + self.height + 5)
-                if answer:
-                    self.is_dead = True
-                    return
-
-            for box in boxes:
-                answer = box.check_collision_top_wall(self.x - 23, self.y - 20, self.x + self.width + 20, self.y + self.height)
-                if answer:
-                    self.is_dead = True
-                    return
-
-                answer = box.check_collision_bottom_wall(self.x - 20, self.y - 20, self.x + self.width + 20, self.y + self.height)
-                if answer:
-                    self.is_dead = True
-                    return
-
-                answer = box.check_collision_left_wall(self.x - 20, self.y - 30, self.x + self.width + 15, self.y + self.height + 5)
-                if answer:
-                    self.is_dead = True
-                    return
-
-                answer = box.check_collision_right_wall(self.x - 15, self.y - 30, self.x + self.width + 20, self.y + self.height + 5)
                 if answer:
                     self.is_dead = True
                     return
