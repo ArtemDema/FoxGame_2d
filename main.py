@@ -101,7 +101,7 @@ while game_run:
         if reload_chest == 2:
             if mod.with_box == False:
                 for chest in mod.chests: #CHECKING AN ATTEMPT TO OPEN A CHEST
-                    answer = chest.check_open(mod.key.count, mod.player) #
+                    answer = chest.check_open(mod.key.count, mod.player, mod.droped_resources) #
                     if answer[0]: 
                         mod.key.count -= 1
                         modal_window_info = True
@@ -176,7 +176,7 @@ while game_run:
             box.hide_in_him = False
 
         dict_right = mod.move_right_player(mod.player, mod.move_jump, 
-                                           mod.push_box, mod.with_box, box_player, mod.WIDTH) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
+                                           mod.push_box, mod.with_box, box_player, mod.WIDTH, mod.droped_resources) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
         if "move_right" in dict_right: mod.move_right = dict_right["move_right"]
         if "last_side" in dict_right: last_side = dict_right["last_side"]
         if "push_box" in dict_right: mod.push_box = dict_right["push_box"]
@@ -196,8 +196,7 @@ while game_run:
                     for box in mod.boxes:
                         box.hide_in_him = False
     else:
-        list = mod.player.strength_jump = mod.check_jump(mod.player.x, mod.player.y, mod.player.width, #JUMP FUNCTION
-                                                mod.player.height, mod.player.strength_jump, mod.blocks, mod.player.speed)
+        list = mod.player.strength_jump = mod.check_jump(mod.player, mod.blocks)
         if "move_jump" in list: mod.move_jump = list["move_jump"]
         if "player_strength_jump" in list: mod.player.strength_jump = list["player_strength_jump"]
 

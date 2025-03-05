@@ -1,1 +1,1 @@
-from .class_r import Discarded_Item, droped_resources
+from .class_r import Discarded_Item

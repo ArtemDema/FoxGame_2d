@@ -1,5 +1,5 @@
-from .map import blocks, list_trees, list_of_clouds,chests, boxes, list_enemy, list_bush
-from ..resourses import droped_resources
+from .map import blocks, list_trees, list_of_clouds,chests, boxes, list_enemy, list_bush, list_big_boss_tree
+from .maps import list_of_text
 from ..enemy import list_feather
 
 def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHECK MOVE LEFT
@@ -9,14 +9,14 @@ def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHEC
     dict_return = {}
     if with_box:
         for block in blocks:
-            answer = block.check_collision_right_wall(player.x, chest_player.y, 
+            answer = block.check_collision_right_wall(player.x, chest_player.y + 5, 
                                                     player.x + player.width, player.y + player.height)
             if answer:
                 dict_return["last_side"] = 0
                 return dict_return
             
         for chest in chests:
-            answer = chest.check_collision_right_wall(player.x, chest_player.y, 
+            answer = chest.check_collision_right_wall(player.x, chest_player.y + 5, 
                                                     player.x + player.width, player.y + player.height)
             if answer:
                 dict_return["last_side"] = 0
@@ -46,14 +46,14 @@ def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHEC
             player.x -= player.speed
     else:
         for block in blocks:
-            answer = block.check_collision_right_wall(player.x, player.y, 
+            answer = block.check_collision_right_wall(player.x, player.y + 5, 
                                                     player.x + player.width, player.y + player.height)
             if answer:
                 dict_return["last_side"] = 0
                 return dict_return
             
         for chest in chests:
-            answer = chest.check_collision_right_wall(player.x, player.y, 
+            answer = chest.check_collision_right_wall(player.x, player.y + 5, 
                                                     player.x + player.width, player.y + player.height)
             if answer:
                 dict_return["last_side"] = 0
@@ -92,21 +92,21 @@ def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHEC
 
     return dict_return
 
-def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH): #CHECK MOVE RIGHT
+def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH, droped_resources): #CHECK MOVE RIGHT
     """
     ### Checking blocks for moving player to the right side
     """
     dict_return = {}
     if with_box:
         for block in blocks:
-            answer = block.check_collision_left_wall(player.x, chest_player.y, 
+            answer = block.check_collision_left_wall(player.x, chest_player.y + 5, 
                                                     player.x + player.width, player.y + player.height)
             if answer:
                 dict_return["last_side"] = 1
                 return dict_return
             
         for chest in chests:
-            answer = chest.check_collision_left_wall(player.x, chest_player.y, 
+            answer = chest.check_collision_left_wall(player.x, chest_player.y + 5, 
                                                     player.x + player.width, player.y + player.height)
             if answer:
                 dict_return["last_side"] = 1
@@ -158,18 +158,22 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                     feather.x -= player.speed
                 for bush in list_bush:
                     bush.x -= player.speed
+                for tree in list_big_boss_tree:
+                    tree.x -= player.speed
+                for text in list_of_text:
+                    text.x -= player.speed
             else:
                 player.x += player.speed
     else:
         for block in blocks:
-            answer = block.check_collision_left_wall(player.x, player.y, 
+            answer = block.check_collision_left_wall(player.x, player.y + 5, 
                                                     player.x + player.width, player.y + player.height)
             if answer:
                 dict_return["last_side"] = 1
                 return dict_return
         
         for chest in chests:
-            answer = chest.check_collision_left_wall(player.x, player.y, 
+            answer = chest.check_collision_left_wall(player.x, player.y + 5, 
                                                     player.x + player.width, player.y + player.height)
             if answer:
                 dict_return["last_side"] = 1
@@ -223,6 +227,10 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                     feather.x -= player.speed
                 for bush in list_bush:
                     bush.x -= player.speed
+                for tree in list_big_boss_tree:
+                    tree.x -= player.speed
+                for text in list_of_text:
+                    text.x -= player.speed
             else:
                 player.x += player.speed
 

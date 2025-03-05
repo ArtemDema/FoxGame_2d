@@ -1,7 +1,5 @@
 from ..main_classes import Block
 
-droped_resources = []
-
 class Discarded_Item(Block):
     """
     ### Class of discarded items
@@ -59,11 +57,6 @@ class Discarded_Item(Block):
             else: return_list["key_count"] = key_count + 1
         return return_list
         
-meat1 = Discarded_Item(x = 700, y = 0, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
-egg1 = Discarded_Item(x = 800, y = 100, width = 20, height = 30, image = "images/resources/egg.png",whatIsThis= "egg")
-key1 = Discarded_Item(x = 900, y = 200, width = 30, height = 22, image = "images/resources/key.png",whatIsThis= "key")
-key2 = Discarded_Item(x = 900, y = 200, width = 30, height = 22, image = "images/resources/key.png",whatIsThis= "key")
-droped_resources.append(meat1)
-droped_resources.append(egg1)
-droped_resources.append(key1)
-droped_resources.append(key2)
+# meat1 = Discarded_Item(x = 700, y = 0, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
+# egg1 = Discarded_Item(x = 800, y = 100, width = 20, height = 30, image = "images/resources/egg.png",whatIsThis= "egg")
+# key1 = Discarded_Item(x = 900, y = 200, width = 30, height = 22, image = "images/resources/key.png",whatIsThis= "key")

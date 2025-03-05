@@ -1,5 +1,5 @@
 from ...main_classes import Enemy
-from ...resourses import Discarded_Item, droped_resources
+from ...resourses import Discarded_Item
 from ...interface import interface
 
 import random
@@ -176,7 +176,7 @@ class Chicken(Enemy):
                                 interface[5].count += 1
 
 
-    def dead_count(self, list_chicken): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
+    def dead_count(self, list_chicken, droped_resources): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         if self.death_count == 6:
             meat1 = Discarded_Item(x = self.x, y = self.y, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
             droped_resources.append(meat1)

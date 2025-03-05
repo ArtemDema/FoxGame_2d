@@ -31,6 +31,8 @@ list_bubble_tree = ["images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0000.png"
                     "images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0008.png","images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0009.png",
                     "images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0010.png"]
 
+list_big_trees = ["images/screen1/path_of_big_tree/0.png","images/screen1/path_of_big_tree/1.png"]
+
 #ROOSTER----------------------------------------------------------------------------------------------------------------------
 list_idle_rooster = ["images/enemy/rooster/idle/0.png", "images/enemy/rooster/idle/1.png", 
                     "images/enemy/rooster/idle/2.png", "images/enemy/rooster/idle/3.png"]
@@ -68,10 +70,11 @@ load_list_image(list_run_with_chest, 80, 80)
 load_list_image(list_jump, 80, 80)
 load_list_image(list_jump_with_chest, 80, 80)
 load_list_image(list_crouch, 80, 80)
-load_list_image(list_bubble_tree, 160, 190)
+load_list_image(list_bubble_tree, 130, 284)
 load_list_image(list_idle_rooster, 63, 63)
 load_list_image(list_run_rooster, 63, 63)
 load_list_image(list_idle_frog, 60, 60)
 load_list_image(list_jump_frog, 60, 60)
 load_list_image(list_idle_chicken, 50, 50)
 load_list_image(list_run_chicken, 50, 50)
+load_list_image(list_big_trees, 650, 400)

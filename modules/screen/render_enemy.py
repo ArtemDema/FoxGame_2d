@@ -1,7 +1,7 @@
 from ..enemy import list_run_rooster, list_feather
 from ..enemy import list_run_chicken, list_animation_death, list_jump_frog, list_idle_frog, list_animation_death_birds, list_idle_chicken, list_idle_rooster
 from .screen import screen
-from .map import list_frog, list_chicken, list_rooster
+from .map import list_frog, list_chicken, list_rooster, droped_resources
 from .load_all_images import list_run_rooster, list_idle_rooster, list_idle_frog, list_jump_frog, list_run_chicken, list_idle_chicken
 
 
@@ -12,7 +12,7 @@ def render_enemy():
     for rooster in list_rooster:
         if rooster.is_dead:
             rooster.death(rooster.death_count, screen, list_animation_death_birds) #RENDER DEATH SPRITE
-            rooster.dead_count(list_rooster) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
+            rooster.dead_count(list_rooster, droped_resources) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         else:
             if rooster.random_move >= 0:
                 rooster.run(rooster.run_count, screen, rooster.vector_move, list_run_rooster) #RENDER RUN SPRITE
@@ -28,7 +28,7 @@ def render_enemy():
     for chicken in list_chicken:
         if chicken.is_dead:
             chicken.death(chicken.death_count, screen, list_animation_death_birds) #RENDER DEATH SPRITE
-            chicken.dead_count(list_chicken) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
+            chicken.dead_count(list_chicken, droped_resources) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         else:
             if chicken.random_move >= 0:
                 chicken.run(chicken.run_count, screen, chicken.vector_move, list_run_chicken) #RENDER RUN SPRITE
@@ -38,7 +38,7 @@ def render_enemy():
     for frog in list_frog:
         if frog.is_dead:
             frog.death(frog.death_count, screen, list_animation_death) #RENDER DEATH SPRITE
-            frog.dead_count(list_frog) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
+            frog.dead_count(list_frog, droped_resources) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         else:
             if frog.move_bottom:
                     frog.fall(screen, frog.vector_move, list_jump_frog) #RENDER FALL SPRITE

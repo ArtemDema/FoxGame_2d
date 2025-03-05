@@ -1,7 +1,7 @@
 import pygame
 
-from .map import background, blocks, list_trees, list_of_clouds, chests, boxes, list_bush
-from ..resourses import droped_resources
+from .map import background, blocks, list_trees, list_of_clouds, chests, boxes, list_bush, list_big_boss_tree, droped_resources
+from .maps import list_of_text
 from ..interface import interface
 from .render_enemy import render_enemy
 from ..enemy import list_feather
@@ -19,6 +19,9 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
 
     #background rendering
     background.draw_image(screen)
+
+    for tree in list_big_boss_tree:
+        tree.draw_image(screen)
 
     for cloud in list_of_clouds:
         cloud.draw_image(screen)
@@ -113,6 +116,9 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
 
     for bush in list_bush:
         bush.draw_image(screen)
+
+    for text in list_of_text:
+        text.render_text(screen)
     
     #check for climbing rendering
     else:

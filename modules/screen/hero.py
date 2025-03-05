@@ -177,4 +177,4 @@ class Hero(Enemy):
                     if top_y_i <= bottom_y:
                         return True
 
-player = Hero(x = 600, y = 400, width = 80, height = 80, image="images/player/idle/0.png", hp = 3, speed = 4, strength_jump = 17)
+player = Hero(x = 600, y = 620, width = 80, height = 80, image="images/player/idle/0.png", hp = 3, speed = 4, strength_jump = 17)

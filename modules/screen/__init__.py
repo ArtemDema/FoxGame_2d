@@ -1,7 +1,8 @@
 from .hero import player, Hero
 from .hero import move_bottom, move_crouch, move_jump, move_left, move_right, hide, with_box, push_box
 from .map import map, background, blocks, list_trees, list_of_clouds, chests, boxes, list_rooster, list_enemy, list_chicken, list_frog
-from .map import list_bush
+from .map import list_bush, list_big_boss_tree, droped_resources
+from .maps import *
 from .render import render
 from .screen import WIDTH, HEIGHT, screen
 from .move import move_left_player, move_right_player

@@ -1,5 +1,4 @@
 from ..main_classes import Block
-from ..resourses import droped_resources, Discarded_Item
 
 import math, random
 
@@ -56,8 +55,13 @@ class Box(Block):
                 self.x = self.x + 150 * math.cos(angle * (math.pi / 180))
                 self.y = self.y + 150 * math.sin(angle * (math.pi / 180))
 
-    def gravity(self, player, blocks, chests): #GRAVITY CHEST
-        for block in blocks: #DOES THE CHEST TOUCH THE FLOOR
+    def gravity(self, player, blocks, chests, boxes): #GRAVITY CHEST
+        list_of_all_blocks = []
+        list_of_all_blocks += blocks
+        list_of_all_blocks += chests
+        list_of_all_blocks += boxes
+
+        for block in list_of_all_blocks: #DOES THE CHEST TOUCH THE FLOOR
             answer_fall_r = block.check_collision_top_wall(self.x - 15, self.y,
                                                         self.x + self.width + 15, self.y + self.height + 1)
             if answer_fall_r:

@@ -1,5 +1,5 @@
 from ..main_classes import Block
-from ..resourses import droped_resources, Discarded_Item
+from ..resourses import Discarded_Item
 
 import random
 
@@ -14,7 +14,7 @@ class Chest(Block):
         self.hide_in_him = False
         super().__init__(x, y, width, height, image)
     
-    def check_open(self, count_key, player): #CHECK OPEN
+    def check_open(self, count_key, player, droped_resources): #CHECK OPEN
         list_return = [None, " "]
         if self.open_chest == False:
             random_n = random.randint(0, 3)

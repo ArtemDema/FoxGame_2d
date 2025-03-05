@@ -1,0 +1,1 @@
+print(tick.get_fps()
