@@ -2,7 +2,7 @@ import pygame
 
 from .map import background, blocks, list_trees, list_of_clouds, chests, boxes, list_bush, list_big_boss_tree, droped_resources
 from .maps import list_of_text
-from ..interface import interface
+from ..interface import interface, hearts, Column_Meat_Egg_Hp_Key
 from .render_enemy import render_enemy
 from ..enemy import list_feather
 from .load_all_images import list_idle_with_chest, list_idle, list_jump, list_jump_with_chest, list_crouch, list_run_with_chest, list_run
@@ -16,6 +16,16 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
     """
     
     return_dict = {}
+
+    hearts = []
+
+    for index in range(5):
+        if index < player.hp:
+            hp = Column_Meat_Egg_Hp_Key(10 + (index * 30), 19, 27, 27, "images/resources/heart.png", 0)
+            hearts.append(hp)
+        else:
+            hp = Column_Meat_Egg_Hp_Key(10 + (index * 30), 19, 27, 27, "images/resources/hollow_heart.png", 0)
+            hearts.append(hp)
 
     #background rendering
     background.draw_image(screen)
@@ -57,6 +67,9 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
 
     for recource in droped_resources: 
         recource.draw_image(screen)
+
+    for hp in hearts:
+        hp.draw_image(screen)
 
     for item in interface:
         item.draw_image(screen)

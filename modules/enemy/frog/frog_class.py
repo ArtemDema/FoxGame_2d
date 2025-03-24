@@ -4,11 +4,6 @@ from ...interface import interface
 
 import random, math
 
-list_idle_frog = ["images/enemy/frog/idle/0.png","images/enemy/frog/idle/1.png","images/enemy/frog/idle/2.png","images/enemy/frog/idle/3.png"]
-
-list_jump_frog = ["images/enemy/frog/jump/0.png","images/enemy/frog/jump/1.png"]
-
-
 class Frog(Enemy):
     """
     ### Class of frogs with aggressive character
@@ -172,7 +167,7 @@ class Frog(Enemy):
                                                         self.x + self.width, self.y + self.height)
                 if answer:
                     self.is_dead = True
-                    interface[4].count += 1
+                    interface[3].count += 1
 
             right_x = self.x + self.width
             bottom_y = self.y + self.height
@@ -183,7 +178,7 @@ class Frog(Enemy):
                         if top_y_p + 20 <= self.y:
                             if bottom_y_p + 10 <= bottom_y:
                                 self.is_dead = True
-                                interface[4].count += 1
+                                interface[3].count += 1
 
             #middle (golden)
             if bottom_y_p >= self.y:
@@ -192,7 +187,7 @@ class Frog(Enemy):
                         if top_y_p + 20 <= self.y:
                             if bottom_y_p + 10 <= bottom_y:
                                 self.is_dead = True
-                                interface[4].count += 1
+                                interface[3].count += 1
                                         
             #right angle
             if bottom_y_p >= self.y:
@@ -201,7 +196,7 @@ class Frog(Enemy):
                         if top_y_p + 20 <= self.y:
                             if bottom_y_p + 10 <= bottom_y:
                                 self.is_dead = True
-                                interface[4].count += 1
+                                interface[3].count += 1
 
 
     def dead_count(self, list_frog, droped_resources): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT

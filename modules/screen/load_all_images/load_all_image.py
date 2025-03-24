@@ -31,7 +31,7 @@ list_bubble_tree = ["images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0000.png"
                     "images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0008.png","images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0009.png",
                     "images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0010.png"]
 
-list_big_trees = ["images/screen1/path_of_big_tree/0.png","images/screen1/path_of_big_tree/1.png"]
+list_big_trees = ["images/screen1/path_of_big_tree/0.png","images/screen1/path_of_big_tree/1.png", "images/screen1/big_tree.png"]
 
 #ROOSTER----------------------------------------------------------------------------------------------------------------------
 list_idle_rooster = ["images/enemy/rooster/idle/0.png", "images/enemy/rooster/idle/1.png", 
@@ -44,6 +44,11 @@ list_run_rooster = ["images/enemy/rooster/run/0.png", "images/enemy/rooster/run/
 list_idle_frog = ["images/enemy/frog/idle/0.png","images/enemy/frog/idle/1.png","images/enemy/frog/idle/2.png","images/enemy/frog/idle/3.png"]
 
 list_jump_frog = ["images/enemy/frog/jump/0.png","images/enemy/frog/jump/1.png"]
+
+#Opossum----------------------------------------------------------------------------------------------------------------------
+list_run_opossum = ["images/enemy/opossum/0.png", "images/enemy/opossum/1.png", 
+                    "images/enemy/opossum/2.png", "images/enemy/opossum/3.png",
+                    "images/enemy/opossum/4.png", "images/enemy/opossum/5.png"]
 
 #CHICKEN----------------------------------------------------------------------------------------------------------------------
 list_idle_chicken = ["images/enemy/chicken/idle/0.png", "images/enemy/chicken/idle/1.png", 
@@ -73,6 +78,7 @@ load_list_image(list_crouch, 80, 80)
 load_list_image(list_bubble_tree, 130, 284)
 load_list_image(list_idle_rooster, 63, 63)
 load_list_image(list_run_rooster, 63, 63)
+load_list_image(list_run_opossum, 83, 83)
 load_list_image(list_idle_frog, 60, 60)
 load_list_image(list_jump_frog, 60, 60)
 load_list_image(list_idle_chicken, 50, 50)

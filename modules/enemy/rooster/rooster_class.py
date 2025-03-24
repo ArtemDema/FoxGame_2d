@@ -5,12 +5,6 @@ from .feather import list_feather, Feather
 
 import random, math, pygame
 
-list_idle_rooster = ["images/enemy/rooster/idle/0.png", "images/enemy/rooster/idle/1.png", 
-                    "images/enemy/rooster/idle/2.png", "images/enemy/rooster/idle/3.png"]
-
-list_run_rooster = ["images/enemy/rooster/run/0.png", "images/enemy/rooster/run/1.png", 
-                    "images/enemy/rooster/run/2.png", "images/enemy/rooster/run/3.png"]
-
 class Rooster(Enemy):
     """
     ### Rooster class with aggressive character

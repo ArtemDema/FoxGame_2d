@@ -1,1 +1,1 @@
-from .chicken_class import list_run_chicken, list_idle_chicken, Chicken
+from .chicken_class import Chicken

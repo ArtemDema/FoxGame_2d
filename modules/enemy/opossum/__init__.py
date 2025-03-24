@@ -1,0 +1,1 @@
+from .opossum_class import Opossum

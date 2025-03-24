@@ -1,1 +1,1 @@
-from .frog_class import list_idle_frog, list_jump_frog, Frog
+from .frog_class import Frog

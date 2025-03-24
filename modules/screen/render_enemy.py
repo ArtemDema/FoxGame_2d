@@ -1,8 +1,8 @@
-from ..enemy import list_run_rooster, list_feather
-from ..enemy import list_run_chicken, list_animation_death, list_jump_frog, list_idle_frog, list_animation_death_birds, list_idle_chicken, list_idle_rooster
+from ..enemy import list_feather
+from ..enemy import list_animation_death, list_animation_death_birds
 from .screen import screen
-from .map import list_frog, list_chicken, list_rooster, droped_resources
-from .load_all_images import list_run_rooster, list_idle_rooster, list_idle_frog, list_jump_frog, list_run_chicken, list_idle_chicken
+from .map import list_frog, list_chicken, list_rooster, droped_resources, list_opossum
+from .load_all_images import list_run_rooster, list_idle_rooster, list_idle_frog, list_jump_frog, list_run_chicken, list_idle_chicken, list_run_opossum
 
 
 def render_enemy():
@@ -46,3 +46,10 @@ def render_enemy():
                     frog.jump(screen, frog.vector_move, list_jump_frog) #RENDER JUMP SPRITE
             else:
                 frog.idle(frog.idle_count, screen, frog.vector_move, list_idle_frog) #RENDER IDLE SPRITE
+
+    for opossum in list_opossum:
+        if opossum.is_dead:
+            opossum.death(opossum.death_count, screen, list_animation_death) #RENDER DEATH SPRITE
+            opossum.dead_count(list_opossum, droped_resources) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
+        else:
+            opossum.run(opossum.run_count, screen, opossum.vector_move, list_run_opossum) #RENDER RUN SPRITE

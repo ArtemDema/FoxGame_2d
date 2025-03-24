@@ -1,4 +1,4 @@
-from .screen import blocks, list_of_clouds, list_trees, chests, boxes, list_enemy, list_bush, list_big_boss_tree, droped_resources, list_of_text
+from .screen import blocks, list_of_clouds, list_trees, chests, boxes, list_enemy, list_bush, droped_resources, list_of_text
 from .enemy import list_feather
 
 def check_push_box(player, last_side): #CHECK PUSH BOX

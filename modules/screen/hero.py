@@ -1,5 +1,5 @@
 from ..main_classes import Enemy
-from ..interface import hp
+from ..json import get_info
 
 import pygame
 
@@ -76,7 +76,6 @@ class Hero(Enemy):
     def damage_player(self):
         if self.timer_damage == 0:
             self.hp -= 1
-            hp.count -= 1
             self.timer_damage = 360
 
     def check_collision_right(self, left_x_i, top_y_i, right_x_i, bottom_y_i): #CHECKING FOR TOUCHING THE RIGHT COLLISION
@@ -177,4 +176,6 @@ class Hero(Enemy):
                     if top_y_i <= bottom_y:
                         return True
 
-player = Hero(x = 600, y = 620, width = 80, height = 80, image="images/player/idle/0.png", hp = 3, speed = 4, strength_jump = 17)
+
+info = get_info()
+player = Hero(x = 600, y = 620, width = 80, height = 80, image="images/player/idle/0.png", hp = info["hp"], speed = 4, strength_jump = 17)
