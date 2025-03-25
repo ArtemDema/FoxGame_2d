@@ -1,5 +1,4 @@
 from .map import blocks, list_trees, list_of_clouds,chests, boxes, list_enemy, list_bush, list_big_boss_tree
-from .maps import list_of_text
 from ..enemy import list_feather
 
 def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHECK MOVE LEFT
@@ -160,8 +159,6 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                     bush.x -= player.speed
                 for tree in list_big_boss_tree:
                     tree.x -= player.speed
-                for text in list_of_text:
-                    text.x -= player.speed
             else:
                 player.x += player.speed
     else:
@@ -229,8 +226,6 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                     bush.x -= player.speed
                 for tree in list_big_boss_tree:
                     tree.x -= player.speed
-                for text in list_of_text:
-                    text.x -= player.speed
             else:
                 player.x += player.speed
 

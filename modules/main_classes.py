@@ -204,3 +204,12 @@ class Block(Settings):
                 if left_x_p + 20 <= right_x:
                     if top_y_p + 20 <= bottom_y:
                         return True
+                    
+class TileBlock(Block):
+    def __init__(self, x, y, width, height, image):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.image = image
+        self.rect = self.image.get_rect(topleft = (x,y))

@@ -1,7 +1,6 @@
 import pygame
 
 from .map import background, blocks, list_trees, list_of_clouds, chests, boxes, list_bush, list_big_boss_tree, droped_resources
-from .maps import list_of_text
 from ..interface import interface, hearts, Column_Meat_Egg_Hp_Key
 from .render_enemy import render_enemy
 from ..enemy import list_feather
@@ -129,9 +128,6 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
 
     for bush in list_bush:
         bush.draw_image(screen)
-
-    for text in list_of_text:
-        text.render_text(screen)
     
     #check for climbing rendering
     else:

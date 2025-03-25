@@ -1,4 +1,4 @@
-from ..main_classes import Block
+from ..main_classes import Block, TileBlock
 from .screen import WIDTH, HEIGHT
 from ..tree import Tree
 from ..box import Box
@@ -7,7 +7,7 @@ from ..enemy import Frog, Chicken, Rooster, Opossum
 from ..bush import Bush
 from ..resourses import Discarded_Item
 
-import random
+import random, pytmx, os
 
 map = [ [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "],
         [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "],
@@ -65,104 +65,115 @@ droped_resources = []
 #e - egg
 #k - key
 
+path = os.path.abspath(__file__ + "\..\..\..\levels")
+
+level = pytmx.load_pygame(path + "/first_screen.tmx")
+
+layer = level.get_layer_by_name("Слой тайлов 1")
+
+for x, y, tileSurface in layer.tiles():
+    tile =  TileBlock(x = x * 50, y = y * 50, width = 0, height = 0, image = tileSurface)
+    blocks.append(tile)
+
+
 background = Block(x = 0, y = 0, width = WIDTH, height = HEIGHT, image = "images/screen/1.jpeg")
 
-for idy, row in enumerate(map):
-    for idx, column in enumerate(row):
-        if column == "0":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/screen1/block_of_big_tree.png")
-            blocks.append(block)
+# for idy, row in enumerate(map):
+#     for idx, column in enumerate(row):
+#         if column == "0":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/screen1/block_of_big_tree.png")
+#             blocks.append(block)
 
-        if column == "1":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/1.png")
-            blocks.append(block)
+#         if column == "1":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/1.png")
+#             blocks.append(block)
         
-        elif column == "2":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/2.png")
-            blocks.append(block)
+#         elif column == "2":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/2.png")
+#             blocks.append(block)
 
-        elif column == "3":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/3.png")
-            blocks.append(block)
+#         elif column == "3":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/3.png")
+#             blocks.append(block)
 
-        elif column == "4":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/4.png")
-            blocks.append(block)
+#         elif column == "4":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/4.png")
+#             blocks.append(block)
 
-        elif column == "5":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/5.png")
-            blocks.append(block)
+#         elif column == "5":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/5.png")
+#             blocks.append(block)
 
-        elif column == "6":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/6.png")
-            blocks.append(block)
+#         elif column == "6":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/6.png")
+#             blocks.append(block)
         
-        elif column == "7":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/7.png")
-            blocks.append(block)
+#         elif column == "7":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/level_1/7.png")
+#             blocks.append(block)
         
-        elif column == "8":
-            tree = Tree(x = 50 * idx - 5, y = 50 * idy - 234, width = 0, height = 0, #change size in load_all_image.py
-                        image ="images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0000.png", 
-                        random_egg = random.randint(0, 1), sprite_frequency_tree=random.randint(0, 10))
-            list_trees.append(tree)
+#         elif column == "8":
+#             tree = Tree(x = 50 * idx - 5, y = 50 * idy - 234, width = 0, height = 0, #change size in load_all_image.py
+#                         image ="images/tree/Pine tree/Bubble Pine Tree - YELLOW - 0000.png", 
+#                         random_egg = random.randint(0, 1), sprite_frequency_tree=random.randint(0, 10))
+#             list_trees.append(tree)
 
-        elif column == "c":
-            chest = Chest(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/chest/chest_lock.png", open_chest = False)
-            chests.append(chest)
+#         elif column == "c":
+#             chest = Chest(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/chest/chest_lock.png", open_chest = False)
+#             chests.append(chest)
 
-        elif column == "b":
-            box = Box(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/box/box_lock.png", open_box = False)
-            boxes.append(box)
+#         elif column == "b":
+#             box = Box(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/box/box_lock.png", open_box = False)
+#             boxes.append(box)
 
-        elif column == "f":
-            frog = Frog(50 * idx, 50 * idy - 10, 60, 60, "images/enemy/frog/idle/0.png", 3, 2, 2, 0, 0, False)
-            list_frog.append(frog)
-            list_enemy.append(frog)
+#         elif column == "f":
+#             frog = Frog(50 * idx, 50 * idy - 10, 60, 60, "images/enemy/frog/idle/0.png", 3, 2, 2, 0, 0, False)
+#             list_frog.append(frog)
+#             list_enemy.append(frog)
 
-        elif column == "o":
-            opossum = Opossum(50 * idx, 50 * idy - 40, 60, 60, "images/enemy/opossum/0.png", 3, 2, 2, 0, 0, False)
-            list_opossum.append(opossum)
-            list_enemy.append(opossum)
+#         elif column == "o":
+#             opossum = Opossum(50 * idx, 50 * idy - 40, 60, 60, "images/enemy/opossum/0.png", 3, 2, 2, 0, 0, False)
+#             list_opossum.append(opossum)
+#             list_enemy.append(opossum)
 
-        elif column == "r":
-            rooster = Rooster(50 * idx, 50 * idy - 10, 63, 63, "images/enemy/rooster/idle/0.png", 3, 2, 0, 0, False, 0)
-            list_rooster.append(rooster)
-            list_enemy.append(rooster)
+#         elif column == "r":
+#             rooster = Rooster(50 * idx, 50 * idy - 10, 63, 63, "images/enemy/rooster/idle/0.png", 3, 2, 0, 0, False, 0)
+#             list_rooster.append(rooster)
+#             list_enemy.append(rooster)
 
-        elif column == "h":
-            chicken = Chicken(50 * idx, 50 * idy, 40, 50, "images/enemy/chicken/run/0.png", 3, 2, 2, 0, 0, 0, 0, False, 0)
-            list_chicken.append(chicken)
-            list_enemy.append(chicken)
+#         elif column == "h":
+#             chicken = Chicken(50 * idx, 50 * idy, 40, 50, "images/enemy/chicken/run/0.png", 3, 2, 2, 0, 0, 0, 0, False, 0)
+#             list_chicken.append(chicken)
+#             list_enemy.append(chicken)
         
-        elif column == "s":
-            bush = Bush(50 * idx, 50 * idy - 13, 105, 65, f"images/bush/{random.randint(0,6)}.png")
-            list_bush.append(bush)
+#         elif column == "s":
+#             bush = Bush(50 * idx, 50 * idy - 13, 105, 65, f"images/bush/{random.randint(0,6)}.png")
+#             list_bush.append(bush)
         
-        elif column == "-":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/air/1.png")
-            blocks.append(block)
+#         elif column == "-":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/air/1.png")
+#             blocks.append(block)
 
-        elif column == "=":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/air/2.png")
-            blocks.append(block)
+#         elif column == "=":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/air/2.png")
+#             blocks.append(block)
 
-        elif column == "_":
-            block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/air/1.png")
-            blocks.append(block)
+#         elif column == "_":
+#             block = Block(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/tilemap/air/1.png")
+#             blocks.append(block)
 
-        elif column == "m":
-            meat1 = Discarded_Item(x = 50 * idx, y = 50 * idy, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
-            droped_resources.append(meat1)
+#         elif column == "m":
+#             meat1 = Discarded_Item(x = 50 * idx, y = 50 * idy, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
+#             droped_resources.append(meat1)
 
-        elif column == "t":
-            heart1 = Discarded_Item(x = 50 * idx, y = 50 * idy, width = 25, height = 25, image = "images/resources/heart.png", whatIsThis= "heart")
-            droped_resources.append(heart1)
+#         elif column == "t":
+#             heart1 = Discarded_Item(x = 50 * idx, y = 50 * idy, width = 25, height = 25, image = "images/resources/heart.png", whatIsThis= "heart")
+#             droped_resources.append(heart1)
 
-        elif column == "e":
-            egg1 = Discarded_Item(x = 50 * idx, y = 50 * idy, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
-            droped_resources.append(egg1)
+#         elif column == "e":
+#             egg1 = Discarded_Item(x = 50 * idx, y = 50 * idy, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+#             droped_resources.append(egg1)
 
-        elif column == "k":
-            key1 = Discarded_Item(x = 50 * idx, y = 50 * idy, width = 30, height = 22, image = "images/resources/key.png", whatIsThis= "key")
-            droped_resources.append(key1)
+#         elif column == "k":
+#             key1 = Discarded_Item(x = 50 * idx, y = 50 * idy, width = 30, height = 22, image = "images/resources/key.png", whatIsThis= "key")
+#             droped_resources.append(key1)

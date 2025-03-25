@@ -178,4 +178,4 @@ class Hero(Enemy):
 
 
 info = get_info()
-player = Hero(x = 600, y = 620, width = 80, height = 80, image="images/player/idle/0.png", hp = info["hp"], speed = 4, strength_jump = 17)
+player = Hero(x = 600, y = 0, width = 80, height = 80, image="images/player/idle/0.png", hp = info["hp"], speed = 4, strength_jump = 17)

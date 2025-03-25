@@ -1,4 +1,4 @@
-from .screen import blocks, list_of_clouds, list_trees, chests, boxes, list_enemy, list_bush, droped_resources, list_of_text
+from .screen import blocks, list_of_clouds, list_trees, chests, boxes, list_enemy, list_bush, droped_resources
 from .enemy import list_feather
 
 def check_push_box(player, last_side): #CHECK PUSH BOX
@@ -80,6 +80,8 @@ def gravity(player, move_jump): #GRAVITY PLAYER
     list_of_all_blocks += blocks
     list_of_all_blocks += chests
     list_of_all_blocks += boxes
+
+    answer_fall = True
 
     for block in list_of_all_blocks:
         answer_fall = block.check_collision_top_wall(player.x, player.y, #checking whether the player is standing on some block
