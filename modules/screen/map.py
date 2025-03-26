@@ -1,4 +1,4 @@
-from ..main_classes import Block, TileBlock
+from ..main_classes import Block, BackGround
 from .screen import WIDTH, HEIGHT
 from ..tree import Tree
 from ..box import Box
@@ -72,11 +72,11 @@ level = pytmx.load_pygame(path + "/first_screen.tmx")
 layer = level.get_layer_by_name("Слой тайлов 1")
 
 for x, y, tileSurface in layer.tiles():
-    tile =  TileBlock(x = x * 50, y = y * 50, width = 0, height = 0, image = tileSurface)
+    tile =  Block(x = x * 50, y = y * 50, width = 50, height = 50, image = tileSurface)
     blocks.append(tile)
 
 
-background = Block(x = 0, y = 0, width = WIDTH, height = HEIGHT, image = "images/screen/1.jpeg")
+background = BackGround(x = 0, y = 0, width = WIDTH, height = HEIGHT, image = "images/screen/1.jpeg")
 
 # for idy, row in enumerate(map):
 #     for idx, column in enumerate(row):

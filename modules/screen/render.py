@@ -1,6 +1,6 @@
 import pygame
 
-from .map import background, blocks, list_trees, list_of_clouds, chests, boxes, list_bush, list_big_boss_tree, droped_resources
+from .map import blocks, background, list_trees, list_of_clouds, chests, boxes, list_bush, list_big_boss_tree, droped_resources
 from ..interface import interface, hearts, Column_Meat_Egg_Hp_Key
 from .render_enemy import render_enemy
 from ..enemy import list_feather
@@ -80,6 +80,7 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
         for feather in list_feather:
             feather.draw_image(screen)
 
+    # pygame.draw.rect(screen, (255, 255, 255),player.rect)
     #check for drawing in a idle
     if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False and hide == False:
         player.idle(idle_count, screen, last_side, with_chest, list_idle_with_chest, list_idle)
@@ -132,4 +133,8 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
     #check for climbing rendering
     else:
         pass #climb 
+
+    # for block in blocks:
+    #     pygame.draw.rect(screen, (255, 0, 255), block.rect)
+    
     return return_dict

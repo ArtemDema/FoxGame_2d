@@ -105,111 +105,40 @@ class Block(Settings):
     ### Class for create blocks with check collision function
     """
     def __init__(self, x, y, width, height, image):
-        super().__init__(x, y, width, height, image)
-
-    def check_collision_right_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECKING FOR TOUCHING THE RIGHT WALL
-        right_x = self.x + self.width
-        bottom_y = self.y + self.height
-
-        #top corner
-        if left_x_p + 15 <= right_x:
-            if top_y_p + 30 <= self.y:
-                if bottom_y_p - 5 >= self.y:
-                    if right_x_p - 20 >= right_x:
-                        return True
-        
-        #middle (golden)
-        if left_x_p + 15 <= right_x:
-            if top_y_p + 30 >= self.y:
-                if bottom_y_p <= bottom_y:
-                    if right_x_p - 20 >= right_x:
-                            return True
-
-        #bottom corner                            
-        if left_x_p + 15 <= right_x:
-            if top_y_p + 30 <= bottom_y:
-                if bottom_y_p >= bottom_y:
-                    if right_x_p - 20 >= right_x:
-                        return True
-    
-    def check_collision_left_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECKING FOR TOUCHING THE LEFT WALL
-        bottom_y = self.y + self.height
-        
-        #top corner
-        if left_x_p + 20 <= self.x:
-            if top_y_p + 30 <= self.y:
-                if bottom_y_p - 5 >= self.y:
-                    if right_x_p - 15 >= self.x:
-                        return True
-        
-        #middle (golden)
-        if left_x_p + 20 <= self.x:
-            if top_y_p + 30 >= self.y:
-                if bottom_y_p <= bottom_y:
-                    if right_x_p - 15 >= self.x:
-                        return True
-                                    
-        #bottom corner
-        if left_x_p + 20 <= self.x:
-            if top_y_p + 30 <= bottom_y:
-                if bottom_y_p >= bottom_y:
-                    if right_x_p - 15 >= self.x:
-                        return True
-    
-    def check_collision_top_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECKING FOR TOUCHING THE TOP WALL
-        right_x = self.x + self.width
-        
-        #left angle
-        if bottom_y_p >= self.y:
-            if left_x_p + 23 <= self.x:
-                if right_x_p - 20 >= self.x:
-                    if top_y_p + 20 <= self.y:
-                        return True
-
-        #middle (golden)
-        if bottom_y_p >= self.y:
-            if left_x_p + 23 >= self.x:
-                if right_x_p - 20 <= right_x:
-                    if top_y_p + 20 <= self.y:
-                        return True
-                                    
-        #right angle
-        if bottom_y_p >= self.y:
-            if left_x_p + 23 <= right_x:
-                if right_x_p - 20 >= right_x:
-                    if top_y_p + 20 <= self.y:
-                        return True
-
-    def check_collision_bottom_wall(self, left_x_p, top_y_p, right_x_p, bottom_y_p): #CHECKING FOR TOUCHING THE BOTTOM WALL
-        right_x = self.x + self.width
-        bottom_y = self.y + self.height
-
-        #left angle
-        if bottom_y_p >= bottom_y:
-            if left_x_p + 20 <= self.x:
-                if right_x_p - 20 >= self.x:
-                    if top_y_p + 20 <= bottom_y:
-                        return True
-                        
-        #middle (golden)
-        if bottom_y_p >= bottom_y:
-            if left_x_p + 20 >= self.x:
-                if right_x_p - 20 <= right_x:
-                    if top_y_p + 20 <= bottom_y:
-                        return True
-        
-        #right angle
-        if bottom_y_p >= bottom_y:
-            if right_x_p - 20 >= right_x:
-                if left_x_p + 20 <= right_x:
-                    if top_y_p + 20 <= bottom_y:
-                        return True
-                    
-class TileBlock(Block):
-    def __init__(self, x, y, width, height, image):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.image = image
-        self.rect = self.image.get_rect(topleft = (x,y))
+        self.rect = self.image.get_rect(midtop = (self.x + self.width // 2, self.y), 
+                                        midbottom = (self.x + self.width // 2, self.y + self.height),
+                                        midleft = (self.x, self.y + self.height // 2), 
+                                        midright = (self.x + self.width, self.y + self.height // 2),
+                                        topleft = (self.x, self.y),
+                                        topright = (self.x + self.width, self.y),
+                                        bottomleft = (self.x, self.y + self.height),
+                                        bottomright = (self.x + self.width, self.y + self.height))
+
+    def check_collision_right_wall(self, player): #CHECKING FOR TOUCHING THE RIGHT WALL
+        if self.rect.collidepoint(player.rect.topleft):
+            return True
+        if self.rect.collidepoint(player.rect.midleft):
+            return True
+    
+    def check_collision_left_wall(self, player): #CHECKING FOR TOUCHING THE LEFT WALL
+        if self.rect.collidepoint(player.rect.topright):
+            return True
+        if self.rect.collidepoint(player.rect.midright):
+            return True
+    
+    def check_collision_top_wall(self, player): #CHECKING FOR TOUCHING THE TOP WALL
+        if self.rect.collidepoint(player.rect.midbottom):
+            return True
+
+    def check_collision_bottom_wall(self, player): #CHECKING FOR TOUCHING THE BOTTOM WALL
+        if self.rect.collidepoint(player.rect.midtop):
+            return True
+                    
+class BackGround(Settings):
+    def __init__(self, x, y, width, height, image):
+        super().__init__(x = x, y = y, width = width, height = height, image = image)

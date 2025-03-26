@@ -21,6 +21,7 @@ class Hero(Enemy):
         self.timer_damage = 0
         self.hide = False
         super().__init__(x, y, width, height, image, hp, speed)
+        self.rect = pygame.Rect(self.x + 16, self.y + 30, self.width - 33, self.height - 30)
         
     def idle(self, idle_count, screen, last_side, with_chest, list_idle_with_chest, list_idle): #DRAWING IDLE POSITION
         if last_side == 0:

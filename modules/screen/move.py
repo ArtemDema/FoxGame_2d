@@ -8,8 +8,7 @@ def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHEC
     dict_return = {}
     if with_box:
         for block in blocks:
-            answer = block.check_collision_right_wall(player.x, chest_player.y + 5, 
-                                                    player.x + player.width, player.y + player.height)
+            answer = block.check_collision_right_wall(player)
             if answer:
                 dict_return["last_side"] = 0
                 return dict_return
@@ -43,29 +42,17 @@ def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHEC
             if push_box: dict_return["push_box"] = False
             dict_return["last_side"] = 0
             player.x -= player.speed
+            player.rect.x -= player.speed
     else:
         for block in blocks:
-            answer = block.check_collision_right_wall(player.x, player.y + 5, 
-                                                    player.x + player.width, player.y + player.height)
+            answer = block.check_collision_right_wall(player)
             if answer:
                 dict_return["last_side"] = 0
                 return dict_return
-            
-        for chest in chests:
-            answer = chest.check_collision_right_wall(player.x, player.y + 5, 
-                                                    player.x + player.width, player.y + player.height)
-            if answer:
-                dict_return["last_side"] = 0
-                return dict_return
-
-        for box in boxes:
-            answer = box.check_collision_right_wall(player.x, player.y + 5, 
-                                                    player.x + player.width, player.y + player.height)
             if answer:
                 if push_box:
                     for block in blocks:
-                        answer = block.check_collision_right_wall(box.x - 15, box.y, 
-                                                    box.x + box.width, box.y + box.height)
+                        answer = block.check_collision_right_wall(player)
                         if answer:
                             dict_return["last_side"] = 0
                             return dict_return
@@ -88,6 +75,7 @@ def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHEC
             if push_box: dict_return["push_box"] = False
             dict_return["last_side"] = 0
             player.x -= player.speed
+            player.rect.x -= player.speed
 
     return dict_return
 
@@ -98,8 +86,7 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
     dict_return = {}
     if with_box:
         for block in blocks:
-            answer = block.check_collision_left_wall(player.x, chest_player.y + 5, 
-                                                    player.x + player.width, player.y + player.height)
+            answer = block.check_collision_left_wall(player)
             if answer:
                 dict_return["last_side"] = 1
                 return dict_return
@@ -141,6 +128,7 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
             if player.x == WIDTH // 2:
                 for block in blocks:
                     block.x -= player.speed
+                    block.rect.x -= player.speed
                 for resource in droped_resources:
                     resource.x -= player.speed
                 for chest in chests:
@@ -161,10 +149,10 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                     tree.x -= player.speed
             else:
                 player.x += player.speed
+                player.rect.x += player.speed
     else:
         for block in blocks:
-            answer = block.check_collision_left_wall(player.x, player.y + 5, 
-                                                    player.x + player.width, player.y + player.height)
+            answer = block.check_collision_left_wall(player)
             if answer:
                 dict_return["last_side"] = 1
                 return dict_return
@@ -182,8 +170,7 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
             if answer:
                 if push_box:
                     for block in blocks:
-                        answer = block.check_collision_left_wall(box.x + 17, box.y, 
-                                                    box.x + box.width + 17, box.y + box.height)
+                        answer = block.check_collision_left_wall(player)
                         if answer:
                             dict_return["last_side"] = 1
                             return dict_return
@@ -208,6 +195,7 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
             if player.x == WIDTH // 2:
                 for block in blocks:
                     block.x -= player.speed
+                    block.rect.x -= player.speed
                 for resource in droped_resources:
                     resource.x -= player.speed
                 for chest in chests:
@@ -228,5 +216,6 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                     tree.x -= player.speed
             else:
                 player.x += player.speed
+                player.rect.x += player.speed
 
     return dict_return
