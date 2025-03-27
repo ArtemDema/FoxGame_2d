@@ -118,6 +118,8 @@ class Block(Settings):
                                         topright = (self.x + self.width, self.y),
                                         bottomleft = (self.x, self.y + self.height),
                                         bottomright = (self.x + self.width, self.y + self.height))
+        
+        self.top_rect = pygame.Rect((self.x), (self.y), (self.width), (10))
 
     def check_collision_right_wall(self, player): #CHECKING FOR TOUCHING THE RIGHT WALL
         if self.rect.collidepoint(player.rect.topleft):
@@ -132,7 +134,11 @@ class Block(Settings):
             return True
     
     def check_collision_top_wall(self, player): #CHECKING FOR TOUCHING THE TOP WALL
-        if self.rect.collidepoint(player.rect.midbottom):
+        if self.top_rect.collidepoint(player.rect.midbottom):
+            return True
+        if self.top_rect.collidepoint(player.rect.bottomleft):
+            return True
+        if self.top_rect.collidepoint(player.rect.bottomright):
             return True
 
     def check_collision_bottom_wall(self, player): #CHECKING FOR TOUCHING THE BOTTOM WALL
