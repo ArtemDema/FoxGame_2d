@@ -83,9 +83,9 @@ class Chicken(Enemy):
                         break
                     
                 if answer:
-                    for block in list_of_all_blocks: #CHECK TOUCH RIGHT WALL OF BLOCK
+                    for block in list_of_all_blocks: #CHECK TOUCH LEFT WALL OF BLOCK
                         answer = block.check_collision_left_wall(self.x, self.y, 
-                                                                self.x + self.width, self.y + self.height)
+                                                                self.x + self.width + 15, self.y + self.height)
                         if answer:
                             if self.run_count == 3: 
                                 self.run_count = 0
@@ -138,7 +138,7 @@ class Chicken(Enemy):
                                                         self.x + self.width, self.y + self.height)
                 if answer:
                     self.is_dead = True
-                    interface[5].count += 1
+                    interface[4].count += 1
 
             right_x = self.x + self.width
             bottom_y = self.y + self.height
@@ -149,7 +149,7 @@ class Chicken(Enemy):
                         if top_y_p + 20 <= self.y:
                             if bottom_y_p + 10 <= bottom_y:
                                 self.is_dead = True
-                                interface[5].count += 1
+                                interface[4].count += 1
 
             #middle (golden)
             if bottom_y_p >= self.y:
@@ -158,7 +158,7 @@ class Chicken(Enemy):
                         if top_y_p + 20 <= self.y:
                             if bottom_y_p + 10 <= bottom_y:
                                 self.is_dead = True
-                                interface[5].count += 1
+                                interface[4].count += 1
                                         
             #right angle
             if bottom_y_p >= self.y:
@@ -167,7 +167,7 @@ class Chicken(Enemy):
                         if top_y_p + 20 <= self.y:
                             if bottom_y_p + 10 <= bottom_y:
                                 self.is_dead = True
-                                interface[5].count += 1
+                                interface[4].count += 1
 
 
     def dead_count(self, list_chicken, droped_resources): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT

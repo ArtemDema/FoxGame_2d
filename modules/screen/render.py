@@ -32,6 +32,9 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
     for tree in list_big_boss_tree:
         tree.draw_image(screen)
 
+    for bush in list_bush:
+        bush.draw_image(screen)
+
     for cloud in list_of_clouds:
         cloud.draw_image(screen)
 
@@ -54,14 +57,6 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
         chest.draw_image(screen)
     
     for box in boxes:
-        if box.open_box == True:
-            if box.hide_in_him:
-                box.image = "images/box/box_player_in.png"
-            else:
-                box.image = "images/box/box_open.png"
-        else:
-            box.image = "images/box/box_lock.png"
-        box.load_image()
         box.draw_image(screen)
 
     for recource in droped_resources: 
@@ -126,8 +121,6 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
         else:
             return_dict["number_for_choose_sprite"] = number_for_choose_sprite + 1
 
-    for bush in list_bush:
-        bush.draw_image(screen)
     
     #check for climbing rendering
     else:

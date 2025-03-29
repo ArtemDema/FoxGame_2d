@@ -8,12 +8,17 @@ class Discarded_Item(Block):
         self.whatIsThis = whatIsThis
         super().__init__(x,y,width,height,image)
 
-    def gravity(self,player, blocks): #
-        for block in blocks:
+    def gravity(self,player, blocks, chests, boxes): #
+        list_of_all_blocks = []
+        list_of_all_blocks += blocks
+        list_of_all_blocks += chests
+        list_of_all_blocks += boxes
+        for block in list_of_all_blocks:
             answer_fall_r = block.check_collision_top_wall(self.x, self.y, #
                                                         self.x + self.width, self.y + self.height)
             if answer_fall_r:
                 break
+        
         if answer_fall_r != True: #if he does not
             self.y += player.speed
 

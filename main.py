@@ -118,16 +118,18 @@ while game_run:
                 if answer:
                     mod.with_box = True
                     box_player = box
-                    if box.random_key == 1:
-                        random_d = random.randint(0, 4)
-                        if random_d == 1:
-                            key1 = mod.Discarded_Item(x = box.x, y = box.y, width = 35, height = 25, image = "images/resources/key.png", whatIsThis= "key")
-                            mod.droped_resources.append(key1)
-                            box.random_key = 0
-                        else:
-                            egg1 = mod.Discarded_Item(x = box.x, y = box.y, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
+                    if box.random_item == "key":
+                        key1 = mod.Discarded_Item(x = box.x, y = box.y, width = 35, height = 25, image = "images/resources/key.png", whatIsThis= "key")
+                        mod.droped_resources.append(key1)
+                        box.random_item = " "
+                    elif box.random_item == "egg":
+                            egg1 = mod.Discarded_Item(x = box.x, y = box.y, width = 25, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
                             mod.droped_resources.append(egg1)
-                            box.random_key = 0
+                            box.random_item = " "
+                    elif box.random_item == "meat":
+                            meat1 = mod.Discarded_Item(x = box.x, y = box.y, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
+                            mod.droped_resources.append(meat1)
+                            box.random_item = " "
     if mod.with_box:
         box_player.x = mod.player.x + 18
         box_player.y = mod.player.y - 19
@@ -141,9 +143,11 @@ while game_run:
         if mod.with_box == True:
             mod.with_box = False
             if last_side == 0:
-                box_player.throw_box(-135, mod.blocks)
+                box_player.throw = True
+                box_player.angle = -125
             else:
-                box_player.throw_box(-45, mod.blocks)
+                box_player.throw = True
+                box_player.angle = -55
     #--------------------------------------------
 
     #MOVE--------------------------------------------
@@ -154,8 +158,6 @@ while game_run:
 
         for chest in mod.chests:
             chest.hide_in_him = False
-        for box in mod.boxes:
-            box.hide_in_him = False
         if mod.player.x >= 1:
             dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_box, mod.with_box, box_player) #FUNCTION FOR PLAYER WALKING TO THE LEFT
             if "move_left" in dict_left: mod.move_left = dict_left["move_left"]

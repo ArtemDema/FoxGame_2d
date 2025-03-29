@@ -148,7 +148,7 @@ class Opossum(Enemy):
                                                         self.x + self.width, self.y + self.height)
                 if answer:
                     self.is_dead = True
-                    interface[6].count += 1
+                    interface[5].count += 1
 
             right_x = self.x + self.width
             bottom_y = self.y + self.height

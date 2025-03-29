@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.11.2" name="block_of_floor" tilewidth="50" tileheight="50" tilecount="11" columns="0">
+<tileset version="1.10" tiledversion="1.11.2" name="block_of_floor" tilewidth="50" tileheight="50" tilecount="12" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image source="../images/for_TileMapEditor/1.png" width="50" height="50"/>
@@ -33,5 +33,8 @@
  </tile>
  <tile id="10">
   <image source="../images/for_TileMapEditor/т.png" width="50" height="50"/>
+ </tile>
+ <tile id="11">
+  <image source="../images/for_TileMapEditor/8 o.png" width="50" height="50"/>
  </tile>
 </tileset>
