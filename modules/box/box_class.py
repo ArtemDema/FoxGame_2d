@@ -41,26 +41,25 @@ class Box(Block):
                                             right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
                 if answer: 
                     self.throw = False
-                    self.column_throw_move = 7
+                    self.column_throw_move = 10
                     boxes.append(self)
                     return
-                else:
-                    for block in list_of_all_blocks: #IS THE PLAYER TOUCHING THE LEFT WALL
-                        answer = block.check_collision_left_wall(left_x_p = self.x, top_y_p = self.y, 
-                                                right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
-                        if answer:
-                            self.throw = False
-                            self.column_throw_move = 7
-                            boxes.append(self)
-                            return
+            for block in list_of_all_blocks: #IS THE PLAYER TOUCHING THE LEFT WALL
+                answer = block.check_collision_left_wall(left_x_p = self.x, top_y_p = self.y, 
+                                        right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
+                if answer:
+                    self.throw = False
+                    self.column_throw_move = 10
+                    boxes.append(self)
+                    return
             if answer != True:
                 if self.column_throw_move != 0:
-                    self.x = self.x + 27 * math.cos(self.angle * (math.pi / 180))
-                    self.y = self.y + 27 * math.sin(self.angle * (math.pi / 180))
+                    self.x = self.x + 17 * math.cos(self.angle * (math.pi / 180))
+                    self.y = self.y + 17 * math.sin(self.angle * (math.pi / 180))
                     self.column_throw_move -= 1
                 else:
                     self.throw = False
-                    self.column_throw_move = 7
+                    self.column_throw_move = 10
                 boxes.append(self)
         else:
             for block in list_of_all_blocks: #IS THE PLAYER TOUCHING THE BOTTOM WALL
@@ -68,26 +67,25 @@ class Box(Block):
                                             right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
                 if answer: 
                     self.throw = False
-                    self.column_throw_move = 7
+                    self.column_throw_move = 10
                     boxes.append(self)
                     return
-                else:
-                    for block in list_of_all_blocks: #IS THE PLAYER TOUCHING THE RIGHT WALL
-                        answer = block.check_collision_right_wall(left_x_p = self.x, top_y_p = self.y, 
-                                                right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
-                        if answer: 
-                            self.throw = False
-                            self.column_throw_move = 7
-                            boxes.append(self)
-                            return
+            for block in list_of_all_blocks: #IS THE PLAYER TOUCHING THE RIGHT WALL
+                answer = block.check_collision_right_wall(left_x_p = self.x, top_y_p = self.y, 
+                                        right_x_p = self.x + self.width, bottom_y_p = self.y + self.height)
+                if answer: 
+                    self.throw = False
+                    self.column_throw_move = 10
+                    boxes.append(self)
+                    return
             if answer != True:
                 if self.column_throw_move != 0:
-                    self.x = self.x + 27 * math.cos(self.angle * (math.pi / 180))
-                    self.y = self.y + 27 * math.sin(self.angle * (math.pi / 180))
+                    self.x = self.x + 17 * math.cos(self.angle * (math.pi / 180))
+                    self.y = self.y + 17 * math.sin(self.angle * (math.pi / 180))
                     self.column_throw_move -= 1
                 else:
                     self.throw = False
-                    self.column_throw_move = 7
+                    self.column_throw_move = 10
                 boxes.append(self)
 
     def gravity(self, player, blocks, chests, boxes): #GRAVITY CHEST
@@ -105,4 +103,4 @@ class Box(Block):
                 break
 
         if answer_fall_r != True: #if he does not
-            self.y += player.speed
+            self.y += player.speed - 0.64

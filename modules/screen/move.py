@@ -1,4 +1,4 @@
-from .map import blocks, list_trees, list_of_clouds,chests, boxes, list_enemy, list_bush, list_big_boss_tree
+from .map import blocks, list_trees, list_of_clouds,chests, boxes, list_enemy, list_bush, list_big_boss_tree, list_water, end_of_level
 from ..enemy import list_feather
 
 def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHECK MOVE LEFT
@@ -138,28 +138,35 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                 chest.hide_in_him = False
 
             if player.x == WIDTH // 2:
-                for block in blocks:
-                    block.x -= player.speed
-                    block.rect.x -= player.speed
-                    block.top_rect.x -= player.speed
-                for resource in droped_resources:
-                    resource.x -= player.speed
-                for chest in chests:
-                    chest.x -= player.speed
-                for box in boxes:
-                    box.x -= player.speed
-                for enemy in list_enemy:
-                    enemy.x -= player.speed
-                for tree in list_trees:
-                    tree.x -= player.speed
-                for cloud in list_of_clouds:
-                    cloud.x -= player.speed
-                for feather in list_feather:
-                    feather.x -= player.speed
-                for bush in list_bush:
-                    bush.x -= player.speed
-                for tree in list_big_boss_tree:
-                    tree.x -= player.speed
+                if player.x + WIDTH // 2 >= end_of_level.x + end_of_level.width:
+                    player.x += player.speed
+                    player.rect.x += player.speed
+                else:
+                    for block in blocks:
+                        block.x -= player.speed
+                        block.rect.x -= player.speed
+                        block.top_rect.x -= player.speed
+                    for resource in droped_resources:
+                        resource.x -= player.speed
+                    for chest in chests:
+                        chest.x -= player.speed
+                    for box in boxes:
+                        box.x -= player.speed
+                    for enemy in list_enemy:
+                        enemy.x -= player.speed
+                    for tree in list_trees:
+                        tree.x -= player.speed
+                    for cloud in list_of_clouds:
+                        cloud.x -= player.speed
+                    for feather in list_feather:
+                        feather.x -= player.speed
+                    for bush in list_bush:
+                        bush.x -= player.speed
+                    for tree in list_big_boss_tree:
+                        tree.x -= player.speed
+                    for water in list_water:
+                        water.x -= player.speed
+                    end_of_level.x -= player.speed
             else:
                 player.x += player.speed
                 player.rect.x += player.speed
@@ -183,7 +190,8 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
             if answer:
                 if push_box:
                     for block in blocks:
-                        answer = block.check_collision_left_wall_p(player)
+                        answer = block.check_collision_left_wall(box.x + 17, box.y, 
+                                                    box.x + box.width + 17, box.y + box.height)
                         if answer:
                             dict_return["last_side"] = 1
                             return dict_return
@@ -206,28 +214,35 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
             if push_box: dict_return["push_box"] = False
             dict_return["last_side"] = 1
             if player.x == WIDTH // 2:
-                for block in blocks:
-                    block.x -= player.speed
-                    block.rect.x -= player.speed
-                    block.top_rect.x -= player.speed
-                for resource in droped_resources:
-                    resource.x -= player.speed
-                for chest in chests:
-                    chest.x -= player.speed
-                for box in boxes:
-                    box.x -= player.speed
-                for enemy in list_enemy:
-                    enemy.x -= player.speed
-                for tree in list_trees:
-                    tree.x -= player.speed
-                for cloud in list_of_clouds:
-                    cloud.x -= player.speed
-                for feather in list_feather:
-                    feather.x -= player.speed
-                for bush in list_bush:
-                    bush.x -= player.speed
-                for tree in list_big_boss_tree:
-                    tree.x -= player.speed
+                if player.x + WIDTH // 2 >= end_of_level.x + end_of_level.width:
+                    player.x += player.speed
+                    player.rect.x += player.speed
+                else:
+                    for block in blocks:
+                        block.x -= player.speed
+                        block.rect.x -= player.speed
+                        block.top_rect.x -= player.speed
+                    for resource in droped_resources:
+                        resource.x -= player.speed
+                    for chest in chests:
+                        chest.x -= player.speed
+                    for box in boxes:
+                        box.x -= player.speed
+                    for enemy in list_enemy:
+                        enemy.x -= player.speed
+                    for tree in list_trees:
+                        tree.x -= player.speed
+                    for cloud in list_of_clouds:
+                        cloud.x -= player.speed
+                    for feather in list_feather:
+                        feather.x -= player.speed
+                    for bush in list_bush:
+                        bush.x -= player.speed
+                    for tree in list_big_boss_tree:
+                        tree.x -= player.speed
+                    for water in list_water:
+                        water.x -= player.speed
+                    end_of_level.x -= player.speed
             else:
                 player.x += player.speed
                 player.rect.x += player.speed

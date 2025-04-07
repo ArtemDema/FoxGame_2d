@@ -107,7 +107,7 @@ class Frog(Enemy):
                     if self.vector_move == 1:
 
                         for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
-                            answer = block.check_collision_top_wall(self.x - 73, self.y - 15, self.x + self.width - 30, self.y + self.height + 15)
+                            answer = block.check_collision_top_wall(self.x - 76, self.y - 15, self.x + self.width - 30, self.y + self.height + 15)
                             if answer:
                                 break
                         
@@ -122,7 +122,7 @@ class Frog(Enemy):
                 else:
                     if self.vector_move == 0:
                         for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
-                            answer = block.check_collision_top_wall(self.x + 28, self.y - 15, self.x + self.width + 80, self.y + self.height + 15)
+                            answer = block.check_collision_top_wall(self.x + 60, self.y - 15, self.x + self.width + 60, self.y + self.height + 15)
                             if answer:
                                 break
                             
@@ -160,43 +160,49 @@ class Frog(Enemy):
             if self.move_jump == False:
                 self.move_bottom = True
 
-    def check_death(self, left_x_p, top_y_p, right_x_p, bottom_y_p, chests): #CHECK DEATH CHICKEN
+    def check_death(self, player, boxes, move_bottom): #CHECK DEATH CHICKEN
         if self.is_dead == False:
-            for chest in chests:
-                answer = chest.check_collision_bottom_wall(self.x, self.y, #CHECK CHEST FOR DEATH
+            for box in boxes:
+                answer = box.check_collision_bottom_wall(self.x, self.y, #CHECK BOX FOR DEATH
                                                         self.x + self.width, self.y + self.height)
                 if answer:
                     self.is_dead = True
                     interface[3].count += 1
 
-            right_x = self.x + self.width
-            bottom_y = self.y + self.height
-            #left angle
-            if bottom_y_p >= self.y:
-                if left_x_p + 33 <= self.x:
-                    if right_x_p - 30 >= self.x:
-                        if top_y_p + 20 <= self.y:
-                            if bottom_y_p + 10 <= bottom_y:
-                                self.is_dead = True
-                                interface[3].count += 1
+            if move_bottom == True:
+                right_x = self.x + self.width
+                bottom_y = self.y + self.height
 
-            #middle (golden)
-            if bottom_y_p >= self.y:
-                if left_x_p + 33 >= self.x:
-                    if right_x_p - 30 <= right_x:
-                        if top_y_p + 20 <= self.y:
-                            if bottom_y_p + 10 <= bottom_y:
-                                self.is_dead = True
-                                interface[3].count += 1
-                                        
-            #right angle
-            if bottom_y_p >= self.y:
-                if left_x_p + 33 <= right_x:
-                    if right_x_p - 30 >= right_x:
-                        if top_y_p + 20 <= self.y:
-                            if bottom_y_p + 10 <= bottom_y:
-                                self.is_dead = True
-                                interface[3].count += 1
+                bottom_y_p = player.y + player.height
+                left_x_p = player.x
+                right_x_p = player.x + player.width
+                top_y_p = player.y
+                #left angle
+                if bottom_y_p >= self.y:
+                    if left_x_p + 33 <= self.x:
+                        if right_x_p - 30 >= self.x:
+                            if top_y_p + 20 <= self.y:
+                                if bottom_y_p + 10 <= bottom_y:
+                                    self.is_dead = True
+                                    interface[3].count += 1
+
+                #middle (golden)
+                if bottom_y_p >= self.y:
+                    if left_x_p + 33 >= self.x:
+                        if right_x_p - 30 <= right_x:
+                            if top_y_p + 20 <= self.y:
+                                if bottom_y_p + 10 <= bottom_y:
+                                    self.is_dead = True
+                                    interface[3].count += 1
+                                            
+                #right angle
+                if bottom_y_p >= self.y:
+                    if left_x_p + 33 <= right_x:
+                        if right_x_p - 30 >= right_x:
+                            if top_y_p + 20 <= self.y:
+                                if bottom_y_p + 10 <= bottom_y:
+                                    self.is_dead = True
+                                    interface[3].count += 1
 
 
     def dead_count(self, list_frog, droped_resources): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT

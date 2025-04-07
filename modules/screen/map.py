@@ -1,10 +1,11 @@
-from ..main_classes import Block, BackGround, TileBlock
+from ..main_classes import BackGround, TileBlock, Settings
 from .screen import WIDTH, HEIGHT
 from ..tree import Tree
 from ..box import Box
 from ..chest import Chest
 from ..enemy import Frog, Chicken, Rooster, Opossum
 from ..bush import Bush
+from ..water import Water
 from ..resourses import Discarded_Item
 
 import random, pytmx, os
@@ -22,9 +23,9 @@ map = [ [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "
         ["6","b"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","b"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "],
         [" "," "," "," "," "," "," "," ","e"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","e"," "," "," "," "," "," "," "," "," "," ","b","e"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "],
         [" "," ","b"," "," "," "," ","e","b"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","6"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","e"," ","7","7"," "," "," "," "," "," "],
-        [" "," ","b"," ","h","s"," ","b","b","b"," "," "," "," "," "," "," ","8"," "," "," "," "," "," "," ","h"," "," ","8"," "," "," "," ","s"," "," "," "," "," "," "," "," ","8","h"," "," "," "," "," "," "," ","s"," "," ","r"," "," "," ","8"," ","b"," "," ","s","h"," "," ","b"," "," "," ","b","7","8"," "," ","c"," "," "," "," ","e","b","b","6"," ","s","h"," "," "," "],
-        [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "],
-        [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "]]
+        [" "," ","b"," ","h","s"," ","b","b","b"," "," "," "," "," "," "," ","8"," "," "," "," "," "," "," ","h"," "," ","8"," "," "," "," ","s","f"," "," "," "," "," "," "," ","8","f"," "," "," "," "," "," "," ","s"," "," ","r"," "," "," ","8"," ","b"," "," ","s","h"," "," ","b"," "," "," ","b","7","8"," "," ","c"," "," "," "," ","e","b","b","6"," ","s","h","n"," "," "],
+        [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","w","w","w","w","w","w"," "," "," ","w","w","w"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","w","w","w"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "],
+        [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","d","d","d","d","d","d"," "," "," ","d","d","d"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ","d","d","d"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "]]
 
 blocks = []
 list_trees = []
@@ -39,6 +40,7 @@ list_enemy = []
 list_bush = []
 list_big_boss_tree = []
 droped_resources = []
+list_water = []
 
 # - Nothing
 #8 - tree
@@ -56,6 +58,9 @@ droped_resources = []
 #t - heart
 #e - egg
 #k - key
+#w - water
+#d - deep water
+#n - end of level
 
 path = os.path.abspath(__file__ + "\..\..\..\levels")
 
@@ -68,7 +73,9 @@ for x, y, tileSurface in layer.tiles():
     blocks.append(tile)
 
 
-background = BackGround(x = 0, y = 0, width = WIDTH, height = HEIGHT, image = "images/screen/1.jpeg")
+background = BackGround(x = 0, y = 0, width = WIDTH, height = HEIGHT, image = "images/screen/first.jpg")
+
+water_column = 0
 
 for idy, row in enumerate(map):
     for idx, column in enumerate(row):       
@@ -137,3 +144,26 @@ for idy, row in enumerate(map):
         elif column == "k":
             key1 = Discarded_Item(x = 50 * idx, y = 50 * idy, width = 30, height = 22, image = "images/resources/key.png", whatIsThis= "key")
             droped_resources.append(key1)
+        
+        elif column == "w":
+            if water_column == 0:
+                water = Water(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/water/0.png")
+                list_water.append(water)
+                water_column += 1
+            else:
+                water = Water(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/water/1.png")
+                list_water.append(water)
+                water_column = 0
+        
+        elif column == "d":
+            if water_column == 0:
+                water = Water(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/water/2.png")
+                list_water.append(water)
+                water_column += 1
+            else:
+                water = Water(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/water/3.png")
+                list_water.append(water)
+                water_column = 0
+        
+        elif column == "n":
+            end_of_level = Settings(x = 50 * idx, y = 50 * idy - 50, width = 80, height = 100, image = "images/screen/end.png")

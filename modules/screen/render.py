@@ -1,6 +1,7 @@
 import pygame
 
-from .map import blocks, background, list_trees, list_of_clouds, chests, boxes, list_bush, list_big_boss_tree, droped_resources
+from .map import blocks, background, list_trees, list_of_clouds, chests, boxes, list_bush, list_big_boss_tree, droped_resources, list_water
+from .map import end_of_level
 from ..interface import interface, hearts, Column_Meat_Egg_Hp_Key
 from .render_enemy import render_enemy
 from ..enemy import list_feather
@@ -18,16 +19,20 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
 
     hearts = []
 
+
     for index in range(5):
         if index < player.hp:
-            hp = Column_Meat_Egg_Hp_Key(10 + (index * 30), 19, 27, 27, "images/resources/heart.png", 0)
+            hp = Column_Meat_Egg_Hp_Key(10 + (index * 30), 30, 27, 27, "images/resources/heart.png", 0)
             hearts.append(hp)
         else:
-            hp = Column_Meat_Egg_Hp_Key(10 + (index * 30), 19, 27, 27, "images/resources/hollow_heart.png", 0)
+            hp = Column_Meat_Egg_Hp_Key(10 + (index * 30), 30, 27, 27, "images/resources/hollow_heart.png", 0)
             hearts.append(hp)
 
     #background rendering
     background.draw_image(screen)
+
+    #render end of level
+    end_of_level.draw_image(screen)
 
     for tree in list_big_boss_tree:
         tree.draw_image(screen)
@@ -41,6 +46,9 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
     #rendering all blocks
     for block in blocks: 
         block.draw_image(screen)
+
+    for water in list_water:
+        water.draw_image(screen)
 
     for tree in list_trees:
         tree.draw_image(screen)

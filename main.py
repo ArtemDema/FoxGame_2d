@@ -62,7 +62,7 @@ while game_run:
           cloud = mod.Cloud(x = 1430, 
                             y = -25, 
                             width = random.randint(80, 180),
-                            height = random.randint(40, 140), 
+                            height = random.randint(80, 140), 
                             image = f"images/cloud/cloud_{random.randint(0, 7)}.png")
           mod.list_of_clouds.append(cloud)
 
@@ -84,7 +84,7 @@ while game_run:
 
     #ENEMY--------------------------------------------
     for enemy in mod.list_enemy:
-        enemy.check_death(mod.player.x, mod.player.y, mod.player.x + mod.player.width, mod.player.y + mod.player.height, mod.chests) #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
+        enemy.check_death(mod.player, mod.boxes, mod.move_bottom) #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
         if enemy.is_dead == False:
             enemy.player_visibility = enemy.player_visibility_zone(mod.player)
             enemy.move(mod.player, mod.blocks, mod.chests, mod.boxes) #ENEMY MOVE
@@ -173,8 +173,6 @@ while game_run:
 
         for chest in mod.chests:
             chest.hide_in_him = False
-        for box in mod.boxes:
-            box.hide_in_him = False
 
         dict_right = mod.move_right_player(mod.player, mod.move_jump, 
                                            mod.push_box, mod.with_box, box_player, mod.WIDTH, mod.droped_resources) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
@@ -182,7 +180,11 @@ while game_run:
         if "last_side" in dict_right: last_side = dict_right["last_side"]
         if "push_box" in dict_right: mod.push_box = dict_right["push_box"]
     else:
-        mod.move_right = False
+        if mod.player.x >= mod.end_of_level.x - 250:
+            mod.player.x += mod.player.speed
+            mod.move_right = True
+        else:
+            mod.move_right = False
 
       #JUMP
     if mod.move_jump == False:
@@ -208,7 +210,6 @@ while game_run:
     else:
         mod.move_crouch = False
     #--------------------------------------------
-
     #DAMAGE TO THE PLAYER--------------------------------------------
     if mod.player.timer_damage > 0:
         mod.player.timer_damage -= 1
@@ -260,5 +261,7 @@ while game_run:
         continue_b.show_image(mod.screen)
         exit_b.show_image(mod.screen)
     #--------------------------------------------
+    for water in mod.list_water:
+        mod.player.hp = water.check_death_of_player(mod.player)
     
     pygame.display.flip()
