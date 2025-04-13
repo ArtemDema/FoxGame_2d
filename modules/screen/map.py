@@ -75,8 +75,6 @@ for x, y, tileSurface in layer.tiles():
 
 background = BackGround(x = 0, y = 0, width = WIDTH, height = HEIGHT, image = "images/screen/first.jpg")
 
-water_column = 0
-
 for idy, row in enumerate(map):
     for idx, column in enumerate(row):       
         if column == "8":
@@ -146,24 +144,12 @@ for idy, row in enumerate(map):
             droped_resources.append(key1)
         
         elif column == "w":
-            if water_column == 0:
-                water = Water(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/water/0.png")
-                list_water.append(water)
-                water_column += 1
-            else:
-                water = Water(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/water/1.png")
-                list_water.append(water)
-                water_column = 0
+            water = Water(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/water/0.png")
+            list_water.append(water)
         
         elif column == "d":
-            if water_column == 0:
-                water = Water(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/water/2.png")
-                list_water.append(water)
-                water_column += 1
-            else:
-                water = Water(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/water/3.png")
-                list_water.append(water)
-                water_column = 0
+            water = Water(x = 50 * idx, y = 50 * idy, width = 50, height = 50, image = "images/water/2.png")
+            list_water.append(water)
         
         elif column == "n":
             end_of_level = Settings(x = 50 * idx, y = 50 * idy - 50, width = 80, height = 100, image = "images/screen/end.png")

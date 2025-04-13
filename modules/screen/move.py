@@ -146,6 +146,7 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                         block.x -= player.speed
                         block.rect.x -= player.speed
                         block.top_rect.x -= player.speed
+                        block.bottom_rect.x -= player.speed
                     for resource in droped_resources:
                         resource.x -= player.speed
                     for chest in chests:
@@ -222,6 +223,7 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                         block.x -= player.speed
                         block.rect.x -= player.speed
                         block.top_rect.x -= player.speed
+                        block.bottom_rect.x -= player.speed
                     for resource in droped_resources:
                         resource.x -= player.speed
                     for chest in chests:

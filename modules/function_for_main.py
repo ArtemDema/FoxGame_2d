@@ -82,15 +82,15 @@ def gravity(player, move_jump): #GRAVITY PLAYER
 
     answer_fall = True
 
-    for block in blocks:
-        answer_fall = block.check_collision_top_wall_p(player)
-        if answer_fall: #if the player is standing on some block
-            list_return["move_bottom"] = False
-            return list_return
-        
     for block in list_of_all_blocks:
         answer_fall = block.check_collision_top_wall(player.x, player.y,
                                                     player.x + player.width, player.y + player.height)
+        if answer_fall: #if the player is standing on some block
+            list_return["move_bottom"] = False
+            return list_return
+
+    for block in blocks:
+        answer_fall = block.check_collision_top_wall_p(player)
         if answer_fall: #if the player is standing on some block
             list_return["move_bottom"] = False
             return list_return

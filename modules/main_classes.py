@@ -161,22 +161,22 @@ class Block(Settings):
         
         #left angle
         if bottom_y_p >= self.y:
-            if left_x_p + 23 <= self.x:
-                if right_x_p - 20 >= self.x:
+            if left_x_p + 30 <= self.x:
+                if right_x_p - 30 >= self.x:
                     if top_y_p + 20 <= self.y:
                         return True
 
         #middle (golden)
         if bottom_y_p >= self.y:
-            if left_x_p + 23 >= self.x:
-                if right_x_p - 20 <= right_x:
+            if left_x_p + 30 >= self.x:
+                if right_x_p - 30 <= right_x:
                     if top_y_p + 20 <= self.y:
                         return True
                                     
         #right angle
         if bottom_y_p >= self.y:
-            if left_x_p + 23 <= right_x:
-                if right_x_p - 20 >= right_x:
+            if left_x_p + 30 <= right_x:
+                if right_x_p - 30 >= right_x:
                     if top_y_p + 20 <= self.y:
                         return True
 
@@ -215,15 +215,9 @@ class TileBlock(Block):
         self.width = width
         self.height = height
         self.image = image
-        self.rect = self.image.get_rect(midtop = (self.x + self.width // 2, self.y), 
-                                        midbottom = (self.x + self.width // 2, self.y + self.height),
-                                        midleft = (self.x, self.y + self.height // 2), 
-                                        midright = (self.x + self.width, self.y + self.height // 2),
-                                        topleft = (self.x, self.y),
-                                        topright = (self.x + self.width, self.y),
-                                        bottomleft = (self.x, self.y + self.height),
-                                        bottomright = (self.x + self.width, self.y + self.height))
+        self.rect = pygame.Rect((self.x - 5),(self.y),(self.width + 10),(self.height))
         self.top_rect = pygame.Rect((self.x), (self.y), (self.width), (10))
+        self.bottom_rect = pygame.Rect((self.x), (self.y + self.height - 10), (self.width), (10))
 
     def check_collision_right_wall_p(self, player): #CHECKING FOR TOUCHING THE RIGHT WALL
         if self.rect.collidepoint(player.rect.topleft):
@@ -246,7 +240,11 @@ class TileBlock(Block):
             return True
 
     def check_collision_bottom_wall_p(self, player): #CHECKING FOR TOUCHING THE BOTTOM WALL
-        if self.rect.collidepoint(player.rect.midtop):
+        if self.bottom_rect.collidepoint(player.rect.midtop):
+            return True
+        if self.bottom_rect.collidepoint(player.rect.topleft):
+            return True
+        if self.bottom_rect.collidepoint(player.rect.topright):
             return True
                     
 class BackGround(Settings):

@@ -55,6 +55,10 @@ list_idle_chicken = ["images/enemy/chicken/idle/0.png", "images/enemy/chicken/id
 list_run_chicken = ["images/enemy/chicken/run/0.png", "images/enemy/chicken/run/1.png", 
                     "images/enemy/chicken/run/2.png", "images/enemy/chicken/run/3.png"]
 
+#WATER----------------------------------------------------------------------------------------------------------------------
+
+list_water_images = ["images/water/0.png","images/water/1.png","images/water/2.png","images/water/3.png","images/water/4.png"]
+
 ##LOAD_IMAGE----------------------------------------------------------------------------------------------------------------------
 
 def load_list_image(list_images, width, height):
@@ -81,3 +85,4 @@ load_list_image(list_idle_frog, 60, 60)
 load_list_image(list_jump_frog, 60, 60)
 load_list_image(list_idle_chicken, 50, 50)
 load_list_image(list_run_chicken, 50, 50)
+load_list_image(list_water_images, 50, 50)
