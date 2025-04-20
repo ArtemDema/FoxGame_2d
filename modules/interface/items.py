@@ -19,7 +19,7 @@ class Column_Meat_Egg_Hp_Key(Settings):
             screen.blit(text1, (self.x + self.width + 10, 32))
 
 meat = Column_Meat_Egg_Hp_Key(220, 25, 55, 30, "images/resources/meat.png", 0)
-egg = Column_Meat_Egg_Hp_Key(340, 24, 23, 30, "images/resources/egg.png", 0)
+egg = Column_Meat_Egg_Hp_Key(340, 24, 23, 30, "images/resources/egg.png", 19)
 key = Column_Meat_Egg_Hp_Key(420, 28, 35, 25, "images/resources/key.png", 0)
 frog = Column_Meat_Egg_Hp_Key(1115, 18, 40, 40, "images/enemy/frog/idle/0.png", 0)
 chicken = Column_Meat_Egg_Hp_Key(1015, 18, 40, 40, "images/enemy/chicken/idle/0.png", 0)

@@ -7,6 +7,6 @@ class Water(Block):
     def check_death_of_player(self, player):
         answer = self.check_collision_top_wall(player.x + 20, player.y, player.x + player.width - 20, player.y + player.height - 10)
         if answer:
-            return 0
+            return True
         else:
-            return player.hp
+            return False

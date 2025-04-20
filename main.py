@@ -1,4 +1,4 @@
-import pygame, random
+import pygame
 import modules as mod
 
 pygame.init()
@@ -12,6 +12,8 @@ reload_chest = 0
 box_player = 0
 modal_window_info = False
 pause = False
+tasks = False
+last_block = 0
 
 #counters (elements for the array) for changing the sprite:
 idle_count = 0
@@ -20,6 +22,7 @@ crouch_count = 0
 
 #sprite change frequency
 number_for_choose_sprite = 10
+frequency_cloud = 120
 #getting information from the last session
 info = mod.get_info()
 WIDTH = info["width"]
@@ -50,86 +53,45 @@ while game_run:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if modal_window_info:
                 modal_window_info = mod.modal_w.check_click(position_mouse[0], position_mouse[1])
-            if pause:
+            elif pause:
                 pause = continue_b.check_click(position_mouse_x = position_mouse[0], position_mouse_y = position_mouse[1])
                 game_run = exit_b.check_click(position_mouse_x = position_mouse[0], position_mouse_y = position_mouse[1])
                 if game_run ==False:
                     mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
+            elif tasks:
+                tasks = exit_b.check_click(position_mouse_x = position_mouse[0], position_mouse_y = position_mouse[1])
 
     #CLOUD--------------------------------------------
-    if len(mod.list_of_clouds) < 5:
-      for i in range(5 - len(mod.list_of_clouds)):
-          cloud = mod.Cloud(x = 1430, 
-                            y = -25, 
-                            width = random.randint(80, 180),
-                            height = random.randint(80, 140), 
-                            image = f"images/cloud/cloud_{random.randint(0, 7)}.png")
-          mod.list_of_clouds.append(cloud)
-
-    for cloud in mod.list_of_clouds:
-        answer = cloud.move()
-        if answer:
-            mod.list_of_clouds.remove(cloud)
+    mod.list_of_clouds = mod.cloud_check(mod.list_of_clouds, mod.Cloud, frequency_cloud)
+    if frequency_cloud <= 0:
+        frequency_cloud = 120
+    else:
+        frequency_cloud -= 1
     #--------------------------------------------
 
     #TREE--------------------------------------------
-    for tree in mod.list_trees:
-        tree.idle(mod.list_bubble_tree)
-        answer = tree.drop_egg(mod.player)
-        if answer:
-            egg1 = mod.Discarded_Item(x = tree.x + 70, y = tree.y - 30, width = 20, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
-            mod.droped_resources.append(egg1)
-            tree.ramdom_egg = 0
+    mod.droped_resources= mod.tree_check(mod.list_trees, mod.list_bubble_tree, mod.player, mod.Discarded_Item, mod.droped_resources)
     #--------------------------------------------
 
     #ENEMY--------------------------------------------
-    for enemy in mod.list_enemy:
-        enemy.check_death(mod.player, mod.boxes, mod.move_bottom) #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
-        if enemy.is_dead == False:
-            enemy.player_visibility = enemy.player_visibility_zone(mod.player)
-            enemy.move(mod.player, mod.blocks, mod.chests, mod.boxes) #ENEMY MOVE
-
-    if len(mod.list_feather) != 0:
-        for feather in mod.list_feather:
-            feather.move(mod.WIDTH, mod.HEIGHT, mod.player, mod.blocks, mod.chests, mod.boxes)
+    mod.enemy(mod.list_enemy, mod.player, mod.boxes, mod.move_bottom, mod.blocks, mod.chests, mod.list_feather, mod.WIDTH, mod.HEIGHT)
     #--------------------------------------------
 
     #CHEST AND BOX--------------------------------------------
       #OPEN AND HIDE IN CHEST
     if keys[pygame.K_e]:
-        if reload_chest == 2:
-            if mod.with_box == False:
-                for chest in mod.chests: #CHECKING AN ATTEMPT TO OPEN A CHEST
-                    answer = chest.check_open(mod.key.count, mod.player, mod.droped_resources) #
-                    if answer[0]: 
-                        mod.key.count -= 1
-                        modal_window_info = True
-                        claim = answer[1]
-                    elif answer[0] == False: 
-                        mod.player.hide = True
-                        chest.hide_in_him = True
-        else:
-            reload_chest += 1
+        return_dict = mod.check_open(mod.with_box, mod.chests, mod.key, mod.player, mod.droped_resources, reload_chest)
+        if "key.count" in return_dict: mod.key.count = return_dict["key.count"]
+        if "modal_window_info" in return_dict: modal_window_info = return_dict["modal_window_info"]
+        if "player.hide" in return_dict: mod.player.hide = return_dict["player.hide"]
+        if "reload_chest" in return_dict: reload_chest = return_dict["reload_chest"]
+
       #UP THE BOX
     if keys[pygame.K_q]:
-        if mod.player.hide == False and mod.with_box == False:
-            for box in mod.boxes: #CHECKING AN ATTEMPT TO UP A BOX 
-                answer = box.check_up_the_box(mod.player) #
-                if answer:
-                    mod.with_box = True
-                    box_player = box
-                    if box.random_item == "key":
-                        key1 = mod.Discarded_Item(x = box.x, y = box.y, width = 35, height = 25, image = "images/resources/key.png", whatIsThis= "key")
-                        mod.droped_resources.append(key1)
-                        box.random_item = " "
-                    elif box.random_item == "egg":
-                            egg1 = mod.Discarded_Item(x = box.x, y = box.y, width = 25, height = 30, image = "images/resources/egg.png", whatIsThis= "egg")
-                            mod.droped_resources.append(egg1)
-                            box.random_item = " "
-                    elif box.random_item == "meat":
-                            meat1 = mod.Discarded_Item(x = box.x, y = box.y, width = 40, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
-                            mod.droped_resources.append(meat1)
-                            box.random_item = " "
+        return_dict = mod.up_a_box(mod.player, mod.boxes, mod.Discarded_Item, mod.droped_resources, mod.with_box)
+        if "with_box" in return_dict: mod.with_box = return_dict["with_box"]
+        if "box_player" in return_dict: box_player = return_dict["box_player"]
+
     if mod.with_box:
         box_player.x = mod.player.x + 18
         box_player.y = mod.player.y - 19
@@ -159,10 +121,11 @@ while game_run:
         for chest in mod.chests:
             chest.hide_in_him = False
         if mod.player.x >= 1:
-            dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_box, mod.with_box, box_player) #FUNCTION FOR PLAYER WALKING TO THE LEFT
-            if "move_left" in dict_left: mod.move_left = dict_left["move_left"]
-            if "last_side" in dict_left: last_side = dict_left["last_side"]
-            if "push_box" in dict_left: mod.push_box = dict_left["push_box"]
+            if mod.move_bottom == False:
+                dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_box, mod.with_box, box_player) #FUNCTION FOR PLAYER WALKING TO THE LEFT
+                if "move_left" in dict_left: mod.move_left = dict_left["move_left"]
+                if "last_side" in dict_left: last_side = dict_left["last_side"]
+                if "push_box" in dict_left: mod.push_box = dict_left["push_box"]
     else:
         mod.move_left = False
     
@@ -174,11 +137,12 @@ while game_run:
         for chest in mod.chests:
             chest.hide_in_him = False
 
-        dict_right = mod.move_right_player(mod.player, mod.move_jump, 
-                                           mod.push_box, mod.with_box, box_player, mod.WIDTH, mod.droped_resources) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
-        if "move_right" in dict_right: mod.move_right = dict_right["move_right"]
-        if "last_side" in dict_right: last_side = dict_right["last_side"]
-        if "push_box" in dict_right: mod.push_box = dict_right["push_box"]
+        if mod.move_bottom == False:
+            dict_right = mod.move_right_player(mod.player, mod.move_jump, 
+                                            mod.push_box, mod.with_box, box_player, mod.WIDTH, mod.droped_resources) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
+            if "move_right" in dict_right: mod.move_right = dict_right["move_right"]
+            if "last_side" in dict_right: last_side = dict_right["last_side"]
+            if "push_box" in dict_right: mod.push_box = dict_right["push_box"]
     else:
         if mod.player.x >= mod.end_of_level.x - 250:
             mod.player.x += mod.player.speed
@@ -210,6 +174,7 @@ while game_run:
     else:
         mod.move_crouch = False
     #--------------------------------------------
+
     #DAMAGE TO THE PLAYER--------------------------------------------
     if mod.player.timer_damage > 0:
         mod.player.timer_damage -= 1
@@ -219,6 +184,7 @@ while game_run:
       #PLAYER GRAVITY
     list_return = mod.gravity(mod.player, mod.move_jump) #PLAYER GRAVITY
     if "move_bottom" in list_return: mod.move_bottom = list_return["move_bottom"]
+    if "last_block" in list_return: last_block = list_return["last_block"]
 
       #GRAVITY OF RESOURCES AND CHESTS
     mod.gravity_resources(mod.player) #RESOURCE GRAVITY
@@ -244,13 +210,25 @@ while game_run:
     if "number_for_choose_sprite" in return_dict: number_for_choose_sprite = return_dict["number_for_choose_sprite"]
     #--------------------------------------------
 
+    mod.add_hp(mod.egg, mod.player, mod.meat)
+
     #MODAL_INFO--------------------------------------------
     if modal_window_info:
-        mod.modal_w.print_text_on_screen(mod.WIDTH, mod.HEIGHT, mod.screen, claim)
+        mod.modal_w.print_text_on_screen(mod.WIDTH, mod.HEIGHT, mod.screen, mod.claim)
         pygame.time.delay(120)
     #--------------------------------------------
 
-    #Pause--------------------------------------------
+    #TASK MENU--------------------------------------------
+    if keys[pygame.K_t]:
+        tasks = True
+    if tasks:
+        task_photo = mod.Button(325, 75, 600, 700, "images/screen/task.png")
+        exit_b = mod.Button(900, 600, 150, 70, "images/resources/exit.png")
+        task_photo.show_image(mod.screen)
+        exit_b.show_image(mod.screen)
+    #--------------------------------------------
+
+    #PAUSE--------------------------------------------
     if keys[pygame.K_ESCAPE]:
         pause = True
     if pause:
@@ -261,7 +239,21 @@ while game_run:
         continue_b.show_image(mod.screen)
         exit_b.show_image(mod.screen)
     #--------------------------------------------
-    for water in mod.list_water:
-        mod.player.hp = water.check_death_of_player(mod.player)
+    if mod.player.player_in_the_water:
+        if mod.player.y <= mod.HEIGHT + 50:
+            mod.player.y += 1
+        else:
+            mod.player.x = last_block.x - 20
+            mod.player.y = last_block.y - 90
+            mod.player.rect.x = mod.player.x + 30
+            mod.player.rect.y = mod.player.y + 30
+            mod.player.player_in_the_water = False
+    else:
+        for water in mod.list_water:
+            answer = water.check_death_of_player(mod.player)
+            if answer:
+                mod.player.damage_player()
+                mod.player.player_in_the_water = True
+                break
     
     pygame.display.flip()

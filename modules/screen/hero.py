@@ -20,6 +20,7 @@ class Hero(Enemy):
         self.strength_jump = strength_jump
         self.timer_damage = 0
         self.hide = False
+        self.player_in_the_water = False
         super().__init__(x, y, width, height, image, hp, speed)
         self.rect = pygame.Rect(self.x + 30, self.y + 30, self.width - 55, self.height - 30)
         
@@ -179,4 +180,4 @@ class Hero(Enemy):
 
 
 info = get_info()
-player = Hero(x = 600, y = 0, width = 80, height = 80, image="images/player/idle/0.png", hp = info["hp"], speed = 4, strength_jump = 17)
+player = Hero(x = 600, y = 0, width = 80, height = 80, image="images/player/idle/0.png", hp = info["hp"], speed = 4, strength_jump = 20)

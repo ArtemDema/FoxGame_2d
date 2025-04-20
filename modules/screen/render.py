@@ -84,7 +84,7 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
             feather.draw_image(screen)
 
     #check for drawing in a idle
-    if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False and hide == False:
+    if move_left == False and move_right == False and move_bottom == False and move_jump == False and move_crouch == False and hide == False and player.player_in_the_water == False:
         player.idle(idle_count, screen, last_side, with_chest, list_idle_with_chest, list_idle)
         if number_for_choose_sprite == 10:
             if idle_count != 3:
@@ -94,6 +94,11 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
             return_dict["number_for_choose_sprite"] = 0
         else:
             return_dict["number_for_choose_sprite"] = number_for_choose_sprite + 1
+
+    elif player.player_in_the_water:
+        player.image = "images/player/hurt/player-hurt-1.png"
+        player.load_image()
+        player.draw_image(screen)
 
     #Jump drawing check
     elif move_jump: 
@@ -129,9 +134,10 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
         else:
             return_dict["number_for_choose_sprite"] = number_for_choose_sprite + 1
 
-    
     #check for climbing rendering
     else:
         pass #climb 
+    
+    # pygame.draw.rect(screen, (255,255,255), player.rect)
     
     return return_dict

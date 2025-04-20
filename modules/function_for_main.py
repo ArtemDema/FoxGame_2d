@@ -28,7 +28,7 @@ def check_jump(player, blocks): #CHECK JUMP
             answer = block.check_collision_bottom_wall_p(player)
             if answer:
                 return_dict["move_jump"] = False
-                return_dict["player_strength_jump"] = 17
+                return_dict["player_strength_jump"] = 20
                 return return_dict
             
         for box in boxes:
@@ -36,7 +36,7 @@ def check_jump(player, blocks): #CHECK JUMP
                                                 player.x + player.width, player.y + player.height)
             if answer:
                 return_dict["move_jump"] = False
-                return_dict["player_strength_jump"] = 17
+                return_dict["player_strength_jump"] = 20
                 return return_dict
             
             player.y -= player.speed * 1.5
@@ -68,7 +68,7 @@ def check_jump(player, blocks): #CHECK JUMP
             return return_dict
     else:
         return_dict["move_jump"] = False
-        return_dict["player_strength_jump"] = 17
+        return_dict["player_strength_jump"] = 20
         return return_dict
     
 def gravity(player, move_jump): #GRAVITY PLAYER
@@ -93,6 +93,7 @@ def gravity(player, move_jump): #GRAVITY PLAYER
         answer_fall = block.check_collision_top_wall_p(player)
         if answer_fall: #if the player is standing on some block
             list_return["move_bottom"] = False
+            list_return["last_block"] = block
             return list_return
 
     if answer_fall != True: #if he does not

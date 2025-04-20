@@ -8,3 +8,4 @@ from .enemy import *
 from .cloud import *
 from .modal_window import *
 from .main_menu import *
+from .game_events_and_checks import *

@@ -27,12 +27,26 @@ def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHEC
             if answer:
                 if push_box:
                     for block in blocks:
-                        answer = block.check_collision_right_wall(box.x + 17, box.y, 
-                                                    box.x + box.width + 17, box.y + box.height)
+                        answer = block.check_collision_right_wall(box.x - 15, box.y, 
+                                                    box.x + box.width, box.y + box.height)
                         if answer:
                             dict_return["last_side"] = 0
                             return dict_return
-                    box.x -= player.speed
+                    
+                    for chest in chests:
+                        answer = chest.check_collision_right_wall(box.x - 15, box.y, 
+                                                    box.x + box.width, box.y + box.height)
+                        if answer:
+                            dict_return["last_side"] = 0
+                            return dict_return
+                        
+                    for box2 in boxes:
+                        if box2.x != box.x and box2.y != box.y:
+                            answer = box2.check_collision_right_wall(box.x - 15, box.y, 
+                                                        box.x + box.width, box.y + box.height)
+                            if answer:
+                                dict_return["last_side"] = 0
+                                return dict_return
                 else:
                     dict_return["last_side"] = 0
                     return dict_return
@@ -76,7 +90,15 @@ def move_left_player(player, move_jump, push_box, with_box, chest_player): #CHEC
                         if answer:
                             dict_return["last_side"] = 0
                             return dict_return
-
+                        
+                    for box2 in boxes:
+                        if box2.x != box.x and box2.y != box.y:
+                            answer = box2.check_collision_right_wall(box.x - 15, box.y, 
+                                                        box.x + box.width, box.y + box.height)
+                            if answer:
+                                dict_return["last_side"] = 0
+                                return dict_return
+                            
                     box.x -= player.speed
                 else:
                     dict_return["last_side"] = 0
@@ -118,11 +140,26 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
             if answer:
                 if push_box:
                     for block in blocks:
-                        answer = block.check_collision_left_wall(box.x + 17, box.y, 
-                                                    box.x + box.width + 17, box.y + box.height)
+                        answer = block.check_collision_left_wall(box.x, box.y, 
+                                                    box.x + box.width + 10, box.y + box.height)
                         if answer:
                             dict_return["last_side"] = 1
                             return dict_return
+                    
+                    for chest in chests:
+                        answer = chest.check_collision_left_wall(box.x, box.y, 
+                                                    box.x + box.width + 10, box.y + box.height)
+                        if answer:
+                            dict_return["last_side"] = 1
+                            return dict_return
+                        
+                    for box2 in boxes:
+                        if box2.x != box.x and box2.y != box.y:
+                            answer = box2.check_collision_left_wall(box.x, box.y, 
+                                                        box.x + box.width + 10, box.y + box.height)
+                            if answer:
+                                dict_return["last_side"] = 1
+                                return dict_return
                     box.x += player.speed
                 else:
                     dict_return["last_side"] = 1
@@ -191,18 +228,26 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
             if answer:
                 if push_box:
                     for block in blocks:
-                        answer = block.check_collision_left_wall(box.x + 17, box.y, 
-                                                    box.x + box.width + 17, box.y + box.height)
+                        answer = block.check_collision_left_wall(box.x, box.y, 
+                                                    box.x + box.width + 10, box.y + box.height)
                         if answer:
                             dict_return["last_side"] = 1
                             return dict_return
                     
                     for chest in chests:
-                        answer = chest.check_collision_left_wall(box.x + 17, box.y, 
-                                                    box.x + box.width + 17, box.y + box.height)
+                        answer = chest.check_collision_left_wall(box.x, box.y, 
+                                                    box.x + box.width + 10, box.y + box.height)
                         if answer:
                             dict_return["last_side"] = 1
                             return dict_return
+                        
+                    for box2 in boxes:
+                        if box2.x != box.x and box2.y != box.y:
+                            answer = box2.check_collision_left_wall(box.x, box.y, 
+                                                        box.x + box.width + 10, box.y + box.height)
+                            if answer:
+                                dict_return["last_side"] = 1
+                                return dict_return
 
                     box.x += player.speed
                 else:
@@ -214,7 +259,7 @@ def move_right_player(player, move_jump, push_box, with_box, chest_player, WIDTH
                 dict_return["move_right"] = True
             if push_box: dict_return["push_box"] = False
             dict_return["last_side"] = 1
-            if player.x == WIDTH // 2:
+            if player.x >= WIDTH // 2:
                 if player.x + WIDTH // 2 >= end_of_level.x + end_of_level.width:
                     player.x += player.speed
                     player.rect.x += player.speed
