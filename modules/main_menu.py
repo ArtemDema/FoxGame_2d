@@ -22,6 +22,11 @@ class Button(Settings):
         black_fill.fill((0,0,0))
         black_fill.set_alpha(83)
         screen.blit(black_fill, (0, 0))
+    
+    def text(self, screen, text, size):
+        f1 = pygame.font.Font(None, size)
+        text1 = f1.render(f"{text}", 1, (0, 0, 0))
+        screen.blit(text1, (self.x, self.y))
 
 def menu(screen: pygame.Surface):
     menu_run = True

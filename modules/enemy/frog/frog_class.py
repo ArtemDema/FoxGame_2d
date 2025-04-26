@@ -160,7 +160,7 @@ class Frog(Enemy):
             if self.move_jump == False:
                 self.move_bottom = True
 
-    def check_death(self, player, boxes, move_bottom): #CHECK DEATH CHICKEN
+    def check_death(self, player, boxes, move_bottom, task_enemy): #CHECK DEATH CHICKEN
         if self.is_dead == False:
             for box in boxes:
                 answer = box.check_collision_bottom_wall(self.x, self.y, #CHECK BOX FOR DEATH
@@ -168,6 +168,7 @@ class Frog(Enemy):
                 if answer:
                     self.is_dead = True
                     interface[3].count += 1
+                    task_enemy -= 1
 
             if move_bottom == True:
                 right_x = self.x + self.width
@@ -185,6 +186,7 @@ class Frog(Enemy):
                                 if bottom_y_p + 10 <= bottom_y:
                                     self.is_dead = True
                                     interface[3].count += 1
+                                    task_enemy -= 1
 
                 #middle (golden)
                 if bottom_y_p >= self.y:
@@ -194,6 +196,7 @@ class Frog(Enemy):
                                 if bottom_y_p + 10 <= bottom_y:
                                     self.is_dead = True
                                     interface[3].count += 1
+                                    task_enemy -= 1
                                             
                 #right angle
                 if bottom_y_p >= self.y:
@@ -203,6 +206,8 @@ class Frog(Enemy):
                                 if bottom_y_p + 10 <= bottom_y:
                                     self.is_dead = True
                                     interface[3].count += 1
+                                    task_enemy -= 1
+        return task_enemy
 
 
     def dead_count(self, list_frog, droped_resources): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT

@@ -1,0 +1,1 @@
+from .chick_class import Chick

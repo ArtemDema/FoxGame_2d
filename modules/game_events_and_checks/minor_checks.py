@@ -36,9 +36,9 @@ def add_hp(egg, player, meat):
             player.hp += 1
             meat.count = 0
 
-def enemy(list_enemy, player, boxes, move_bottom, blocks, chests, list_feather, WIDTH, HEIGHT):
+def enemy(list_enemy, player, boxes, move_bottom, blocks, chests, list_feather, WIDTH, HEIGHT, task_enemy):
     for enemy in list_enemy:
-        enemy.check_death(player, boxes, move_bottom) #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
+        task_enemy = enemy.check_death(player, boxes, move_bottom, task_enemy) #CHECKING IF THE PLAYER IS TRYING TO KILL THE ENEMY
         if enemy.is_dead == False:
             enemy.player_visibility = enemy.player_visibility_zone(player)
             enemy.move(player, blocks, chests, boxes) #ENEMY MOVE
@@ -46,3 +46,4 @@ def enemy(list_enemy, player, boxes, move_bottom, blocks, chests, list_feather, 
     if len(list_feather) != 0:
         for feather in list_feather:
             feather.move(WIDTH, HEIGHT, player, blocks, chests, boxes)
+    return task_enemy

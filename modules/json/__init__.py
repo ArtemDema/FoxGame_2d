@@ -1,1 +1,1 @@
-from .functions import get_info, save_info
+from .functions import *

@@ -30,24 +30,24 @@ class Tree(Settings):
 
         #left angle
         if bottom_y_p >= bottom_y:
-            if left_x_p + 20 <= self.x + 80:
-                if right_x_p - 20 >= self.x + 80:
-                    if top_y_p + 20 <= bottom_y:
+            if left_x_p + 60 <= self.x + 80:
+                if right_x_p - 60 >= self.x + 80:
+                    if top_y_p + 60 <= bottom_y:
                         if self.ramdom_egg == 1:
                             return True
                         
         #middle (golden)
         if bottom_y_p >= bottom_y:
-            if left_x_p + 20 >= self.x + 80:
-                if right_x_p - 20 <= right_x - 80:
-                    if top_y_p + 20 <= bottom_y:
+            if left_x_p + 60 >= self.x + 80:
+                if right_x_p - 60 <= right_x - 80:
+                    if top_y_p + 60 <= bottom_y:
                         if self.ramdom_egg == 1:
                             return True
         
         #right angle
         if bottom_y_p >= bottom_y:
-            if right_x_p - 20 >= right_x - 80:
-                if left_x_p + 20 <= right_x - 80:
-                    if top_y_p + 20 <= bottom_y:
+            if right_x_p - 60 >= right_x - 80:
+                if left_x_p + 60 <= right_x - 80:
+                    if top_y_p + 60 <= bottom_y:
                         if self.ramdom_egg == 1:
                             return True

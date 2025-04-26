@@ -22,10 +22,10 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
 
     for index in range(5):
         if index < player.hp:
-            hp = Column_Meat_Egg_Hp_Key(10 + (index * 30), 30, 27, 27, "images/resources/heart.png", 0)
+            hp = Column_Meat_Egg_Hp_Key(10 + (index * 30), 30, 27, 27, "images/resources/heart.png", 0, 32)
             hearts.append(hp)
         else:
-            hp = Column_Meat_Egg_Hp_Key(10 + (index * 30), 30, 27, 27, "images/resources/hollow_heart.png", 0)
+            hp = Column_Meat_Egg_Hp_Key(10 + (index * 30), 30, 27, 27, "images/resources/hollow_heart.png", 0, 32)
             hearts.append(hp)
 
     #background rendering

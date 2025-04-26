@@ -5,6 +5,12 @@ pygame.init()
 
 tick = pygame.time.Clock()
 
+#task counters
+task_egg  = 0
+task_meat = 0
+task_enemy = 0
+task_chest = 0
+
 #saves the last motion vector (0 - left, 1 - right)
 last_side = 0
 
@@ -24,13 +30,19 @@ crouch_count = 0
 number_for_choose_sprite = 10
 frequency_cloud = 120
 #getting information from the last session
-info = mod.get_info()
+info = mod.get_info(__file__ + "/../json/main_info.json")
 WIDTH = info["width"]
 HEIGHT = info["height"]
 mod.player.hp = info["hp"]
 
 #show menu
 game_run = mod.main_menu.menu(screen = mod.screen)
+player_level = 1
+task = mod.get_info(__file__ + "/../level_task/tasks.json")
+task_egg  = int(task[f'{player_level}']['1'])
+task_meat = int(task[f'{player_level}']['3'])
+task_enemy = int(task[f'{player_level}']['5'])
+task_chest = int(task[f'{player_level}']['7'])
 while game_run:
     tick.tick(60) #set the number of fps
 
@@ -44,7 +56,7 @@ while game_run:
     #events
     for event in pygame.event.get():
         if event.type == pygame.QUIT: #SAVES INFORMATION
-            mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
+            mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp, path = __file__ + "/../json/main_info.json")
             game_run = False
         
         if event.type == pygame.MOUSEMOTION:
@@ -57,10 +69,9 @@ while game_run:
                 pause = continue_b.check_click(position_mouse_x = position_mouse[0], position_mouse_y = position_mouse[1])
                 game_run = exit_b.check_click(position_mouse_x = position_mouse[0], position_mouse_y = position_mouse[1])
                 if game_run ==False:
-                    mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp)
+                    mod.save_info(WIDTH = mod.WIDTH, HEIGHT = mod.HEIGHT, player_hp = mod.player.hp, path = __file__ + "/../json/main_info.json")
             elif tasks:
                 tasks = exit_b.check_click(position_mouse_x = position_mouse[0], position_mouse_y = position_mouse[1])
-
     #CLOUD--------------------------------------------
     mod.list_of_clouds = mod.cloud_check(mod.list_of_clouds, mod.Cloud, frequency_cloud)
     if frequency_cloud <= 0:
@@ -70,11 +81,11 @@ while game_run:
     #--------------------------------------------
 
     #TREE--------------------------------------------
-    mod.droped_resources= mod.tree_check(mod.list_trees, mod.list_bubble_tree, mod.player, mod.Discarded_Item, mod.droped_resources)
+    mod.droped_resources = mod.tree_check(mod.list_trees, mod.list_bubble_tree, mod.player, mod.Discarded_Item, mod.droped_resources)
     #--------------------------------------------
 
     #ENEMY--------------------------------------------
-    mod.enemy(mod.list_enemy, mod.player, mod.boxes, mod.move_bottom, mod.blocks, mod.chests, mod.list_feather, mod.WIDTH, mod.HEIGHT)
+    task_enemy = mod.enemy(mod.list_enemy, mod.player, mod.boxes, mod.move_bottom, mod.blocks, mod.chests, mod.list_feather, mod.WIDTH, mod.HEIGHT, task_enemy)
     #--------------------------------------------
 
     #CHEST AND BOX--------------------------------------------
@@ -145,8 +156,9 @@ while game_run:
             if "push_box" in dict_right: mod.push_box = dict_right["push_box"]
     else:
         if mod.player.x >= mod.end_of_level.x - 250:
-            mod.player.x += mod.player.speed
-            mod.move_right = True
+            if task_egg <= 0 and task_meat <= 0 and task_enemy <= 0 and task_chest <= 0:
+                mod.player.x += mod.player.speed
+                mod.move_right = True
         else:
             mod.move_right = False
 
@@ -194,11 +206,14 @@ while game_run:
 
     #COLLECT RECOURCES--------------------------------------------
     for recource in mod.droped_resources: 
-        return_dict = recource.check_collect_recource(mod.player, mod.meat.count, mod.egg.count, mod.key.count, mod.player.hp) #CHECKING FOR SELECTION OF RESOURCES
+        return_dict = recource.check_collect_recource(mod.player, mod.meat.count, mod.egg.count, mod.key.count, mod.player.hp,
+                                                      task_egg, task_meat) #CHECKING FOR SELECTION OF RESOURCES
         if "egg_count" in return_dict: mod.egg.count = return_dict["egg_count"]
         if "key_count" in return_dict: mod.key.count = return_dict["key_count"]
         if "meat_count" in return_dict: mod.meat.count = return_dict["meat_count"]
         if "heart_count" in return_dict: mod.player.hp = return_dict["heart_count"]
+        if "task_egg" in return_dict: task_egg = return_dict["task_egg"]
+        if "task_meat" in return_dict: task_meat = return_dict["task_meat"]
     #--------------------------------------------
 
     #RENDER--------------------------------------------
@@ -219,13 +234,28 @@ while game_run:
     #--------------------------------------------
 
     #TASK MENU--------------------------------------------
+    list_task = [task_egg, task_meat, task_enemy, task_chest]
     if keys[pygame.K_t]:
         tasks = True
     if tasks:
+        #--------------------------------------------!!!!!!!!!!!!!!!
         task_photo = mod.Button(325, 75, 600, 700, "images/screen/task.png")
         exit_b = mod.Button(900, 600, 150, 70, "images/resources/exit.png")
         task_photo.show_image(mod.screen)
+        number = 0
+        for index in range(len(task["1"])):
+            if index % 2 == 0:
+                text_task = mod.Button(535, 200 + index * 50, 0, 0, "images/resources/exit.png")
+                text_task.text(mod.screen, f"{task['1'][f'{index}']}", 48)
+            else:
+                text_task = mod.Button(610, 200 + index * 50, 0, 0, "images/resources/exit.png")
+                if list_task[number] >= 0:
+                    text_task.text(mod.screen, f"{list_task[number]}", 48)
+                else:
+                    text_task.text(mod.screen, "0", 48)
+                number += 1
         exit_b.show_image(mod.screen)
+        #--------------------------------------------!!!!!!!!!!!!!!!
     #--------------------------------------------
 
     #PAUSE--------------------------------------------
@@ -238,7 +268,7 @@ while game_run:
         continue_b.screen_darkness(mod.screen)
         continue_b.show_image(mod.screen)
         exit_b.show_image(mod.screen)
-    #--------------------------------------------
+    #--------------------------------------------!!!!!!!!!!!!!!!
     if mod.player.player_in_the_water:
         if mod.player.y <= mod.HEIGHT + 50:
             mod.player.y += 1
@@ -255,5 +285,6 @@ while game_run:
                 mod.player.damage_player()
                 mod.player.player_in_the_water = True
                 break
+    #--------------------------------------------!!!!!!!!!!!!!!!
     
     pygame.display.flip()

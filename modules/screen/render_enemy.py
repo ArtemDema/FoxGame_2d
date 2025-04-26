@@ -1,8 +1,9 @@
 from ..enemy import list_feather
 from ..enemy import list_animation_death, list_animation_death_birds
 from .screen import screen
-from .map import list_frog, list_chicken, list_rooster, droped_resources, list_opossum
+from .map import list_frog, list_chicken, list_rooster, droped_resources, list_opossum, list_chick
 from .load_all_images import list_run_rooster, list_idle_rooster, list_idle_frog, list_jump_frog, list_run_chicken, list_idle_chicken, list_run_opossum
+from .load_all_images import list_chick_image, list_chick_egg_image
 
 
 def render_enemy():
@@ -53,3 +54,13 @@ def render_enemy():
             opossum.dead_count(list_opossum, droped_resources) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         else:
             opossum.run(opossum.run_count, screen, opossum.vector_move, list_run_opossum) #RENDER RUN SPRITE
+    
+    for chick in list_chick:
+        if chick.is_dead:
+            chick.death(chick.death_count, screen, list_animation_death_birds) #RENDER DEATH SPRITE
+            chick.dead_count(list_chick, droped_resources) #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
+        else:
+            if chick.spawn_count >= 5:
+                chick.run(chick.run_count, screen, chick.vector_move, list_chick_image) #RENDER RUN SPRITE
+            else:
+                chick.run(chick.spawn_count, screen, chick.vector_move, list_chick_egg_image)

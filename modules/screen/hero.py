@@ -179,5 +179,5 @@ class Hero(Enemy):
                         return True
 
 
-info = get_info()
+info = get_info(__file__ + "/../../../json/main_info.json")
 player = Hero(x = 600, y = 0, width = 80, height = 80, image="images/player/idle/0.png", hp = info["hp"], speed = 4, strength_jump = 20)

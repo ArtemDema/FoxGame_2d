@@ -160,7 +160,7 @@ class Rooster(Enemy):
             self.vector_move = random.randint(0, 1)
             self.random_move = random.randint(50, 250)
     
-    def check_death(self, player, boxes, move_bottom): #CHECK DEATH opossum
+    def check_death(self, player, boxes, move_bottom, task_enemy): #CHECK DEATH opossum
         if self.is_dead == False:
             for box in boxes:
                 answer = box.check_collision_bottom_wall(self.x, self.y, #CHECK BOX FOR DEATH
@@ -168,6 +168,7 @@ class Rooster(Enemy):
                 if answer:
                     self.is_dead = True
                     interface[5].count += 1
+                    task_enemy -= 1
 
             if move_bottom == True:
                 right_x = self.x + self.width
@@ -185,6 +186,7 @@ class Rooster(Enemy):
                                 if bottom_y_p + 10 <= bottom_y:
                                     self.is_dead = True
                                     interface[5].count += 1
+                                    task_enemy -= 1
 
                 #middle (golden)
                 if bottom_y_p >= self.y:
@@ -194,6 +196,7 @@ class Rooster(Enemy):
                                 if bottom_y_p + 10 <= bottom_y:
                                     self.is_dead = True
                                     interface[5].count += 1
+                                    task_enemy -= 1
                                             
                 #right angle
                 if bottom_y_p >= self.y:
@@ -203,6 +206,8 @@ class Rooster(Enemy):
                                 if bottom_y_p + 10 <= bottom_y:
                                     self.is_dead = True
                                     interface[5].count += 1
+                                    task_enemy -= 1
+        return task_enemy
 
     def throw_rooster_feather(self, player):
         randian = math.atan2(self.y - player.y, self.x - player.x)

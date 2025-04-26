@@ -9,7 +9,7 @@ class Box(Block):
     def __init__(self, x, y, width, height, image, random_item):
         self.random_item = random_item
         self.hide_in_him = False
-        self.column_throw_move = 7
+        self.column_throw_move = 10
         self.throw = False
         self.angle = 0
         super().__init__(x, y, width, height, image)
@@ -103,4 +103,4 @@ class Box(Block):
                 break
 
         if answer_fall_r != True: #if he does not
-            self.y += player.speed - 0.64
+            self.y += player.speed

@@ -56,8 +56,14 @@ list_run_chicken = ["images/enemy/chicken/run/0.png", "images/enemy/chicken/run/
                     "images/enemy/chicken/run/2.png", "images/enemy/chicken/run/3.png"]
 
 #WATER----------------------------------------------------------------------------------------------------------------------
-
 list_water_images = ["images/water/0.png","images/water/1.png","images/water/2.png","images/water/3.png","images/water/4.png"]
+
+#CHICK----------------------------------------------------------------------------------------------------------------------
+list_chick_image = ["images/enemy/chick/0.png","images/enemy/chick/1.png","images/enemy/chick/2.png","images/enemy/chick/3.png"]
+
+list_chick_egg_image = ["images/resources/imposter_egg/0.png","images/resources/imposter_egg/1.png",
+                        "images/resources/imposter_egg/2.png","images/resources/imposter_egg/3.png",
+                        "images/resources/imposter_egg/4.png","images/resources/imposter_egg/5.png"]
 
 ##LOAD_IMAGE----------------------------------------------------------------------------------------------------------------------
 
@@ -86,3 +92,5 @@ load_list_image(list_jump_frog, 60, 60)
 load_list_image(list_idle_chicken, 50, 50)
 load_list_image(list_run_chicken, 50, 50)
 load_list_image(list_water_images, 50, 50)
+load_list_image(list_chick_image, 30, 30)
+load_list_image(list_chick_egg_image, 35, 34)

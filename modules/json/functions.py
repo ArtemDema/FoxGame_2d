@@ -1,9 +1,8 @@
 import os
 import json
 
-path = os.path.abspath(__file__ + "/../../../json/main_info.json")
 
-def get_info(): #
+def get_info(path): #
     """
     ### Give information from last session
     """
@@ -11,7 +10,7 @@ def get_info(): #
         info = json.load(file)
         return info
 
-def save_info(WIDTH, HEIGHT, player_hp): #
+def save_info(WIDTH, HEIGHT, player_hp, path): #
     """
     ### Save information from session
     """
