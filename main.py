@@ -5,6 +5,10 @@ pygame.init()
 
 tick = pygame.time.Clock()
 
+#
+add_hp_egg = 0
+add_hp_meat = 0
+
 #task counters
 task_egg  = 0
 task_meat = 0
@@ -133,7 +137,8 @@ while game_run:
             chest.hide_in_him = False
         if mod.player.x >= 1:
             if mod.move_bottom == False:
-                dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_box, mod.with_box, box_player) #FUNCTION FOR PLAYER WALKING TO THE LEFT
+                dict_left = mod.move_left_player(mod.player, mod.move_jump, mod.push_box, mod.with_box, 
+                                                 box_player, mod.list_enemy) #FUNCTION FOR PLAYER WALKING TO THE LEFT
                 if "move_left" in dict_left: mod.move_left = dict_left["move_left"]
                 if "last_side" in dict_left: last_side = dict_left["last_side"]
                 if "push_box" in dict_left: mod.push_box = dict_left["push_box"]
@@ -150,7 +155,8 @@ while game_run:
 
         if mod.move_bottom == False:
             dict_right = mod.move_right_player(mod.player, mod.move_jump, 
-                                            mod.push_box, mod.with_box, box_player, mod.WIDTH, mod.droped_resources) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
+                                            mod.push_box, mod.with_box, box_player, mod.WIDTH, mod.droped_resources,
+                                            mod.list_enemy) #FUNCTION FOR PLAYER WALKING TO THE RIGHT
             if "move_right" in dict_right: mod.move_right = dict_right["move_right"]
             if "last_side" in dict_right: last_side = dict_right["last_side"]
             if "push_box" in dict_right: mod.push_box = dict_right["push_box"]
@@ -203,7 +209,6 @@ while game_run:
     mod.gravity_boxes(mod.player) #GRAVITY OF BOX
     mod.gravity_enemy(mod.player) #ENEMIES GRAVITY
     #--------------------------------------------
-
     #COLLECT RECOURCES--------------------------------------------
     for recource in mod.droped_resources: 
         return_dict = recource.check_collect_recource(mod.player, mod.meat.count, mod.egg.count, mod.key.count, mod.player.hp,
@@ -225,7 +230,9 @@ while game_run:
     if "number_for_choose_sprite" in return_dict: number_for_choose_sprite = return_dict["number_for_choose_sprite"]
     #--------------------------------------------
 
-    mod.add_hp(mod.egg, mod.player, mod.meat)
+    return_dict = mod.add_hp(mod.egg, mod.player, mod.meat, add_hp_egg, add_hp_meat)
+    if "add_hp_egg" in return_dict: add_hp_egg = return_dict["add_hp_egg"]
+    if "add_hp_meat" in return_dict: add_hp_meat = return_dict["add_hp_meat"]
 
     #MODAL_INFO--------------------------------------------
     if modal_window_info:

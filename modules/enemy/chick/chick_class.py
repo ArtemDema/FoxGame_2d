@@ -1,8 +1,8 @@
-from ...main_classes import Enemy
+from ...main_classes import Enemy, Block
 from ...interface import interface
 from ...resourses import Discarded_Item
 
-class Chick(Enemy):
+class Chick(Enemy, Block):
     def __init__(self, x, y, width, height, image, hp, speed, sprite_frequency_chick, is_dead, death_count):
         self.vector_move = -1
         self.run_count = 0
@@ -11,7 +11,7 @@ class Chick(Enemy):
         self.death_count = death_count
         self.spawn_count = 0
         self.player_visibility = False
-        super().__init__(x, y, width, height, image, hp, speed)
+        Enemy.__init__(self, x, y, width, height, image, hp, speed)
 
     def move_vector(self, player):
         distance = player.x - self.x
@@ -162,6 +162,8 @@ class Chick(Enemy):
             meat1 = Discarded_Item(x = self.x, y = self.y, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
             droped_resources.append(meat1)
             list_chick.remove(self)
+            self.x = 10000
+            self.y = 10000
         else:
             if self.sprite_frequency_chick >= 10: 
                 self.death_count += 1

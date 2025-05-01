@@ -1,4 +1,4 @@
-from ...main_classes import Enemy
+from ...main_classes import Enemy, Block
 from ...resourses import Discarded_Item
 from ...interface import interface
 
@@ -6,23 +6,21 @@ import random
 
 list_jump = []
 
-class Chicken(Enemy):
+class Chicken(Enemy, Block):
     """
     ### Chicken class
     """
-    def __init__(self, x, y, width, height, image, hp, speed, 
-                 vector_move, run_count, sprite_frequency_chicken,
-                 random_idle, random_move, is_dead, death_count):
-        self.vector_move = vector_move
-        self.run_count = run_count
-        self.sprite_frequency_chicken = sprite_frequency_chicken
-        self.random_idle = random_idle
-        self.random_move = random_move
-        self.is_dead = is_dead
-        self.death_count = death_count
+    def __init__(self, x, y, width, height, image, hp, speed):
+        self.vector_move = 0
+        self.run_count = 0
+        self.sprite_frequency_chicken = 2
+        self.random_idle = 0
+        self.random_move = 0
+        self.is_dead = False
+        self.death_count = 0
         self.player_visibility = False
         self.idle_count = 0
-        super().__init__(x, y, width, height, image, hp, speed)
+        Enemy.__init__(self, x, y, width, height, image, hp, speed)
 
     def move(self, player, blocks, chests, boxes): #FUNCTION MOVE
         list_of_all_blocks = []
@@ -185,6 +183,8 @@ class Chicken(Enemy):
             meat1 = Discarded_Item(x = self.x, y = self.y, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
             droped_resources.append(meat1)
             list_chicken.remove(self)
+            self.x = 10000
+            self.y = 10000
         else:
             if self.sprite_frequency_chicken >= 10: 
                 self.death_count += 1

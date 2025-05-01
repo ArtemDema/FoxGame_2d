@@ -1,10 +1,12 @@
-from ...main_classes import Enemy
+from ...main_classes import Enemy, Block
 from ...resourses import Discarded_Item
 from ...interface import interface
+import pygame
+from...screen import screen
 
 import random, math
 
-class Frog(Enemy):
+class Frog(Enemy, Block):
     """
     ### Class of frogs with aggressive character
     """
@@ -22,7 +24,7 @@ class Frog(Enemy):
         self.move_bottom = False
         self.move_jump = False
         self.count_jump = 5
-        super().__init__(x, y, width, height, image, hp, speed)
+        Enemy.__init__(self, x, y, width, height, image, hp, speed)
 
     def jump_frog(self, blocks, chests, boxes):
         list_of_all_blocks = []
@@ -42,6 +44,7 @@ class Frog(Enemy):
                         self.count_jump = 5
                         self.angle = 0
                         return
+                    
                     
             else:
                 for block in list_of_all_blocks:
@@ -105,12 +108,22 @@ class Frog(Enemy):
             if self.frequency_jump <= 0:
                 if self.angle == -135:
                     if self.vector_move == 1:
-
                         for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
-                            answer = block.check_collision_top_wall(self.x - 76, self.y - 15, self.x + self.width - 30, self.y + self.height + 15)
+                            answer = block.check_collision_top_wall(self.x - 66, self.y - 15, self.x + self.width - 116, self.y + self.height + 15)
                             if answer:
                                 break
                         
+                        if answer == None:
+                            for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
+                                answer = block.check_collision_top_wall(self.x - 66, self.y + 45, self.x + self.width - 116, self.y + self.height + 75)
+                                if answer:
+                                    break
+                        
+                        if answer == None:
+                            for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
+                                answer = block.check_collision_top_wall(self.x - 66, self.y + 95, self.x + self.width - 116, self.y + self.height + 135)
+                                if answer:
+                                    break
                         
                         if answer:
                             self.move_jump = True
@@ -122,9 +135,21 @@ class Frog(Enemy):
                 else:
                     if self.vector_move == 0:
                         for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
-                            answer = block.check_collision_top_wall(self.x + 60, self.y - 15, self.x + self.width + 60, self.y + self.height + 15)
+                            answer = block.check_collision_top_wall(self.x + 60, self.y - 15, self.x + self.width + 10, self.y + self.height + 15)
                             if answer:
                                 break
+                        
+                        if answer == None:
+                            for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
+                                answer = block.check_collision_top_wall(self.x + 60, self.y + 45, self.x + self.width + 10, self.y + self.height + 75)
+                                if answer:
+                                    break
+                        
+                        if answer == None:
+                            for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
+                                answer = block.check_collision_top_wall(self.x + 60, self.y + 45, self.x + self.width + 10, self.y + self.height + 135)
+                                if answer:
+                                    break
                             
                         if answer:
                             self.move_jump = True
@@ -215,6 +240,8 @@ class Frog(Enemy):
             meat1 = Discarded_Item(x = self.x, y = self.y, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
             droped_resources.append(meat1)
             list_frog.remove(self)
+            self.x = 10000
+            self.y = 10000
         else:
             if self.sprite_frequency_frog >= 10: 
                 self.death_count += 1

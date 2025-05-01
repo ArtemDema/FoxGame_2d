@@ -21,6 +21,7 @@ class Hero(Enemy):
         self.timer_damage = 0
         self.hide = False
         self.player_in_the_water = False
+        self.speed_fall = 5
         super().__init__(x, y, width, height, image, hp, speed)
         self.rect = pygame.Rect(self.x + 30, self.y + 30, self.width - 55, self.height - 30)
         

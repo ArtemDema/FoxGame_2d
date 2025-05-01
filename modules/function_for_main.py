@@ -99,28 +99,8 @@ def gravity(player, move_jump): #GRAVITY PLAYER
     if answer_fall != True: #if he does not
         if move_jump == False:
             list_return["move_bottom"] = True
-            player.y += player.speed
-            player.rect.y += player.speed
-            # for block in blocks:
-            #     block.y -= player.speed
-            # for recource in droped_resources:
-            #     recource.y -= player.speed
-            # for box in boxes:
-            #     box.y -= player.speed
-            # for chest in chests:
-            #     chest.y -= player.speed
-            # for enemy in list_enemy:
-            #     enemy.y -= player.speed
-            # for tree in list_trees:
-            #     tree.y -= player.speed
-            # for cloud in list_of_clouds:
-            #     cloud.y -= player.speed
-            # for feather in list_feather:
-            #     feather.y -= player.speed
-            # for bush in list_bush:
-            #     bush.y -= player.speed
-            # for tree in list_big_boss_tree:
-            #     tree.y -= player.speed
+            player.y += player.speed_fall
+            player.rect.y += player.speed_fall
 
     return list_return
 

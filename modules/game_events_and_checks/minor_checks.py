@@ -26,15 +26,46 @@ def tree_check(list_trees,list_bubble_tree,player, Discarded_Item, droped_resour
             tree.ramdom_egg = 0
     return droped_resources
 
-def add_hp(egg, player, meat):
-    if egg.count >= 20:
+def add_hp(egg, player, meat, add_hp_egg, add_hp_meat):
+    return_dict = {}
+    return_dict["add_hp_egg"] = add_hp_egg
+    return_dict["add_hp_meat"] = add_hp_meat
+    if egg.count == 20:
         if player.hp <= 4:
-            player.hp += 1
-            egg.count = 0
-    elif meat.count >= 10:
+            if add_hp_egg == 0:
+                player.hp += 1
+                return_dict["add_hp_egg"] = add_hp_egg + 1
+
+    elif egg.count == 40:
         if player.hp <= 4:
-            player.hp += 1
-            meat.count = 0
+            if add_hp_egg == 1:
+                player.hp += 1
+                return_dict["add_hp_egg"] = add_hp_egg + 1
+
+    elif egg.count == 50:
+        if player.hp <= 4:
+            if add_hp_egg == 2:
+                player.hp += 1
+                return_dict["add_hp_egg"] = add_hp_egg + 1
+    #--------------------------------------------
+    elif meat.count == 10:
+        if player.hp <= 4:
+            if add_hp_meat == 0:
+                player.hp += 1
+                return_dict["add_hp_meat"] = add_hp_meat + 1
+
+    elif meat.count == 20:
+        if player.hp <= 4:
+            if add_hp_meat == 1:
+                player.hp += 1
+                return_dict["add_hp_meat"] = add_hp_meat + 1
+
+    elif meat.count == 30:
+        if player.hp <= 4:
+            if add_hp_meat == 2:
+                player.hp += 1
+                return_dict["add_hp_meat"] = add_hp_meat + 1
+    return return_dict
 
 def enemy(list_enemy, player, boxes, move_bottom, blocks, chests, list_feather, WIDTH, HEIGHT, task_enemy):
     for enemy in list_enemy:

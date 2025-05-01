@@ -1,11 +1,11 @@
-from ...main_classes import Enemy
+from ...main_classes import Enemy, Block
 from ...resourses import Discarded_Item
 from ...interface import interface
 from .feather import list_feather, Feather
 
 import random, math, pygame
 
-class Rooster(Enemy):
+class Rooster(Enemy, Block):
     """
     ### Rooster class with aggressive character
     """
@@ -21,7 +21,7 @@ class Rooster(Enemy):
         self.idle_count = 0
         self.angle = 0
         self.timer_throw_feather = 20
-        super().__init__(x, y, width, height, image, hp, speed)
+        Enemy.__init__(self, x, y, width, height, image, hp, speed)
 
     def move(self, player, blocks, chests, boxes): #RUN ROOSTER
         if self.player_visibility:
@@ -218,6 +218,8 @@ class Rooster(Enemy):
             meat1 = Discarded_Item(x = self.x, y = self.y, width = 50, height = 25, image = "images/resources/meat.png", whatIsThis= "meat")
             droped_resources.append(meat1)
             list_rooster.remove(self)
+            self.x = 10000
+            self.y = 10000
         else:
             if self.sprite_frequency_rooster >= 10: 
                 self.death_count += 1

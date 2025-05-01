@@ -139,5 +139,6 @@ def render(move_left, move_right, move_jump, move_crouch, move_bottom, screen, #
         pass #climb 
     
     # pygame.draw.rect(screen, (255,255,255), player.rect)
+
     
     return return_dict
