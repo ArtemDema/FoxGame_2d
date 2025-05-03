@@ -10,7 +10,7 @@ class Chicken(Enemy, Block):
     """
     ### Chicken class
     """
-    def __init__(self, x, y, width, height, image, hp, speed):
+    def __init__(self, x, y, width, height, image, hp, speed, sound):
         self.vector_move = 0
         self.run_count = 0
         self.sprite_frequency_chicken = 2
@@ -20,13 +20,16 @@ class Chicken(Enemy, Block):
         self.death_count = 0
         self.player_visibility = False
         self.idle_count = 0
+        self.random_sound = random.randint(600, 1600)
+        self.sound = sound
         Enemy.__init__(self, x, y, width, height, image, hp, speed)
 
-    def move(self, player, blocks, chests, boxes): #FUNCTION MOVE
+    def move(self, player, blocks, chests, boxes, sound_damage): #FUNCTION MOVE
         list_of_all_blocks = []
         list_of_all_blocks += blocks
         list_of_all_blocks += chests
         list_of_all_blocks += boxes
+        self.play_chicken_sound()
 
         if self.player_visibility:
             if self.random_move <= 0:
@@ -128,8 +131,16 @@ class Chicken(Enemy, Block):
         else:
             self.vector_move = random.randint(0, 1)
             self.random_move = random.randint(50, 250)
+    
+    def play_chicken_sound(self):
+        if self.random_sound == 0:
+            self.sound.set_volume(0.09)
+            self.sound.play(loops = 0)
+            self.random_sound = random.randint(600, 1600)
+        else:
+            self.random_sound -= 1
 
-    def check_death(self, player, boxes, move_bottom, task_enemy): #CHECK DEATH opossum
+    def check_death(self, player, boxes, move_bottom, task_enemy, death_enemy): #CHECK DEATH opossum
         if self.is_dead == False:
             for box in boxes:
                 answer = box.check_collision_bottom_wall(self.x, self.y, #CHECK BOX FOR DEATH
@@ -138,6 +149,8 @@ class Chicken(Enemy, Block):
                     self.is_dead = True
                     interface[4].count += 1
                     task_enemy -= 1
+                    death_enemy.set_volume(0.1)
+                    death_enemy.play(loops = 0)
 
             if move_bottom == True:
                 right_x = self.x + self.width
@@ -156,6 +169,8 @@ class Chicken(Enemy, Block):
                                     self.is_dead = True
                                     interface[4].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
 
                 #middle (golden)
                 if bottom_y_p >= self.y:
@@ -166,6 +181,8 @@ class Chicken(Enemy, Block):
                                     self.is_dead = True
                                     interface[4].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
                                             
                 #right angle
                 if bottom_y_p >= self.y:
@@ -176,6 +193,8 @@ class Chicken(Enemy, Block):
                                     self.is_dead = True
                                     interface[4].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
         return task_enemy
 
     def dead_count(self, list_chicken, droped_resources): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT

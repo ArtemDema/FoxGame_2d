@@ -20,7 +20,7 @@ class Chick(Enemy, Block):
         else:
             self.vector_move = 1
 
-    def move(self, player, blocks, chests, boxes):
+    def move(self, player, blocks, chests, boxes, sound_damage):
         if self.spawn_count >= 5:
             if self.vector_move == 0:
                 if player.hide == False:
@@ -66,7 +66,7 @@ class Chick(Enemy, Block):
                 if player.hide == False:
                     answer = player.check_collision_left(self.x, self.y, self.x + self.width, self.y + self.height)
                     if answer:
-                        player.damage_player()
+                        player.damage_player(sound_damage)
 
                     for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
                         answer = block.check_collision_top_wall(self.x + 15, self.y, self.x + self.width + 15, self.y + self.height + 20)
@@ -108,7 +108,7 @@ class Chick(Enemy, Block):
             if self.player_visibility:
                 self.appearance_count()
     
-    def check_death(self, player, boxes, move_bottom, task_enemy): #CHECK DEATH opossum
+    def check_death(self, player, boxes, move_bottom, task_enemy, death_enemy): #CHECK DEATH opossum
         if self.is_dead == False:
             for box in boxes:
                 answer = box.check_collision_bottom_wall(self.x, self.y, #CHECK BOX FOR DEATH
@@ -117,6 +117,8 @@ class Chick(Enemy, Block):
                     self.is_dead = True
                     interface[6].count += 1
                     task_enemy -= 1
+                    death_enemy.set_volume(0.1)
+                    death_enemy.play(loops = 0)
 
             if move_bottom == True:
                 right_x = self.x + self.width
@@ -135,6 +137,8 @@ class Chick(Enemy, Block):
                                     self.is_dead = True
                                     interface[6].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
 
                 #middle (golden)
                 if bottom_y_p >= self.y:
@@ -145,6 +149,8 @@ class Chick(Enemy, Block):
                                     self.is_dead = True
                                     interface[6].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
                                             
                 #right angle
                 if bottom_y_p >= self.y:
@@ -155,6 +161,8 @@ class Chick(Enemy, Block):
                                     self.is_dead = True
                                     interface[6].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
         return task_enemy
     
     def dead_count(self, list_chick, droped_resources): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT

@@ -8,7 +8,7 @@ from ..bush import Bush
 from ..water import Water
 from ..resourses import Discarded_Item
 
-import random, pytmx, os
+import random, pytmx, os, pygame
 
 map = [ [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "],
         [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "],
@@ -64,6 +64,15 @@ list_chick = []
 #d - deep water
 #n - end of level
 
+music = pygame.mixer.Sound(os.path.join(__file__ + "/../../../sound/music.wav"))
+sound_add_hp = pygame.mixer.Sound(os.path.join(__file__ + "/../../../sound/add_hp.wav"))
+sound_damage = pygame.mixer.Sound(os.path.join(__file__ + "/../../../sound/damage.wav"))
+chicken_sound = pygame.mixer.Sound(os.path.join(__file__ + "/../../../sound/chicken.wav"))
+frog_sound = pygame.mixer.Sound(os.path.join(__file__ + "/../../../sound/frog.wav"))
+drop_box = pygame.mixer.Sound(os.path.join(__file__ + "/../../../sound/drop_box.wav"))
+sound_death_enemy = pygame.mixer.Sound(os.path.join(__file__ + "/../../../sound/death_enemy.wav"))
+collect_item = pygame.mixer.Sound(os.path.join(__file__ + "/../../../sound/collect_item.wav"))
+
 path = os.path.abspath(__file__ + "\..\..\..\levels")
 
 level = pytmx.load_pygame(path + "/first_screen.tmx")
@@ -106,7 +115,7 @@ for idy, row in enumerate(map):
             boxes.append(box)
 
         elif column == "f":
-            frog = Frog(50 * idx - 10, 50 * idy - 15, 60, 60, "images/enemy/frog/idle/0.png", 3, 2, 2, 0, 0, False)
+            frog = Frog(50 * idx - 10, 50 * idy - 15, 60, 60, "images/enemy/frog/idle/0.png", 3, 2, 2, 0, 0, False, frog_sound)
             list_frog.append(frog)
             list_enemy.append(frog)
 
@@ -121,7 +130,7 @@ for idy, row in enumerate(map):
             list_enemy.append(rooster)
 
         elif column == "h":
-            chicken = Chicken(50 * idx, 50 * idy, 40, 50, "images/enemy/chicken/run/0.png", 3, 2)
+            chicken = Chicken(50 * idx, 50 * idy, 40, 50, "images/enemy/chicken/run/0.png", 3, 2, chicken_sound)
             list_chicken.append(chicken)
             list_enemy.append(chicken)
         

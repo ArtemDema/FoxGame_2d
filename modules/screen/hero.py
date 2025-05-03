@@ -76,10 +76,12 @@ class Hero(Enemy):
             self.image = list_crouch[crouch_count]
             self.draw_image(screen)
     
-    def damage_player(self):
+    def damage_player(self, sound_damage):
         if self.timer_damage == 0:
             self.hp -= 1
             self.timer_damage = 360
+            sound_damage.set_volume(0.3)
+            sound_damage.play(loops = 0)
 
     def check_collision_right(self, left_x_i, top_y_i, right_x_i, bottom_y_i): #CHECKING FOR TOUCHING THE RIGHT COLLISION
         right_x = self.x + self.width

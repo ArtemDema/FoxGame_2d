@@ -23,7 +23,7 @@ class Rooster(Enemy, Block):
         self.timer_throw_feather = 20
         Enemy.__init__(self, x, y, width, height, image, hp, speed)
 
-    def move(self, player, blocks, chests, boxes): #RUN ROOSTER
+    def move(self, player, blocks, chests, boxes, sound_damage): #RUN ROOSTER
         if self.player_visibility:
             if player.hide == False:
                 distance = player.x - self.x
@@ -55,7 +55,7 @@ class Rooster(Enemy, Block):
                 if player.hide == False:
                     answer = player.check_collision_right(self.x, self.y, self.x + self.width, self.y + self.height)
                     if answer:
-                        player.damage_player()
+                        player.damage_player(sound_damage)
 
                 for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
                     answer = block.check_collision_top_wall(self.x - 15, self.y, self.x + self.width - 15, self.y + self.height + 20)
@@ -99,7 +99,7 @@ class Rooster(Enemy, Block):
                 if player.hide == False:
                     answer = player.check_collision_left(self.x, self.y, self.x + self.width, self.y + self.height)
                     if answer:
-                        player.damage_player()
+                        player.damage_player(sound_damage)
 
                 for block in blocks: #CHECKING IF THERE IS SOIL AT THE FUTURE LOCATION OF THE POINT
                     answer = block.check_collision_top_wall(self.x + 15, self.y, self.x + self.width + 15, self.y + self.height + 20)
@@ -160,7 +160,7 @@ class Rooster(Enemy, Block):
             self.vector_move = random.randint(0, 1)
             self.random_move = random.randint(50, 250)
     
-    def check_death(self, player, boxes, move_bottom, task_enemy): #CHECK DEATH opossum
+    def check_death(self, player, boxes, move_bottom, task_enemy, death_enemy): #CHECK DEATH opossum
         if self.is_dead == False:
             for box in boxes:
                 answer = box.check_collision_bottom_wall(self.x, self.y, #CHECK BOX FOR DEATH
@@ -169,6 +169,8 @@ class Rooster(Enemy, Block):
                     self.is_dead = True
                     interface[5].count += 1
                     task_enemy -= 1
+                    death_enemy.set_volume(0.1)
+                    death_enemy.play(loops = 0)
 
             if move_bottom == True:
                 right_x = self.x + self.width
@@ -187,6 +189,8 @@ class Rooster(Enemy, Block):
                                     self.is_dead = True
                                     interface[5].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
 
                 #middle (golden)
                 if bottom_y_p >= self.y:
@@ -197,6 +201,8 @@ class Rooster(Enemy, Block):
                                     self.is_dead = True
                                     interface[5].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
                                             
                 #right angle
                 if bottom_y_p >= self.y:
@@ -207,6 +213,8 @@ class Rooster(Enemy, Block):
                                     self.is_dead = True
                                     interface[5].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
         return task_enemy
 
     def throw_rooster_feather(self, player):

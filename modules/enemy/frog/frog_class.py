@@ -1,8 +1,6 @@
 from ...main_classes import Enemy, Block
 from ...resourses import Discarded_Item
 from ...interface import interface
-import pygame
-from...screen import screen
 
 import random, math
 
@@ -11,7 +9,7 @@ class Frog(Enemy, Block):
     ### Class of frogs with aggressive character
     """
     def __init__(self, x, y, width, height, image, hp, speed, 
-                 vector_move, idle_count, sprite_frequency_frog, is_dead):
+                 vector_move, idle_count, sprite_frequency_frog, is_dead, sound):
         self.vector_move = vector_move
         self.idle_count = idle_count
         self.sprite_frequency_frog = sprite_frequency_frog
@@ -24,6 +22,8 @@ class Frog(Enemy, Block):
         self.move_bottom = False
         self.move_jump = False
         self.count_jump = 5
+        self.random_sound = random.randint(600, 1600)
+        self.sound = sound
         Enemy.__init__(self, x, y, width, height, image, hp, speed)
 
     def jump_frog(self, blocks, chests, boxes):
@@ -67,7 +67,8 @@ class Frog(Enemy, Block):
             self.angle = 0
         return
 
-    def move(self, player, blocks, chests, boxes): #MOVE JUMP
+    def move(self, player, blocks, chests, boxes, sound_damage): #MOVE JUMP
+        self.play_frog_sound()
         if self.move_jump:
             self.jump_frog(blocks, chests, boxes)
 
@@ -98,11 +99,11 @@ class Frog(Enemy, Block):
         if player.hide == False:
             answer = player.check_collision_left(self.x, self.y, self.x + self.width, self.y + self.height)
             if answer:
-                player.damage_player()
+                player.damage_player(sound_damage)
         
             answer = player.check_collision_right(self.x, self.y, self.x + self.width, self.y + self.height)
             if answer:
-                player.damage_player()
+                player.damage_player(sound_damage)
 
         if self.angle < 0:
             if self.frequency_jump <= 0:
@@ -166,7 +167,7 @@ class Frog(Enemy, Block):
     def actions_frog(self): #RANDOM ACTION
         random_antion = random.randint(0, 1)
         if random_antion == 0:
-            self.random_idle = random.randint(120, 260)
+            self.random_idle = random.randint(600, 1600)
         else:
             self.vector_move = random.randint(0, 1)
             random_antion = random.randint(0, 1)
@@ -185,7 +186,7 @@ class Frog(Enemy, Block):
             if self.move_jump == False:
                 self.move_bottom = True
 
-    def check_death(self, player, boxes, move_bottom, task_enemy): #CHECK DEATH CHICKEN
+    def check_death(self, player, boxes, move_bottom, task_enemy, death_enemy): #CHECK DEATH CHICKEN
         if self.is_dead == False:
             for box in boxes:
                 answer = box.check_collision_bottom_wall(self.x, self.y, #CHECK BOX FOR DEATH
@@ -194,6 +195,8 @@ class Frog(Enemy, Block):
                     self.is_dead = True
                     interface[3].count += 1
                     task_enemy -= 1
+                    death_enemy.set_volume(0.1)
+                    death_enemy.play(loops = 0)
 
             if move_bottom == True:
                 right_x = self.x + self.width
@@ -212,6 +215,8 @@ class Frog(Enemy, Block):
                                     self.is_dead = True
                                     interface[3].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
 
                 #middle (golden)
                 if bottom_y_p >= self.y:
@@ -222,6 +227,8 @@ class Frog(Enemy, Block):
                                     self.is_dead = True
                                     interface[3].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
                                             
                 #right angle
                 if bottom_y_p >= self.y:
@@ -232,8 +239,17 @@ class Frog(Enemy, Block):
                                     self.is_dead = True
                                     interface[3].count += 1
                                     task_enemy -= 1
+                                    death_enemy.set_volume(0.1)
+                                    death_enemy.play(loops = 0)
         return task_enemy
 
+    def play_frog_sound(self):
+        if self.random_sound == 0:
+            self.sound.set_volume(0.09)
+            self.sound.play(loops = 0)
+            self.random_sound = random.randint(2400, 3600)
+        else:
+            self.random_sound -= 1
 
     def dead_count(self, list_frog, droped_resources): #CHANGE SPRITE DEATH AND THEN DROPE A MEAT
         if self.death_count == 6:

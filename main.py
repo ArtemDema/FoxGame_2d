@@ -33,6 +33,7 @@ crouch_count = 0
 #sprite change frequency
 number_for_choose_sprite = 10
 frequency_cloud = 120
+
 #getting information from the last session
 info = mod.get_info(__file__ + "/../json/main_info.json")
 WIDTH = info["width"]
@@ -47,6 +48,8 @@ task_egg  = int(task[f'{player_level}']['1'])
 task_meat = int(task[f'{player_level}']['3'])
 task_enemy = int(task[f'{player_level}']['5'])
 task_chest = int(task[f'{player_level}']['7'])
+mod.music.set_volume(0.06)
+mod.music.play(loops = -1)
 while game_run:
     tick.tick(60) #set the number of fps
 
@@ -122,9 +125,13 @@ while game_run:
             if last_side == 0:
                 box_player.throw = True
                 box_player.angle = -125
+                mod.drop_box.set_volume(0.2)
+                mod.drop_box.play(loops = 0)
             else:
                 box_player.throw = True
                 box_player.angle = -55
+                mod.drop_box.set_volume(0.2)
+                mod.drop_box.play(loops = 0)
     #--------------------------------------------
 
     #MOVE--------------------------------------------
@@ -212,7 +219,7 @@ while game_run:
     #COLLECT RECOURCES--------------------------------------------
     for recource in mod.droped_resources: 
         return_dict = recource.check_collect_recource(mod.player, mod.meat.count, mod.egg.count, mod.key.count, mod.player.hp,
-                                                      task_egg, task_meat) #CHECKING FOR SELECTION OF RESOURCES
+                                                      task_egg, task_meat, mod.collect_item) #CHECKING FOR SELECTION OF RESOURCES
         if "egg_count" in return_dict: mod.egg.count = return_dict["egg_count"]
         if "key_count" in return_dict: mod.key.count = return_dict["key_count"]
         if "meat_count" in return_dict: mod.meat.count = return_dict["meat_count"]
@@ -233,6 +240,9 @@ while game_run:
     return_dict = mod.add_hp(mod.egg, mod.player, mod.meat, add_hp_egg, add_hp_meat)
     if "add_hp_egg" in return_dict: add_hp_egg = return_dict["add_hp_egg"]
     if "add_hp_meat" in return_dict: add_hp_meat = return_dict["add_hp_meat"]
+    if "add_hp_sound" in return_dict: 
+       mod.sound_add_hp.set_volume(0.3)
+       mod.sound_add_hp.play(loops = 0)
 
     #MODAL_INFO--------------------------------------------
     if modal_window_info:
@@ -253,13 +263,13 @@ while game_run:
         for index in range(len(task["1"])):
             if index % 2 == 0:
                 text_task = mod.Button(535, 200 + index * 50, 0, 0, "images/resources/exit.png")
-                text_task.text(mod.screen, f"{task['1'][f'{index}']}", 48)
+                text_task.text(mod.screen, f"{task['1'][f'{index}']}", 48, 0, 0, 0)
             else:
                 text_task = mod.Button(610, 200 + index * 50, 0, 0, "images/resources/exit.png")
                 if list_task[number] >= 0:
-                    text_task.text(mod.screen, f"{list_task[number]}", 48)
+                    text_task.text(mod.screen, f"{list_task[number]}", 48, 0, 0, 0)
                 else:
-                    text_task.text(mod.screen, "0", 48)
+                    text_task.text(mod.screen, "0", 48, 0, 0, 0)
                 number += 1
         exit_b.show_image(mod.screen)
         #--------------------------------------------!!!!!!!!!!!!!!!
@@ -289,9 +299,9 @@ while game_run:
         for water in mod.list_water:
             answer = water.check_death_of_player(mod.player)
             if answer:
-                mod.player.damage_player()
+                mod.player.damage_player(mod.sound_damage)
                 mod.player.player_in_the_water = True
                 break
     #--------------------------------------------!!!!!!!!!!!!!!!
-    
+
     pygame.display.flip()

@@ -13,7 +13,7 @@ class Feather(Enemy):
         self.death_sprite_frequency = 0
         super().__init__(x, y, width, height, image, 0, 0)
 
-    def move(self, WIDTH, HEIGHT, player, blocks, chests, boxes):
+    def move(self, WIDTH, HEIGHT, player, blocks, chests, boxes, sound_damage):
         list_of_all_blocks = []
         list_of_all_blocks += blocks
         list_of_all_blocks += chests
@@ -27,25 +27,25 @@ class Feather(Enemy):
             if player.hide == False:
                 answer = player.check_collision_left(self.x, self.y, self.x + self.width, self.y + self.height)
                 if answer:
-                    player.damage_player()
+                    player.damage_player(sound_damage)
                     list_feather.remove(self)
                     return
 
                 answer = player.check_collision_right(self.x, self.y, self.x + self.width, self.y + self.height)
                 if answer:
-                    player.damage_player()
+                    player.damage_player(sound_damage)
                     list_feather.remove(self)
                     return
 
                 answer = player.check_collision_top(self.x, self.y, self.x + self.width, self.y + self.height)
                 if answer:
-                    player.damage_player()
+                    player.damage_player(sound_damage)
                     list_feather.remove(self)
                     return
 
                 answer = player.check_collision_bottom(self.x, self.y, self.x + self.width, self.y + self.height)
                 if answer:
-                    player.damage_player()
+                    player.damage_player(sound_damage)
                     list_feather.remove(self)
                     return
 
