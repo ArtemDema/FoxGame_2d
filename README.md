@@ -5,11 +5,12 @@
 - [Корисність проекта](#title2)
 - [Мета проекта](#title3)
 - [Обов'язкові модулі](#title4)
+- [Управління](#title0)
 - [Структура проекта](#title5)
 - [Як працює гра](#title5)
 - [Висновок](#title5)
 
-## <a id="title1">Мета проекту:</a>
+## <a id="title1">Мета проекту</a>
 Мета проекту - розробка гри, яка б покращіла мої навички рішення задач. 
 Та наглядна демонстрація того, що можно ррозробити за допомогою модуля Pygame
 
@@ -31,15 +32,25 @@
 5. Запустити гру
     - запусти скрипт через файл main.py
 
+## <a id="title0">Управління</a>
+### A - йти у ліву сторону
+### D - йти у праву сторону
+### SPACE - стрибати
+### Q - підняти ящік
+### R - штовхати ящік
+### G - бросити ящік
+### T - завдання
+### ESCAPE - пауза
+### SHIFT - присід
 
-## <a id="title4">Модулі для роботи гри:</a>
+## <a id="title4">Модулі для роботи гри</a>
 ### Pygame
 Головний модуль, на якому працює гра
 ### PyTMX
 Модуль, завдяки якому переноситься карта з .tmx файла у гру
 
 
-## <a id="title5">Структура проекта:</a>
+## <a id="title5">Структура проекта</a>
 ### Fonts
 Daydream.ttf - шрифт, який використовується при паузі, листі задач
 ### Images
@@ -381,6 +392,20 @@ if answer != True:
         self.x = self.x + 17 * math.cos(self.angle * (math.pi / 180))
         self.y = self.y + 17 * math.sin(self.angle * (math.pi / 180))
         self.column_throw_move -= 1
+```
+### Push box
+#### Ось кусочок с коду, с демонстраціей як це працює:
+```python
+mod.push_box = mod.check_push_box(mod.player, last_side) #BOX PUSH TEST
+
+#що в цій функції(головний кусочок)
+if last_side == 1:
+    for box in boxes:
+        answer = box.check_collision_left_wall(player.x, player.y, 
+                                                player.x + player.width, player.y + player.height)
+        if answer:
+            return True
+return False
 ```
 ### Up a box
 #### Ось кусочок с коду, с демонстраціей як це працює:
