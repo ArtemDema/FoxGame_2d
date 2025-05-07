@@ -22,7 +22,7 @@ class Frog(Enemy, Block):
         self.move_bottom = False
         self.move_jump = False
         self.count_jump = 5
-        self.random_sound = random.randint(600, 1600)
+        self.random_sound = random.randint(600, 2600)
         self.sound = sound
         Enemy.__init__(self, x, y, width, height, image, hp, speed)
 
@@ -167,7 +167,7 @@ class Frog(Enemy, Block):
     def actions_frog(self): #RANDOM ACTION
         random_antion = random.randint(0, 1)
         if random_antion == 0:
-            self.random_idle = random.randint(600, 1600)
+            self.random_idle = random.randint(600, 2600)
         else:
             self.vector_move = random.randint(0, 1)
             random_antion = random.randint(0, 1)

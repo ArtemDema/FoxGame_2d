@@ -20,7 +20,7 @@ class Chicken(Enemy, Block):
         self.death_count = 0
         self.player_visibility = False
         self.idle_count = 0
-        self.random_sound = random.randint(600, 1600)
+        self.random_sound = random.randint(600, 2600)
         self.sound = sound
         Enemy.__init__(self, x, y, width, height, image, hp, speed)
 
@@ -136,7 +136,7 @@ class Chicken(Enemy, Block):
         if self.random_sound == 0:
             self.sound.set_volume(0.09)
             self.sound.play(loops = 0)
-            self.random_sound = random.randint(600, 1600)
+            self.random_sound = random.randint(600, 2600)
         else:
             self.random_sound -= 1
 
