@@ -12,7 +12,7 @@
 
 ## <a id="title1">Мета проекту</a>
 Мета проекту - розробка гри, яка б покращіла мої навички рішення задач. 
-Та наглядна демонстрація того, що можно ррозробити за допомогою модуля Pygame
+Та наглядна демонстрація того, що можно розробити за допомогою модуля Pygame
 
 ---
 
@@ -231,6 +231,33 @@ for idy, row in enumerate(map):
             pass
 ```
 ---
+### Kill enemies
+#### Ось кусочок с коду, с демонстраціей як це працює:
+```python
+#смерть від ящіка
+if self.is_dead == False:
+    for box in boxes:
+        answer = box.check_collision_bottom_wall(self.x, self.y, #CHECK BOX FOR DEATH
+                                                self.x + self.width, self.y + self.height)
+        if answer:
+            self.is_dead = True
+            interface[4].count += 1
+            task_enemy -= 1
+
+#смерть від ігрока
+if bottom_y_p >= self.y:
+    if left_x_p + 33 >= self.x:
+        if right_x_p - 30 <= right_x:
+            if top_y_p + 20 <= self.y:
+                if bottom_y_p + 10 <= bottom_y:
+                    self.is_dead = True
+                    interface[4].count += 1
+                    task_enemy -= 1
+```
+#### Як це виглядає у грі:
+![alt text](gifs/killenemy.gif)
+![alt text](gifs/killenemy2.gif)
+---
 ### Frog
 #### Поведінка жаби - агресивна, може стрибати. Ось кусочок с коду, с демонстраціей як це працює:
 ```python
@@ -260,7 +287,7 @@ if player.hide == False:
         player.damage_player(sound_damage)
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/frog.gif)
 ---
 ### Chick
 #### Поведінка курча - агресивна, може бігати. Ось кусочок с коду, с демонстраціей як це працює:
@@ -280,6 +307,7 @@ if player.hide == False:
 ```
 #### Як це виглядає у грі:
 ![alt text](gifs/chick.gif)
+![alt text](gifs/chick2.gif)
 ---
 ### Chicken
 #### Поведінка куриці - пуглива, може бігати. Ось кусочок с коду, с демонстраціей як це працює:
@@ -303,7 +331,7 @@ if answer != True:
     chick.x += chick.speed
 ```
 #### Як це виглядає у грі:
-![alt text](gifs/killenemy.gif)
+![alt text](gifs/chickenrun.gif)
 ---
 ### Rooster
 #### Поведінка півня - агресивна, може бігати. Ось кусочок с коду, с демонстраціей як це працює:
