@@ -133,7 +133,7 @@ if keys[pygame.K_a]:
         player.rect.x -= player.speed
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/move.gif)
 ---
 ### Jump
 #### Стрибок зроблено за допомогою перевірок на дотик до низу блоків,
@@ -157,7 +157,7 @@ if keys[pygame.K_SPACE]:
         return return_dict
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/jump.gif)
 ---
 ### Crouch
 #### Присідання зроблено за допомогою перевірок на стан ігрока,
@@ -171,7 +171,7 @@ else:
     mod.move_crouch = False
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/crouch.gif)
 ---
 ### Pause
 #### Паузу зроблено за допомогою перевірки на натискання клавіши Escape,
@@ -186,7 +186,7 @@ if pause:
     continue_b.show_image(mod.screen)
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/Pause.gif)
 ---
 ### Menu
 #### Меню зроблено за допомогою такого ж самого циклу як і сама гра,
@@ -206,7 +206,7 @@ while menu_run:
     pygame.display.flip()
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/Menu.gif)
 ---
 ### Map
 #### Карту зроблено за допомогою модулю PyTMX(статичні блоки) та мартиці(девера, ресурси, вороги),
@@ -230,8 +230,6 @@ for idy, row in enumerate(map):
         elif column == "r":
             pass
 ```
-#### Як це виглядає у грі:
-#### скоро з'явиться гіфка
 ---
 ### Frog
 #### Поведінка жаби - агресивна, може стрибати. Ось кусочок с коду, с демонстраціей як це працює:
@@ -281,7 +279,7 @@ if player.hide == False:
         player.damage_player(sound_damage)
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/chick.gif)
 ---
 ### Chicken
 #### Поведінка куриці - пуглива, може бігати. Ось кусочок с коду, с демонстраціей як це працює:
@@ -305,7 +303,7 @@ if answer != True:
     chick.x += chick.speed
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/killenemy.gif)
 ---
 ### Rooster
 #### Поведінка півня - агресивна, може бігати. Ось кусочок с коду, с демонстраціей як це працює:
@@ -339,7 +337,7 @@ if player.hide == False:
         player.damage_player(sound_damage)
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/rooster.gif)
 ---
 ### Feather
 #### З'являється коли півень баче ігрока. Летить в напрямок ігрока.
@@ -362,7 +360,7 @@ if player.hide == False:
         return
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/feather.gif)
 ---
 ### Water
 #### Вода наносить урон ігроку. Ось кусочок с коду, с демонстраціей як це працює:
@@ -374,7 +372,7 @@ for water in mod.list_water:
         mod.player.player_in_the_water = True
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/water.gif)
 ---
 ### Task
 #### Задачі реалізовані наступним чином:
@@ -391,7 +389,7 @@ if tasks:
             text_task.text(mod.screen, f"{task['1'][f'{index}']}", 48, 0, 0, 0)
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/task.gif)
 ---
 ### Chest
 #### Скриню можна відкрити ключом, та сховатися у ній(тількі якщо скриня відкрита)
@@ -412,7 +410,8 @@ elif answer[0] == False:
     chest.hide_in_him = True
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/chestopen.gif)
+![alt text](gifs/chesthide.gif)
 ---
 ### Throw box
 #### Ось кусочок с коду, с демонстраціей як це працює:
@@ -443,7 +442,7 @@ if answer != True:
         self.column_throw_move -= 1
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/dropbox.gif)
 ---
 ### Push box
 #### Ось кусочок с коду, с демонстраціей як це працює:
@@ -460,7 +459,7 @@ if last_side == 1:
 return False
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/pushbox.gif)
 ---
 ### Up a box
 #### Ось кусочок с коду, с демонстраціей як це працює:
@@ -474,7 +473,7 @@ if keys[pygame.K_q]:
                 return_list["box_player"] = box
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/upbox.gif)
 ---
 ### Resources
 #### Ресурси використовуються для проходження рівня
@@ -490,7 +489,7 @@ answer = self.check_collision_bottom_wall(left_x_p = player.x, top_y_p = player.
             return_list["task_meat"] = task_meat - 1
 ```
 #### Як це виглядає у грі:
-#### скоро з'явиться гіфка
+![alt text](gifs/takeresource.gif)
 ---
 ### Interfaсe
 #### Показується вверху ігрового вікна
@@ -504,8 +503,6 @@ f1 = pygame.font.Font(None, 32)
 text1 = f1.render(f"{self.count}", 1, (255, 255, 255))
 screen.blit(text1, (self.x + self.width + 10, self.number_y))
 ```
-#### Як це виглядає у грі:
-#### скоро з'явиться гіфка
 ---
 ## <a id="title7">Висновок</a>
 Розробивши цю гру я отримав, та удосконалив навички розробки ігор на модулі pygame. 

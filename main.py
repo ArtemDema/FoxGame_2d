@@ -103,6 +103,7 @@ while game_run:
         if "modal_window_info" in return_dict: modal_window_info = return_dict["modal_window_info"]
         if "player.hide" in return_dict: mod.player.hide = return_dict["player.hide"]
         if "reload_chest" in return_dict: reload_chest = return_dict["reload_chest"]
+        if "claim" in return_dict: claim = return_dict["claim"]
 
       #UP THE BOX
     if keys[pygame.K_q]:
@@ -246,7 +247,7 @@ while game_run:
 
     #MODAL_INFO--------------------------------------------
     if modal_window_info:
-        mod.modal_w.print_text_on_screen(mod.WIDTH, mod.HEIGHT, mod.screen, mod.claim)
+        mod.modal_w.print_text_on_screen(mod.WIDTH, mod.HEIGHT, mod.screen, claim)
         pygame.time.delay(120)
     #--------------------------------------------
 

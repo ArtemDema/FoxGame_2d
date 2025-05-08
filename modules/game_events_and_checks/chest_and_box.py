@@ -1,16 +1,15 @@
 def check_open(with_box,chests, key, player, droped_resources, reload_chest):
     return_list = {}
-    if reload_chest == 2:
-        if with_box == False:
-            for chest in chests: #CHECKING AN ATTEMPT TO OPEN A CHEST
-                answer = chest.check_open(key.count, player, droped_resources) #
-                if answer[0]: 
-                    return_list["key.count"] = key.count - 1
-                    return_list["modal_window_info"] = True
-                    chest.claim = answer[1]
-                elif answer[0] == False: 
-                    return_list["player.hide"] = True
-                    chest.hide_in_him = True
+    if with_box == False:
+        for chest in chests: #CHECKING AN ATTEMPT TO OPEN A CHEST
+            answer = chest.check_open(key.count, player, droped_resources) #
+            if answer[0]: 
+                return_list["key.count"] = key.count - 1
+                return_list["modal_window_info"] = True
+                return_list["claim"] = answer[1]
+            elif answer[0] == False: 
+                return_list["player.hide"] = True
+                chest.hide_in_him = True
     else:
         return_list["reload_chest"] = 1
     return return_list
