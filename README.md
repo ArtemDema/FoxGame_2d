@@ -58,6 +58,10 @@
 ---
 
 ## <a id="title5">Структура проекта</a>
+[FigJam цього проекту](https://www.figma.com/board/B8v8JYXgKJuE30osFyJRUw/FoxGame?node-id=0-1&t=1NYW6Y12vcnziKrK-1)
+
+---
+
 ### Images
 Папка у якій знаходиться усі зображення, які використовуються у грі
 ### Json
