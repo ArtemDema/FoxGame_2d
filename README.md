@@ -30,7 +30,7 @@
 2. Перейти до папки з грою
     - cd FoxGame
 3. Встановлення python
-    - пишемо pip install python
+    - [встановлюємо Пайтон](https://www.python.org/downloads/)
 4. Встановлення потрібних модулів для роботи гри
     - pip install -r requirements.txt
 5. Запустити гру
